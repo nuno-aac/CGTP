@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C6B9F56D-1456-3BA7-BEEB-FA2FECACE92C}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\GL502V\Documents\Univ\Ano3\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\GL502V\Documents\Univ\Ano3\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\GL502V\Documents\Univ\Ano3\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\GL502V\Documents\Univ\Ano3\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+D:\CMake\bin\cmake.exe -SC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine -BC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin --check-stamp-file C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCXXCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeRCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\FindOpenGL.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+D:\CMake\bin\cmake.exe -SC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine -BC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin --check-stamp-file C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCXXCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeRCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\FindOpenGL.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+D:\CMake\bin\cmake.exe -SC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine -BC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin --check-stamp-file C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCXXCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeRCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\FindOpenGL.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+D:\CMake\bin\cmake.exe -SC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine -BC:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin --check-stamp-file C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeCXXCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeRCCompiler.cmake;C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\3.16.4\CMakeSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\FindOpenGL.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;D:\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\ZERO_CHECK.vcxproj">
+      <Project>{62AE3EAF-8C88-3F52-B644-BD7275DD69D4}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\class1.vcxproj">
+      <Project>{02D2C264-C7C7-3BAB-B94C-9E0C135ABCA9}</Project>
+      <Name>class1</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,3 @@
+C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho2/engine/bin/CMakeFiles/engine.dir
+C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho2/engine/bin/CMakeFiles/ALL_BUILD.dir
+C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho2/engine/bin/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\CMakeFiles\1fabb58500a6c1d0664f90517892bd6b\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1389A4ED-8FE1-327C-9CD7-CC443C7A193F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
