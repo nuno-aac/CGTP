@@ -1,8 +1,0 @@
-﻿  main.cpp
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(82,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(138,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(103,6): warning C4101: 'size': unreferenced local variable
-C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\main.cpp(103,12): warning C4101: 'numFigura': unreferenced local variable
-  engine.vcxproj -> C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho2\engine\bin\Release\engine.exe
