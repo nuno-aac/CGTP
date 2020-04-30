@@ -22,9 +22,8 @@ using namespace std;
 
 vector<Group*> scene;
 vector<vector<float>> vertices;
-vector<vector<float>> modelsVertex;
 
-GLuint models[300];
+GLuint modelsBuf[300];
 int currentModel = 0;
 
 float vert = 0.0f;
@@ -76,17 +75,20 @@ void applyTransformations(Group* g) {
 
 
 void drawModel(Model* model) {
+	vector<float> modelVertex = model->getVertices();
 	glColor3f(model -> getR(), model -> getG(), model -> getB());
-
-	glBindBuffer(GL_ARRAY_BUFFER, models[0]);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[currentModel]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * model->getVertices().size(), &modelVertex[0], GL_STATIC_DRAW);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, model->getVertices().size()/3);
 }
 
 void drawModels(vector<Model*> models){
+	
 	for (int i = 0; i < models.size(); i++) {
-		vector<float> model;
-		modelsVertex.push_back(model);
 		drawModel(models[i]);
+		currentModel++;
 	}
 }
 
@@ -108,6 +110,7 @@ void drawGroup(Group* g){
 void renderScene(void) {
 	int size, numFigura;
 	// clear buffers
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// set the camera
@@ -140,11 +143,10 @@ void renderScene(void) {
 	glEnd();
 	//glTranslatef(vert, 0.0f, hor);
 	glRotatef(ang, 0.0f, 1.0f, 0.0f);
-	
 	for (int i = 0; i < scene.size(); i++) {
 		drawGroup(scene[i]);
 	}
-
+	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
 }
@@ -205,9 +207,10 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
-	glEnableClientState(GL_VERTEX_ARRAY);
 	glutCreateWindow("Trabalho fase 1");
 
+	glewInit();
+	glGenBuffers(300, modelsBuf);
 	// put callback registration here
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
