@@ -37,11 +37,13 @@ void geraPontosBezier(VerticesList* vl, string file, string figura, int tesselat
 	fs.open(file, fstream::in);
 	if (fs.is_open())
 	{
-		getline(fs, line);
-		patches = atof(line);
+		//getline(fs, line);
+		//patches = atof(line);
+		fs >> skipws >> ch;
+		cout << ch;
 		while (fs >> skipws >> ch) {
-			cout << ch;
-			cout << patches;
+			//cout << ch;
+			//cout << patches;
 			/* Or whatever
 			if (i == 0) {
 				patches = atof(line);
@@ -75,6 +77,8 @@ void geraPontosBezier(VerticesList* vl, string file, string figura, int tesselat
 int main(int argc, char* argv[]) {
 	VerticesList* vL = new VerticesList();
 	string figura;
+
+	geraPontosBezier(vL, argv[1], argv[2], 10);
 
 	if (strcmp(argv[1], "plane") == 0 && argc == 7) {
 		float size = stof(argv[2]);
