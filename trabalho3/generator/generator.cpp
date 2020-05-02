@@ -26,6 +26,51 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
 }
 
+void geraPontosBezier(VerticesList* vl, string file, string figura, int tesselation) {
+	int i = 0;
+	int j,k=0;
+	int ch;
+	int patches;
+	int numPerPatch;
+	fstream fs;
+	string line;
+	fs.open(file, fstream::in);
+	if (fs.is_open())
+	{
+		getline(fs, line);
+		patches = atof(line);
+		while (fs >> skipws >> ch) {
+			cout << ch;
+			cout << patches;
+			/* Or whatever
+			if (i == 0) {
+				patches = atof(line);
+				i++;
+			}
+			if (i == 1) {
+				numPerPatch = line.length();
+				int controlPoints[numPerPatch * patches];
+				for (j = 0; j < numPerPatch; j++) {
+					controlPoints[k] = line[j];
+					k++;
+				}
+				i++;
+			}
+			if (i <= patches && i > 1) {
+				for (j = 0; j < numPerPatch; j++) {
+					controlPoints[k] = line[j];
+					k++;
+				}
+				i++;
+			}*/
+		}
+		fs.close();
+	}
+
+	else cout << "Unable to open file";
+
+}
+
 
 int main(int argc, char* argv[]) {
 	VerticesList* vL = new VerticesList();
@@ -43,19 +88,19 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-  if (strcmp(argv[1], "box") == 0 && argc == 9) {
-    float coord_x = stof(argv[2]);
-    float coord_y = stof(argv[3]);
-    float coord_z = stof(argv[4]);
-	float r, g, b;
-	r = stof(argv[5]);
-	g = stof(argv[6]);
-	b = stof(argv[7]);
-    vL->box(coord_x,coord_y,coord_z);
-    figura = argv[8];
-    geraPontosFich(vL, figura,r,g,b);
-    return 0;
-  }
+	if (strcmp(argv[1], "box") == 0 && argc == 9) {
+		float coord_x = stof(argv[2]);
+		float coord_y = stof(argv[3]);
+		float coord_z = stof(argv[4]);
+		float r, g, b;
+		r = stof(argv[5]);
+		g = stof(argv[6]);
+		b = stof(argv[7]);
+		vL->box(coord_x,coord_y,coord_z);
+		figura = argv[8];
+		geraPontosFich(vL, figura,r,g,b);
+		return 0;
+	}
 
 	if (strcmp(argv[1], "sphere") == 0 && argc == 9) {
 		float raio = stof(argv[2]);
