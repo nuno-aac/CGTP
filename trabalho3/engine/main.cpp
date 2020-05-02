@@ -17,6 +17,7 @@
 
 #define _USE_MATH_DEFINES
 
+float p[5][3] = { {-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0} };
 
 using namespace std;
 
@@ -26,6 +27,7 @@ vector<vector<float>> vertices;
 GLuint modelsBuf[300];
 int currentModel = 0;
 
+float time = 0.0f;
 float vert = 0.0f;
 float hor = 0.0f;
 float ang = 0.0f;
@@ -56,12 +58,63 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void multMatrixVector(float* m, float* v, float* res) {
+
+	for (int j = 0; j < 4; ++j) {
+		res[j] = 0;
+		for (int k = 0; k < 4; ++k) {
+			res[j] += v[k] * m[j * 4 + k];
+		}
+	}
+}
+
+void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, float* pos, float* deriv) {
+
+	// catmull-rom matrix
+	float m[4][4] = { {-0.5f,  1.5f, -1.5f,  0.5f},
+						{ 1.0f, -2.5f,  2.0f, -0.5f},
+						{-0.5f,  0.0f,  0.5f,  0.0f},
+						{ 0.0f,  1.0f,  0.0f,  0.0f} };
+	float a[4];
+	float te[4] = { t * t * t , t * t , t , 1 };
+	float telinha[4] = { 3 * t * t , 2 * t , 1 , 0 };
+	for (int i = 0; i < 3; i++) {
+		float p[4] = { p0[i], p1[i],p2[i],p3[i] };
+		multMatrixVector(*m, p, a);
+
+		pos[i] = te[0] * a[0] + te[1] * a[1] + te[2] * a[2] + te[3] * a[3];
+		deriv[i] = telinha[0] * a[0] + telinha[1] * a[1] + telinha[2] * a[2] + telinha[3] * a[3];
+	}
+
+}
+
+
+// given  global t, returns the point in the curve
+void getGlobalCatmullRomPoint(float gt, float* pos, float* deriv, int pointCount) {
+
+	float t = gt * pointCount; // this is the real global t
+	int index = floor(t);  // which segment
+	t = t - index; // where within  the segment
+
+	// indices store the points
+	int indices[4];
+	indices[0] = (index + pointCount - 1) % pointCount;
+	indices[1] = (indices[0] + 1) % pointCount;
+	indices[2] = (indices[1] + 1) % pointCount;
+	indices[3] = (indices[2] + 1) % pointCount;
+
+	getCatmullRomPoint(t, p[indices[0]], p[indices[1]], p[indices[2]], p[indices[3]], pos, deriv);
+}
+
 void applyTransformations(Group* g) {
 	Transformation* t;
+	float pos[3];
+	float deriv[3];
 
 	t = g -> getTranslation();
 	if (t != NULL) {
-		glTranslatef(t->getX(), t->getY(), t->getZ());
+		getGlobalCatmullRomPoint(time, pos, deriv, 5);
+		glTranslatef(pos[0], pos[1], pos[2]);
 	}
 
 	t = g -> getRotation();
@@ -149,6 +202,7 @@ void renderScene(void) {
 	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
+	time += 0.01;
 }
 
 void keyUp(int keyCode, int x, int y){
@@ -197,7 +251,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	scene = parseXML("SolarSystem.xml");
+	scene = parseXML("modelsToRender.xml");
 	cout << "+/- = zoom | z/x = rotacao | arrow keys = mover o modelo";
 	zoom = 23;
 	vert = 25;
