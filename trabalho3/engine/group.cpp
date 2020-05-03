@@ -18,6 +18,10 @@ Transformation* Group::getScale(){
 	return scale;
 }
 
+Catmull* Group::getCatmull() {
+	return translationAnimation;
+}
+
 vector<Model*> Group::getModels(){
 	return models;
 }
@@ -35,6 +39,10 @@ void Group::setTranslation(Transformation* t){
 
 void Group::setScale(Transformation* s){
 	scale = s;
+}
+
+void Group::setCatmull(Catmull* c) {
+	translationAnimation = c;
 }
 
 void Group::pushModel(Model* m) {
