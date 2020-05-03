@@ -1,15 +1,9 @@
 <?xml version="2.0" ?>
 <scene>
   <group>
-		<translate time='5'>
-      <point X='5' Y='0' Z='0'/>
-      <point X='0' Y='0' Z='-5'/>
-      <point X='-5' Y='0' Z='0'/>
-      <point X='0' Y='0' Z='5'/>
-    </translate>
-    <rotate time='5' X='0' Y='1' Z='0'/>
+    <rotate time='5' X='0' Y='0' Z='1'/>
     <models>1
-      <model file='boxRight.3d'/>
+      <model file='bez.3d'/>
     </models>
   </group>
 </scene>

@@ -125,9 +125,9 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 							int tes = i * (tesselation + 1) + l;
 							float t = ((1 / ((float) tesselation)) * l);
 							if (k == sqrtf(numPerPatch) - 1) {
-								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
 							}
 							else {
 								auxX[tes] = (1 - t) * auxX.at(((tesselation + 1) * i) + l) + (t * auxX.at(((tesselation + 1) * (i + 1)) + l));
@@ -199,15 +199,17 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		fs << b << endl;
 
 		for (k = 0; k < patches; k++) {
-			for (i = 0; i < tesselation; i++) {
-				for (j = 0; j < tesselation; j++) {
+			for (j = 0; j < tesselation; j++) {
+				for (i = 0; i < tesselation; i++) {
 					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << endl;
 					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << endl;
+					
 
 					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << endl;
 					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << endl;			
+
 				}
 			}
 		}
