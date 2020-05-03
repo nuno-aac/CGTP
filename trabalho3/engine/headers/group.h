@@ -5,8 +5,10 @@
 #include "transformation.h"
 #include "model.h"
 #include "catmull.h"
+#include "rotationAnimation.h"
 
 class Group {
+	RotationAnimation* rotationAnimation;
 	Catmull* translationAnimation;
 	Transformation* rotation;
 	Transformation* translation;
@@ -17,10 +19,11 @@ class Group {
 public:
 	Group();
 
-	Transformation* getRotation();
+	Transformation* getStaticRotation();
 	Transformation* getTranslation();
 	Transformation* getScale();
 	Catmull* getCatmull();
+	RotationAnimation* getRotationAnimation();
 	vector<Model*> getModels();
 	vector<Group*> getNextGroups();
 
@@ -28,6 +31,7 @@ public:
 	void setTranslation(Transformation* t);
 	void setScale(Transformation* s);
 	void setCatmull(Catmull* c);
+	void setRotationAnimation(RotationAnimation* r);
 	void pushModel(Model* m);
 	void pushGroup(Group* g);
 

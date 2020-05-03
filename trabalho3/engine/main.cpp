@@ -17,7 +17,7 @@
 
 #define _USE_MATH_DEFINES
 
-float p[5][3] = { {-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0} };
+float p[5][3] = {{-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0}};
 
 using namespace std;
 
@@ -90,31 +90,44 @@ void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, flo
 
 
 // given  global t, returns the point in the curve
-void getGlobalCatmullRomPoint(float gt, float* pos, float* deriv, int pointCount) {
+void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* deriv) {
+	int pointCount;
+	float catmullTime;
+	vector<vector<float>> points;
+		
+	points = catmull->getPoints();
+	pointCount = points.size();
+	catmullTime = catmull->getTime();
 
-	float t = gt * pointCount; // this is the real global t
+	float t = ((time/1000)/catmullTime) * pointCount; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
-
 	// indices store the points
+
 	int indices[4];
 	indices[0] = (index + pointCount - 1) % pointCount;
 	indices[1] = (indices[0] + 1) % pointCount;
 	indices[2] = (indices[1] + 1) % pointCount;
 	indices[3] = (indices[2] + 1) % pointCount;
 
-	getCatmullRomPoint(t, p[indices[0]], p[indices[1]], p[indices[2]], p[indices[3]], pos, deriv);
+	getCatmullRomPoint(t, &(points[indices[0]])[0], &(points[indices[1]])[0], &(points[indices[2]])[0], &(points[indices[3]])[0], pos, deriv);
 }
 
 void applyTransformations(Group* g) {
 	Transformation* t;
+	Catmull* c;
 	float pos[3];
 	float deriv[3];
 
+	c = g->getCatmull();
+	if (c != NULL) {
+		getGlobalCatmullRomPoint(time,c, pos, deriv);
+		glTranslatef(pos[0], pos[1], pos[2]);
+	}
+
 	t = g -> getTranslation();
 	if (t != NULL) {
-		getGlobalCatmullRomPoint(time, pos, deriv, 5);
-		glTranslatef(pos[0], pos[1], pos[2]);
+		glTranslatef(t->getX(), t -> getY(), t -> getZ());
 	}
 
 	t = g -> getRotation();
@@ -202,7 +215,7 @@ void renderScene(void) {
 	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
-	time += 0.01;
+	time = glutGet(GLUT_ELAPSED_TIME);
 }
 
 void keyUp(int keyCode, int x, int y){

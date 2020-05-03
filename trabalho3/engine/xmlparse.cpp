@@ -36,8 +36,9 @@ Catmull* parseCatmull(XMLElement* t) {
 		x = stof(point->Attribute("X"));
 		y = stof(point->Attribute("Y"));
 		z = stof(point->Attribute("Z"));
-		res->addPoint(z, y, z);
+		res->addPoint(x, y, z);
 		point = point->NextSiblingElement();
+		cout << x << y << z << "\n";
 	}
 	
 	return res;
@@ -65,7 +66,7 @@ Group* parseGroup(XMLElement* g) {
 
 	XMLElement* translation = g ->FirstChildElement("translate");
 	if (translation != nullptr) {
-		if (translation->Attribute("Time")) group->setCatmull(parseCatmull(translation));
+		if (translation->Attribute("time")) group->setCatmull(parseCatmull(translation));
 		else group->setTranslation(parseTransformation(translation));
 	}
 

@@ -4,9 +4,11 @@ Group::Group() {
 	rotation = NULL;
 	translation = NULL;
 	scale = NULL;
+	rotationAnimation = NULL;
+	translationAnimation = NULL;
 }
 
-Transformation* Group::getRotation(){
+Transformation* Group::getStaticRotation(){
 	return rotation;
 }
 
@@ -20,6 +22,10 @@ Transformation* Group::getScale(){
 
 Catmull* Group::getCatmull() {
 	return translationAnimation;
+}
+
+RotationAnimation* Group::getRotationAnimation() {
+	return rotationAnimation;
 }
 
 vector<Model*> Group::getModels(){
@@ -43,6 +49,10 @@ void Group::setScale(Transformation* s){
 
 void Group::setCatmull(Catmull* c) {
 	translationAnimation = c;
+}
+
+void Group::setRotationAnimation(RotationAnimation* r){
+	rotationAnimation = r;
 }
 
 void Group::pushModel(Model* m) {
