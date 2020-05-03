@@ -25,6 +25,24 @@ Model* parse3dFile(string file) {
 	return m;
 }
 
+Catmull* parseCatmull(XMLElement* t) {
+	float x, y, z;
+	Catmull* res = new Catmull();
+
+	res->setTime(stof(t->Attribute("time")));
+
+	XMLElement* point = t->FirstChildElement("point");
+	while (point != nullptr) {
+		x = stof(point->Attribute("X"));
+		y = stof(point->Attribute("Y"));
+		z = stof(point->Attribute("Z"));
+		res->addPoint(z, y, z);
+		point = point->NextSiblingElement();
+	}
+	
+	return res;
+}
+
 Transformation* parseTransformation(XMLElement* t) {
 	float x = 0, y = 0, z = 0, angle = 0;
 
@@ -46,7 +64,10 @@ Group* parseGroup(XMLElement* g) {
 	string fileName;
 
 	XMLElement* translation = g ->FirstChildElement("translate");
-	if (translation != nullptr) group -> setTranslation(parseTransformation(translation));
+	if (translation != nullptr) {
+		if (translation->Attribute("Time")) group->setCatmull(parseCatmull(translation));
+		else group->setTranslation(parseTransformation(translation));
+	}
 
 	XMLElement* rotation = g -> FirstChildElement("rotate");
 	if (rotation != nullptr) group -> setRotation(parseTransformation(rotation));
