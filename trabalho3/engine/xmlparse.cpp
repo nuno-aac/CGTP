@@ -25,10 +25,30 @@ Model* parse3dFile(string file) {
 	return m;
 }
 
+Catmull* parseCatmull(XMLElement* t) {
+	float x, y, z;
+	Catmull* res = new Catmull();
+
+	res->setTime(stof(t->Attribute("time")));
+
+	XMLElement* point = t->FirstChildElement("point");
+	while (point != nullptr) {
+		x = stof(point->Attribute("X"));
+		y = stof(point->Attribute("Y"));
+		z = stof(point->Attribute("Z"));
+
+		res->addPoint(x, y, z);
+
+		point = point->NextSiblingElement();
+	}
+	
+	return res;
+}
+
 Transformation* parseTransformation(XMLElement* t) {
 	float x = 0, y = 0, z = 0, angle = 0;
 
-	if (t->Attribute("Angle")) angle = stof(t->Attribute("Angle"));
+	if (t->Attribute("angle")) angle = stof(t->Attribute("angle"));
 
 	if (t->Attribute("X")) x = stof(t->Attribute("X"));
 
@@ -41,15 +61,37 @@ Transformation* parseTransformation(XMLElement* t) {
 	return trans;
 }
 
+RotationAnimation* parseRotation(XMLElement* t) {
+	float x = 0, y = 0, z = 0, time = 0;
+
+	if (t->Attribute("time")) time = stof(t->Attribute("time"));
+
+	if (t->Attribute("X")) x = stof(t->Attribute("X"));
+
+	if (t->Attribute("Y")) y = stof(t->Attribute("Y"));
+
+	if (t->Attribute("Z")) z = stof(t->Attribute("Z"));
+
+	RotationAnimation* res = new RotationAnimation(x, y, z, time);
+
+	return res;
+}
+
 Group* parseGroup(XMLElement* g) {
 	Group* group = new Group();
 	string fileName;
 
 	XMLElement* translation = g ->FirstChildElement("translate");
-	if (translation != nullptr) group -> setTranslation(parseTransformation(translation));
+	if (translation != nullptr) {
+		if (translation->Attribute("time")) group->setCatmull(parseCatmull(translation));
+		else group->setTranslation(parseTransformation(translation));
+	}
 
 	XMLElement* rotation = g -> FirstChildElement("rotate");
-	if (rotation != nullptr) group -> setRotation(parseTransformation(rotation));
+	if (rotation != nullptr) {
+		if (rotation->Attribute("time")) group->setRotationAnimation(parseRotation(rotation));
+		else group->setStaticRotation(parseTransformation(rotation));
+	}
 
 	XMLElement* scale = g -> FirstChildElement("scale");
 	if (scale != nullptr) group -> setScale(parseTransformation(scale));

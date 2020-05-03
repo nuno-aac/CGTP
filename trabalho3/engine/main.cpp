@@ -17,7 +17,7 @@
 
 #define _USE_MATH_DEFINES
 
-float p[5][3] = { {-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0} };
+float p[5][3] = {{-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0}};
 
 using namespace std;
 
@@ -58,6 +58,13 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+float getRotationAngle(RotationAnimation * r) {
+	float aux, percentage;
+	aux = time / r->getTime();
+	percentage = aux - floor(aux);
+	return (percentage*360);
+}
+
 void multMatrixVector(float* m, float* v, float* res) {
 
 	for (int j = 0; j < 4; ++j) {
@@ -72,7 +79,7 @@ void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, flo
 
 	// catmull-rom matrix
 	float m[4][4] = { {-0.5f,  1.5f, -1.5f,  0.5f},
-						{ 1.0f, -2.5f,  4.0f, -0.5f},
+						{ 1.0f, -2.5f,  2.0f, -0.5f},
 						{-0.5f,  0.0f,  0.5f,  0.0f},
 						{ 0.0f,  1.0f,  0.0f,  0.0f} };
 	float a[4];
@@ -90,34 +97,53 @@ void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, flo
 
 
 // given  global t, returns the point in the curve
-void getGlobalCatmullRomPoint(float gt, float* pos, float* deriv, int pointCount) {
+void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* deriv) {
+	int pointCount;
+	float catmullTime;
+	vector<vector<float>> points;
+		
+	points = catmull->getPoints();
+	pointCount = points.size();
+	catmullTime = catmull->getTime();
 
-	float t = gt * pointCount; // this is the real global t
+	float t = (time/catmullTime) * pointCount; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
-
 	// indices store the points
+
 	int indices[4];
 	indices[0] = (index + pointCount - 1) % pointCount;
 	indices[1] = (indices[0] + 1) % pointCount;
 	indices[2] = (indices[1] + 1) % pointCount;
 	indices[3] = (indices[2] + 1) % pointCount;
 
-	getCatmullRomPoint(t, p[indices[0]], p[indices[1]], p[indices[2]], p[indices[3]], pos, deriv);
+	getCatmullRomPoint(t, &(points[indices[0]])[0], &(points[indices[1]])[0], &(points[indices[2]])[0], &(points[indices[3]])[0], pos, deriv);
 }
 
 void applyTransformations(Group* g) {
 	Transformation* t;
+	Catmull* c;
+	RotationAnimation* rotA;
 	float pos[3];
 	float deriv[3];
 
-	t = g -> getTranslation();
-	if (t != NULL) {
-		getGlobalCatmullRomPoint(time, pos, deriv, 5);
+	c = g->getCatmull();
+	if (c != NULL) {
+		getGlobalCatmullRomPoint(time,c, pos, deriv);
 		glTranslatef(pos[0], pos[1], pos[2]);
 	}
 
-	t = g -> getRotation();
+	rotA = g->getRotationAnimation();
+	if (rotA != NULL) {
+		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
+	}
+
+	t = g -> getTranslation();
+	if (t != NULL) {
+		glTranslatef(t->getX(), t -> getY(), t -> getZ());
+	}
+
+	t = g -> getStaticRotation();
 	if(t != NULL)
 		glRotatef(t -> getAngle(), t->getX(), t->getY(), t->getZ());
 
@@ -202,7 +228,8 @@ void renderScene(void) {
 	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
-	time += 0.01;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	time /= 1000;
 }
 
 void keyUp(int keyCode, int x, int y){
