@@ -36,9 +36,10 @@ Catmull* parseCatmull(XMLElement* t) {
 		x = stof(point->Attribute("X"));
 		y = stof(point->Attribute("Y"));
 		z = stof(point->Attribute("Z"));
+
 		res->addPoint(x, y, z);
+
 		point = point->NextSiblingElement();
-		cout << x << y << z << "\n";
 	}
 	
 	return res;
@@ -47,7 +48,7 @@ Catmull* parseCatmull(XMLElement* t) {
 Transformation* parseTransformation(XMLElement* t) {
 	float x = 0, y = 0, z = 0, angle = 0;
 
-	if (t->Attribute("Angle")) angle = stof(t->Attribute("Angle"));
+	if (t->Attribute("angle")) angle = stof(t->Attribute("angle"));
 
 	if (t->Attribute("X")) x = stof(t->Attribute("X"));
 
@@ -58,6 +59,24 @@ Transformation* parseTransformation(XMLElement* t) {
 	Transformation* trans = new Transformation(x, y, z, angle);
 
 	return trans;
+}
+
+RotationAnimation* parseRotation(XMLElement* t) {
+	float x = 0, y = 0, z = 0, time = 0;
+
+	if (t->Attribute("time")) time = stof(t->Attribute("time"));
+
+	if (t->Attribute("X")) x = stof(t->Attribute("X"));
+
+	if (t->Attribute("Y")) y = stof(t->Attribute("Y"));
+
+	if (t->Attribute("Z")) z = stof(t->Attribute("Z"));
+
+	cout << x << y << z << time << '\n';
+
+	RotationAnimation* res = new RotationAnimation(x, y, z, time);
+
+	return res;
 }
 
 Group* parseGroup(XMLElement* g) {
@@ -71,7 +90,10 @@ Group* parseGroup(XMLElement* g) {
 	}
 
 	XMLElement* rotation = g -> FirstChildElement("rotate");
-	if (rotation != nullptr) group -> setRotation(parseTransformation(rotation));
+	if (rotation != nullptr) {
+		if (rotation->Attribute("time")) group->setRotationAnimation(parseRotation(rotation));
+		else group->setStaticRotation(parseTransformation(rotation));
+	}
 
 	XMLElement* scale = g -> FirstChildElement("scale");
 	if (scale != nullptr) group -> setScale(parseTransformation(scale));

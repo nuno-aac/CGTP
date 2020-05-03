@@ -36,7 +36,7 @@ vector<Group*> Group::getNextGroups(){
 	return childs;
 }
 
-void Group::setRotation(Transformation* r){
+void Group::setStaticRotation(Transformation* r){
 	rotation = r;
 }
 void Group::setTranslation(Transformation* t){

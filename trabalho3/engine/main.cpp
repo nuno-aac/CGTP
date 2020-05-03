@@ -58,6 +58,13 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+float getRotationAngle(RotationAnimation * r) {
+	float aux, percentage;
+	aux = time / r->getTime();
+	percentage = aux - floor(aux);
+	return (percentage*360);
+}
+
 void multMatrixVector(float* m, float* v, float* res) {
 
 	for (int j = 0; j < 4; ++j) {
@@ -99,7 +106,7 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 	pointCount = points.size();
 	catmullTime = catmull->getTime();
 
-	float t = ((time/1000)/catmullTime) * pointCount; // this is the real global t
+	float t = (time/catmullTime) * pointCount; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
 	// indices store the points
@@ -116,6 +123,7 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 void applyTransformations(Group* g) {
 	Transformation* t;
 	Catmull* c;
+	RotationAnimation* rotA;
 	float pos[3];
 	float deriv[3];
 
@@ -125,12 +133,17 @@ void applyTransformations(Group* g) {
 		glTranslatef(pos[0], pos[1], pos[2]);
 	}
 
+	rotA = g->getRotationAnimation();
+	if (rotA != NULL) {
+		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
+	}
+
 	t = g -> getTranslation();
 	if (t != NULL) {
 		glTranslatef(t->getX(), t -> getY(), t -> getZ());
 	}
 
-	t = g -> getRotation();
+	t = g -> getStaticRotation();
 	if(t != NULL)
 		glRotatef(t -> getAngle(), t->getX(), t->getY(), t->getZ());
 
@@ -216,6 +229,7 @@ void renderScene(void) {
 	// End of frame
 	glutSwapBuffers();
 	time = glutGet(GLUT_ELAPSED_TIME);
+	time /= 1000;
 }
 
 void keyUp(int keyCode, int x, int y){

@@ -27,7 +27,7 @@ public:
 	vector<Model*> getModels();
 	vector<Group*> getNextGroups();
 
-	void setRotation(Transformation* r);
+	void setStaticRotation(Transformation* r);
 	void setTranslation(Transformation* t);
 	void setScale(Transformation* s);
 	void setCatmull(Catmull* c);
