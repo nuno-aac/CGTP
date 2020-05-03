@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -26,46 +27,113 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
 }
 
+int countPontos(string line) {
+	int r = 0;
+	for (int i = 0; i < line.length(); i++) {
+		if (line[i] == ',') r++;
+	}
+	r++;
+	return r;
+}
+
 void geraPontosBezier(VerticesList* vl, string file, string figura, int tesselation) {
 	int i = 0;
-	int j,k=0;
-	int ch;
+	int k = 0;
+	int n;
+	char o;
+	float f;
+	int j = 1;
+	char v;
+	int l = 0;
 	int patches;
-	int numPerPatch;
+	int numPerPatch = 0;
+	int totalControlOrder;
+	int totalControlPoints;
 	fstream fs;
 	string line;
 	fs.open(file, fstream::in);
 	if (fs.is_open())
 	{
-		//getline(fs, line);
-		//patches = atof(line);
-		fs >> skipws >> ch;
-		cout << ch;
-		while (fs >> skipws >> ch) {
-			//cout << ch;
-			//cout << patches;
-			/* Or whatever
-			if (i == 0) {
-				patches = atof(line);
-				i++;
+		fstream fin("file", fstream::in);
+		getline(fs, line);
+		getline(fs, line);
+		numPerPatch = countPontos(line);
+		fs.close();
+		fs.open(file, fstream::in);
+		fs >> skipws >> n;
+		cout << n << "\n";
+		patches = n;
+		totalControlOrder = numPerPatch * patches;
+		int pointsOrder[140]; ///////////////////////////////////////////////////////////// MUDAR PARA totalControlOrder /////////////////////////////////////////////////////////////
+		while (i < patches) {
+			while (j < numPerPatch && fs >> skipws >> n >> v) {
+				pointsOrder[k] = n;
+				k++;
+				j++;				
 			}
-			if (i == 1) {
-				numPerPatch = line.length();
-				int controlPoints[numPerPatch * patches];
-				for (j = 0; j < numPerPatch; j++) {
-					controlPoints[k] = line[j];
-					k++;
-				}
-				i++;
-			}
-			if (i <= patches && i > 1) {
-				for (j = 0; j < numPerPatch; j++) {
-					controlPoints[k] = line[j];
-					k++;
-				}
-				i++;
-			}*/
+			j = 1;
+			fs >> n;
+			pointsOrder[k] = n;
+			k++;
+			i++;
 		}
+		fs >> n;
+		totalControlPoints = n;
+		getline(fs, line);
+		cout << line;
+		float pointsX[4096]; ///////////////////////////////////////////////////////////// MUDAR PARA totalControlPoints /////////////////////////////////////////////////////////////
+		float pointsZ[4096]; ///////////////////////////////////////////////////////////// MUDAR PARA totalControlPoints /////////////////////////////////////////////////////////////
+		float pointsY[4096]; ///////////////////////////////////////////////////////////// MUDAR PARA totalControlPoints /////////////////////////////////////////////////////////////
+		for (i = 0; i < totalControlPoints; i++) {
+			(fs >> skipws >> f >> v);
+			cout << f << " ";
+			pointsX[l] = f;
+			l++;
+			(fs >> skipws >> f >> v);
+			cout << f << " ";
+			pointsZ[l] = f;
+			l++;
+			(fs >> skipws >> f);
+			cout << f << '\n';
+			pointsY[l] = f;
+			l++;
+		}
+		for (k = 0; k < totalControlOrder; k++) {
+			cout << pointsOrder[k] << " ";
+		}
+		cout << '\n';
+		for (l = 0; l < totalControlPoints; l++) {
+			cout << pointsX[l] << " ";
+			cout << pointsZ[l] << " ";
+			cout << pointsY[l] << "\n";
+		}
+		float bezCurve[84]; ///////////////////////////////////////////////////////////// MUDAR PARA totalControlPoints * 3 /////////////////////////////////////////////////////////////
+		float auxX[15]; ///////////////////////////////////////////////////////////// MUDAR PARA (tesselation + 1) * (sqrt(numPerPatch) - 1) /////////////////////////////////////////////////////////////
+		float auxZ[15]; ///////////////////////////////////////////////////////////// MUDAR PARA (tesselation + 1) * (sqrt(numPerPatch) - 1) /////////////////////////////////////////////////////////////
+		float auxY[15]; ///////////////////////////////////////////////////////////// MUDAR PARA (tesselation + 1) * (sqrt(numPerPatch) - 1) /////////////////////////////////////////////////////////////
+		for (n = 0; n < patches; n++) { // patches
+			for(j = 0; j < sqrt(numPerPatch); j++){ //curves
+				for (k = sqrt(numPerPatch) - 1; k > 0; k--) { //level of func
+					for (i = 0; i < k; i++) { //func
+						for (l = 0; l <= tesselation; l++) { // individual point
+							//aux[((i + 1) * (tesselation + 1)) - (tesselation + 1) + l] = (1 - ((1/tesselation + 1) * l))
+						}
+						cout << "....... calc ......." << '\n';
+					}
+					cout << ",,,,,,, level " << k <<" ,,,,,,," << '\n';
+				}
+				cout << "------ curve " << j + 1 << " -------" << '\n';
+			}
+			cout << "======= patch " << n + 1 << " =======" << '\n';
+		}
+		free(pointsOrder);
+		free(pointsX);
+		free(pointsZ);
+		free(pointsY);
+		free(bezCurve);
+		free(auxX);
+		free(auxZ);
+		free(auxZ);
 		fs.close();
 	}
 
@@ -78,7 +146,7 @@ int main(int argc, char* argv[]) {
 	VerticesList* vL = new VerticesList();
 	string figura;
 
-	geraPontosBezier(vL, argv[1], argv[2], 10);
+	geraPontosBezier(vL, argv[1], argv[2], atoi(argv[3]));
 
 	if (strcmp(argv[1], "plane") == 0 && argc == 7) {
 		float size = stof(argv[2]);
