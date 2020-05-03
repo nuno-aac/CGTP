@@ -4,19 +4,20 @@
 #include <vector>
 using namespace std;
 
-class CatMull {
+class Catmull {
 	vector<vector<float>> points;
 	float time;
 
 public:
-	CatMull();
-	CatMull(vector<vector<float>> points, float newAngle);
+	Catmull();
+	Catmull(vector<vector<float>> points, float newAngle);
 
 	vector<vector<float>> getPoints();
 	float getTime();
 
 	void setPoints(vector<vector<float>> p);
 	void setTime(float newTime);
+	void addPoint(float x, float y, float z);
 
 };
 
