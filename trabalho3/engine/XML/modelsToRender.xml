@@ -7,8 +7,8 @@
       <point X='-5' Y='0' Z='0'/>
       <point X='0' Y='0' Z='5'/>
     </translate>
-    <rotate time='5' X='0' Y='0' Z='1'/>
-    <models>
+    <rotate time='5' X='0' Y='1' Z='0'/>
+    <models>1
       <model file='boxRight.3d'/>
     </models>
   </group>

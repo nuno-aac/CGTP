@@ -72,8 +72,6 @@ RotationAnimation* parseRotation(XMLElement* t) {
 
 	if (t->Attribute("Z")) z = stof(t->Attribute("Z"));
 
-	cout << x << y << z << time << '\n';
-
 	RotationAnimation* res = new RotationAnimation(x, y, z, time);
 
 	return res;
