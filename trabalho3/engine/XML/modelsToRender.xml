@@ -1,6 +1,14 @@
 <?xml version="2.0" ?>
 <scene>
   <group>
+    <translate time='5'>
+        <point X='4' Y='0' Z='0'/>
+        <point X='0' Y='0' Z='-4'/>
+        <point X='-10' Y='0' Z='0'/>
+        <point X='-15' Y='0' Z='15'/>
+        <point X='0' Y='0' Z='10'/>
+    </translate>
+    <rotate time='5' X='0' Y='0' Z='10'/>
     <models>1
       <model file='bez.3d'/>
     </models>

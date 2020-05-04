@@ -106,7 +106,7 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 	pointCount = points.size();
 	catmullTime = catmull->getTime();
 
-	float t = (time/catmullTime) * pointCount; // this is the real global t
+	float t = (gt/catmullTime) * pointCount; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
 	// indices store the points
@@ -124,13 +124,28 @@ void applyTransformations(Group* g) {
 	Transformation* t;
 	Catmull* c;
 	RotationAnimation* rotA;
+	vector<float> curveVertex;
 	float pos[3];
 	float deriv[3];
 
 	c = g->getCatmull();
 	if (c != NULL) {
+		for (float tcurve = 0; tcurve < c -> getTime(); tcurve += 0.01) {
+			getGlobalCatmullRomPoint(tcurve, c, pos, deriv);
+			//cout << pos[0] << pos[1] << pos[2] << '\n';
+			curveVertex.push_back(pos[0]);
+			curveVertex.push_back(pos[1]);
+			curveVertex.push_back(pos[2]);
+		}
+		glColor3f(1.0f,1.0f,1.0f);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[4]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * curveVertex.size(), &curveVertex[0], GL_STATIC_DRAW);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+		glDrawArrays(GL_LINE_LOOP, 0, curveVertex.size() / 3);
 		getGlobalCatmullRomPoint(time,c, pos, deriv);
 		glTranslatef(pos[0], pos[1], pos[2]);
+		currentModel++;
 	}
 
 	rotA = g->getRotationAnimation();
@@ -280,8 +295,9 @@ int main(int argc, char** argv) {
 	//Get models
 	scene = parseXML("SolarSystem.xml");
 	cout << "+/- = zoom | z/x = rotacao | arrow keys = mover o modelo";
-	zoom = 23;
-	vert = 25;
+	zoom = 300;
+	vert = 0;
+	hor = 0;
 
 	// put GLUT init here
 	glutInit(&argc, argv);
@@ -289,7 +305,6 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Trabalho fase 1");
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glewInit();
 	glGenBuffers(300, modelsBuf);
