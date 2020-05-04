@@ -12,6 +12,7 @@
           <point X='-150' Y='00' Z='150'/>
           <point X='00' Y='00' Z='100'/>
         </translate>
+        <rotate time='2.5' X='0' Y='1' Z='0'/>
       <models>
         <model file='bez.3d'/>
       </models>

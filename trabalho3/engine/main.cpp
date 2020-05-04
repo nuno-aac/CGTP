@@ -261,16 +261,16 @@ void keyUp(int keyCode, int x, int y){
 
 	switch (keyCode)    {
 	case GLUT_KEY_UP:
-		vert -= 0.05f;
+		vert -= 1.0f;
 		break;
 	case GLUT_KEY_DOWN:
-		vert += 0.05f;
+		vert += 1.0f;
 		break;
 	case GLUT_KEY_RIGHT:
-		hor -= 0.05f;
+		hor += 1.0f;
 		break;
 	case GLUT_KEY_LEFT:
-		hor += 0.05f;
+		hor -= 1.0f;
 		break;
 	default:
 		break;
@@ -282,16 +282,16 @@ void keyRotate(unsigned char keyCode, int x, int y) {
 
 	switch (keyCode) {
 	case '-':
-		zoom += 0.5;
+		zoom += 2;
 		break;
 	case '+':
-		zoom -= 0.5;
+		zoom -= 2;
 		break;
 	case 'z':
-		ang += 1;
+		ang += 5;
 		break;
 	case 'x':
-		ang -= 1;
+		ang -= 5;
 		break;
 	case 's':
 		showOrbit = !showOrbit;
@@ -317,7 +317,7 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Trabalho fase 1");
 
 	glewInit();
