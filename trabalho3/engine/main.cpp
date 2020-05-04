@@ -33,6 +33,8 @@ float hor = 0.0f;
 float ang = 0.0f;
 float zoom = 0.0f;
 
+bool showOrbit;
+
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -120,29 +122,37 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 	getCatmullRomPoint(t, &(points[indices[0]])[0], &(points[indices[1]])[0], &(points[indices[2]])[0], &(points[indices[3]])[0], pos, deriv);
 }
 
+void drawCurve(Catmull* c) {
+	float pos[3];
+	float deriv[3];
+	vector<float> curveVertex;
+	for (float tcurve = 0; tcurve < c->getTime(); tcurve += 0.01) {
+		getGlobalCatmullRomPoint(tcurve, c, pos, deriv);
+		//cout << pos[0] << pos[1] << pos[2] << '\n';
+		curveVertex.push_back(pos[0]);
+		curveVertex.push_back(pos[1]);
+		curveVertex.push_back(pos[2]);
+	}
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[4]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * curveVertex.size(), &curveVertex[0], GL_STATIC_DRAW);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glDrawArrays(GL_LINE_LOOP, 0, curveVertex.size() / 3);
+}
+
 void applyTransformations(Group* g) {
 	Transformation* t;
 	Catmull* c;
 	RotationAnimation* rotA;
-	vector<float> curveVertex;
 	float pos[3];
 	float deriv[3];
 
 	c = g->getCatmull();
 	if (c != NULL) {
-		for (float tcurve = 0; tcurve < c -> getTime(); tcurve += 0.01) {
-			getGlobalCatmullRomPoint(tcurve, c, pos, deriv);
-			//cout << pos[0] << pos[1] << pos[2] << '\n';
-			curveVertex.push_back(pos[0]);
-			curveVertex.push_back(pos[1]);
-			curveVertex.push_back(pos[2]);
+		if (showOrbit) {
+			drawCurve(c);
 		}
-		glColor3f(1.0f,1.0f,1.0f);
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[4]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * curveVertex.size(), &curveVertex[0], GL_STATIC_DRAW);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		glDrawArrays(GL_LINE_LOOP, 0, curveVertex.size() / 3);
 		getGlobalCatmullRomPoint(time,c, pos, deriv);
 		glTranslatef(pos[0], pos[1], pos[2]);
 		currentModel++;
@@ -283,6 +293,9 @@ void keyRotate(unsigned char keyCode, int x, int y) {
 	case 'x':
 		ang -= 1;
 		break;
+	case 's':
+		showOrbit = !showOrbit;
+		break;
 	default:
 		break;
 	}
@@ -294,10 +307,11 @@ using namespace std;
 int main(int argc, char** argv) {
 	//Get models
 	scene = parseXML("SolarSystem.xml");
-	cout << "+/- = zoom | z/x = rotacao | arrow keys = mover o modelo";
+	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
 	zoom = 300;
 	vert = 0;
 	hor = 0;
+	showOrbit = false;
 
 	// put GLUT init here
 	glutInit(&argc, argv);
