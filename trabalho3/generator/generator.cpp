@@ -61,7 +61,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		fs.close();
 		fs.open(file, fstream::in);
 		fs >> skipws >> n;
-		cout << n << "\n";
 		patches = n;
 		totalControlOrder = numPerPatch * patches;
 		vector <int> pointsOrder;
@@ -78,7 +77,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		fs >> n;
 		totalControlPoints = n;
 		getline(fs, line);
-		cout << line;
 		vector <float> pointsX;
 		vector <float> pointsY;
 		vector <float> pointsZ;
@@ -92,15 +90,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 			(fs >> skipws >> f);
 			pointsZ.push_back(f);
 			l++;
-		}
-		for (k = 0; k < pointsOrder.size(); k++) {
-			cout << pointsOrder.at(k) << " ";
-		}
-		cout << '\n';
-		for (l = 0; l < totalControlPoints; l++) {
-			cout << pointsX.at(l) << " ";
-			cout << pointsY.at(l) << " ";
-			cout << pointsZ.at(l) << "\n";
 		}
 		vector <float> bezCurveX;
 		vector <float> bezCurveY;
@@ -116,7 +105,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 			auxY.insert(iteY, 0);
 			auxZ.insert(iteZ, 0);
 		}
-		cout << "------------" << '\n';
 		for (n = 0; n < patches; n++) { // patches
 			for (j = 0; j < sqrt(numPerPatch); j++) { //curves
 				for (k = sqrt(numPerPatch) - 1; k > 0; k--) { //level of func
@@ -135,9 +123,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 								auxZ[tes] = (1 - t) * auxZ.at(((tesselation + 1) * i) + l) + (t * auxZ.at(((tesselation + 1) * (i + 1)) + l));
 							}
 							if (k == 1) {
-								cout << auxX.at(tes) << " ";
-								cout << auxY.at(tes) << " ";
-								cout << auxZ.at(tes) << '\n';
 								bezCurveX.push_back(auxX.at(tes));
 								bezCurveY.push_back(auxY.at(tes));
 								bezCurveZ.push_back(auxZ.at(tes));
@@ -145,9 +130,7 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 						}
 					}
 				}
-				cout << "------ curve " << j + 1 << " -------" << '\n';
 			}
-			cout << "======= patch " << n + 1 << " =======" << '\n';
 		}
 		vector <float> bezPatchX;
 		vector <float> bezPatchY;
@@ -175,9 +158,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 								auxZ[tes] = (1 - t) * auxZ.at(((tesselation + 1) * i) + l) + (t * auxZ.at(((tesselation + 1) * (i + 1)) + l));
 							}
 							if (k == 1) {
-								cout << auxX.at(tes) << " ";
-								cout << auxY.at(tes) << " ";
-								cout << auxZ.at(tes) << '\n';
 								bezPatchX.push_back(auxX.at(tes));
 								bezPatchY.push_back(auxY.at(tes));
 								bezPatchZ.push_back(auxZ.at(tes));
@@ -185,9 +165,7 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 						}
 					}
 				}
-				cout << "------ tesselation " << j + 1 << " -------" << '\n';
 			}
-			cout << "======= patch " << n + 1 << " =======" << '\n';
 		}
 		fs.close();
 
