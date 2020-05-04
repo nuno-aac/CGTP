@@ -6,11 +6,11 @@
     </models>
     <group>
       <translate time='5'>
-          <point X='4' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-4'/>
-          <point X='-10' Y='0' Z='0'/>
-          <point X='-15' Y='0' Z='15'/>
-          <point X='0' Y='0' Z='10'/>
+          <point X='40' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-40'/>
+          <point X='-100' Y='00' Z='00'/>
+          <point X='-150' Y='00' Z='150'/>
+          <point X='00' Y='00' Z='100'/>
         </translate>
       <models>
         <model file='bez.3d'/>
@@ -18,10 +18,10 @@
     </group>
     <group>
       <translate time='5'>
-          <point X='4' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-4'/>
-          <point X='-4' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='4'/>
+          <point X='40' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-40'/>
+          <point X='-40' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='40'/>
         </translate>
       <models>
         <model file='mercury.3d'/>
@@ -29,10 +29,10 @@
     </group>
     <group>
       <translate time='6'>
-          <point X='8' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-8'/>
-          <point X='-8' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='8'/>
+          <point X='80' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-80'/>
+          <point X='-80' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='80'/>
         </translate>
       <models>
         <model file='venus.3d'/>
@@ -40,20 +40,20 @@
     </group>
     <group>
       <translate time='6.8'>
-          <point X='12' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-12'/>
-          <point X='-12' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='12'/>
+          <point X='120' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-120'/>
+          <point X='-120' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='120'/>
         </translate>
       <models>
         <model file='earth.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='1'/>
-            <point X='-1' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='-1'/>
-            <point X='1' Y='0' Z='0'/>
+            <point X='00' Y='00' Z='10'/>
+            <point X='-10' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='-10'/>
+            <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -62,20 +62,20 @@
     </group>
     <group>
       <translate time='7.2'>
-          <point X='16' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-16'/>
-          <point X='-16' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='16'/>
+          <point X='160' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-160'/>
+          <point X='-160' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='160'/>
         </translate>
       <models>
         <model file='mars.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='1'/>
-            <point X='-1' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='-1'/>
-            <point X='1' Y='0' Z='0'/>
+            <point X='00' Y='00' Z='10'/>
+            <point X='-10' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='-10'/>
+            <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -83,10 +83,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='-1'/>
-            <point X='1' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='1'/>
-            <point X='-1' Y='0' Z='0'/>
+            <point X='00' Y='00' Z='-10'/>
+            <point X='10' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='10'/>
+            <point X='-10' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -95,20 +95,20 @@
     </group>
     <group>
       <translate time='9'>
-          <point X='21' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-21'/>
-          <point X='-21' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='21'/>
+          <point X='210' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-210'/>
+          <point X='-210' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='210'/>
         </translate>
       <models>
         <model file='jupiter.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='0' Y='-1.4' Z='1.7'/>
-            <point X='-1.7' Y='-1.4' Z='0'/>
-            <point X='0' Y='-1.4' Z='-1.7'/>
-            <point X='1.7' Y='-1.4' Z='0'/>
+            <point X='00' Y='-14' Z='17'/>
+            <point X='-17' Y='-14' Z='00'/>
+            <point X='00' Y='-14' Z='-17'/>
+            <point X='17' Y='-14' Z='00'/>
           </translate>
         <models>
           <model file='io.3d'/>
@@ -116,10 +116,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='1.2'/>
-            <point X='-1.2' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='-1.2'/>
-            <point X='1.2' Y='0' Z='0'/>
+            <point X='00' Y='00' Z='12'/>
+            <point X='-12' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='-12'/>
+            <point X='12' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='io.3d'/>
@@ -127,10 +127,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='1.7' Z='1.5'/>
-            <point X='-1.5' Y='1.7' Z='0'/>
-            <point X='0' Y='1.7' Z='-1.5'/>
-            <point X='1.5' Y='1.7' Z='0'/>
+            <point X='00' Y='17' Z='15'/>
+            <point X='-15' Y='17' Z='00'/>
+            <point X='00' Y='17' Z='-15'/>
+            <point X='15' Y='17' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -138,10 +138,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='1'/>
-            <point X='-1' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='-1'/>
-            <point X='0' Y='0' Z='5'/>
+            <point X='00' Y='00' Z='10'/>
+            <point X='-10' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='-10'/>
+            <point X='00' Y='00' Z='50'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -149,10 +149,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='-1.1' Z='-1.2'/>
-            <point X='1.2' Y='-1.1' Z='0'/>
-            <point X='0' Y='-1.1' Z='1.2'/>
-            <point X='-1.2' Y='-1.1' Z='0'/>
+            <point X='00' Y='-11' Z='-12'/>
+            <point X='12' Y='-11' Z='00'/>
+            <point X='00' Y='-11' Z='120'/>
+            <point X='-12' Y='-110' Z='00'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -160,10 +160,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='1.1' Y='0' Z='-0.5'/>
-            <point X='-1.1' Y='0' Z='-0.5'/>
-            <point X='-1.1' Y='0' Z='0.5'/>
-            <point X='1.1' Y='0' Z='0.5'/>
+            <point X='11' Y='00' Z='-5'/>
+            <point X='-11' Y='00' Z='-5'/>
+            <point X='-11' Y='00' Z='5'/>
+            <point X='11' Y='00' Z='5'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -171,10 +171,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-1.4' Y='-1.4' Z='-1.5'/>
-            <point X='-1.4' Y='-1.4' Z='1.5'/>
-            <point X='1.4' Y='-1.4' Z='1.5'/>
-            <point X='1.4' Y='-1.4' Z='-1.5'/>
+            <point X='-14' Y='-14' Z='-15'/>
+            <point X='-14' Y='-14' Z='15'/>
+            <point X='14' Y='-14' Z='15'/>
+            <point X='14' Y='-14' Z='-15'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -182,10 +182,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-1.5' Y='-1.4' Z='1.4'/>
-            <point X='1.5' Y='-1.4' Z='1.4'/>
-            <point X='1.5' Y='-1.4' Z='-1.4'/>
-            <point X='-1.5' Y='-1.4' Z='-1.4'/>
+            <point X='-15' Y='-14' Z='14'/>
+            <point X='15' Y='-14' Z='14'/>
+            <point X='15' Y='-14' Z='-14'/>
+            <point X='-15' Y='-14' Z='-14'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -194,20 +194,20 @@
     </group>
     <group>
       <translate time='11'>
-          <point X='27' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-27'/>
-          <point X='-27' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='27'/>
+          <point X='270' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-270'/>
+          <point X='-270' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='270'/>
         </translate>
       <models>
         <model file='saturn.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='-1.2' Y='-0.8' Z='1.2'/>
-            <point X='1.2' Y='-0.8' Z='1.2'/>
-            <point X='1.2' Y='-0.8' Z='-1.2'/>
-            <point X='-1.2' Y='-0.8' Z='-1.2'/>
+            <point X='-12' Y='-8' Z='12'/>
+            <point X='12' Y='-8' Z='12'/>
+            <point X='12' Y='-8' Z='-12'/>
+            <point X='-12' Y='-8' Z='-12'/>
           </translate>
         <models>
           <model file='titan.3d'/>
@@ -215,10 +215,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0.9' Y='1.0' Z='-1.1'/>
-            <point X='-0.9' Y='1.0' Z='-1.1'/>
-            <point X='-0.9' Y='1.0' Z='1.1'/>
-            <point X='0.9' Y='1.0' Z='1.1'/>
+            <point X='9' Y='10' Z='-11'/>
+            <point X='-9' Y='10' Z='-11'/>
+            <point X='-9' Y='10' Z='11'/>
+            <point X='9' Y='10' Z='11'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -226,10 +226,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='1.2' Y='1.0' Z='1.3'/>
-            <point X='1.2' Y='1.0' Z='-1.3'/>
-            <point X='-1.2' Y='1.0' Z='-1.3'/>
-            <point X='-1.2' Y='1.0' Z='1.3'/>
+            <point X='12' Y='10' Z='13'/>
+            <point X='12' Y='10' Z='-13'/>
+            <point X='-12' Y='10' Z='-13'/>
+            <point X='-12' Y='10' Z='13'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -237,10 +237,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-1.1' Y='1.1' Z='1.1'/>
-            <point X='1.1' Y='1.1' Z='1.1'/>
-            <point X='1.1' Y='1.1' Z='-1.1'/>
-            <point X='-1.1' Y='1.1' Z='-1.1'/>
+            <point X='-11' Y='11' Z='11'/>
+            <point X='11' Y='11' Z='11'/>
+            <point X='11' Y='11' Z='-11'/>
+            <point X='-11' Y='11' Z='-11'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -248,10 +248,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='1.4' Y='0' Z='1.4'/>
-            <point X='1.4' Y='0' Z='-1.4'/>
-            <point X='-1.4' Y='0' Z='-1.4'/>
-            <point X='-1.4' Y='0' Z='1.4'/>
+            <point X='14' Y='00' Z='14'/>
+            <point X='14' Y='00' Z='-14'/>
+            <point X='-14' Y='00' Z='-14'/>
+            <point X='-14' Y='00' Z='14'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -259,10 +259,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-1.1' Y='-0.2' Z='1.1'/>
-            <point X='1.1' Y='-0.2' Z='1.1'/>
-            <point X='1.1' Y='-0.2' Z='-1.1'/>
-            <point X='-1.1' Y='-0.2' Z='-1.1'/>
+            <point X='-11' Y='-2' Z='11'/>
+            <point X='11' Y='-2' Z='11'/>
+            <point X='11' Y='-2' Z='-11'/>
+            <point X='-11' Y='-2' Z='-11'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -271,20 +271,20 @@
     </group>
     <group>
       <translate time='12.8'>
-          <point X='33' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-33'/>
-          <point X='-33' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='33'/>
+          <point X='330' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-330'/>
+          <point X='-330' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='330'/>
         </translate>
       <models>
         <model file='uranus.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='0.7' Y='-0.2' Z='0.6'/>
-            <point X='0.7' Y='-0.2' Z='-0.6'/>
-            <point X='-0.7' Y='-0.2' Z='-0.6'/>
-            <point X='-0.7' Y='-0.2' Z='0.6'/>
+            <point X='7' Y='-2' Z='6'/>
+            <point X='7' Y='-2' Z='-6'/>
+            <point X='-7' Y='-2' Z='-6'/>
+            <point X='-7' Y='-2' Z='6'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -292,10 +292,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-0.6' Y='0.1' Z='-0.6'/>
-            <point X='-0.6' Y='0.1' Z='0.6'/>
-            <point X='0.6' Y='0.1' Z='0.6'/>
-            <point X='0.6' Y='0.1' Z='-0.6'/>
+            <point X='-6' Y='1' Z='-6'/>
+            <point X='-6' Y='1' Z='6'/>
+            <point X='6' Y='1' Z='6'/>
+            <point X='6' Y='1' Z='-6'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -303,10 +303,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0' Y='0' Z='0.8'/>
-            <point X='0.8' Y='0' Z='0'/>
-            <point X='0' Y='0' Z='-0.8'/>
-            <point X='-0.8' Y='0' Z='0'/>
+            <point X='00' Y='00' Z='8'/>
+            <point X='8' Y='00' Z='00'/>
+            <point X='00' Y='00' Z='-8'/>
+            <point X='-8' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -314,10 +314,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-0.9' Y='0.3' Z='-0.6'/>
-            <point X='-0.9' Y='0.3' Z='0.6'/>
-            <point X='0.9' Y='0.3' Z='0.6'/>
-            <point X='0.9' Y='0.3' Z='-0.6'/>
+            <point X='-9' Y='3' Z='-6'/>
+            <point X='-9' Y='3' Z='6'/>
+            <point X='9' Y='3' Z='6'/>
+            <point X='9' Y='3' Z='-6'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -325,10 +325,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0.7' Y='0' Z='-0.6'/>
-            <point X='-0.7' Y='0' Z='-0.6'/>
-            <point X='-0.7' Y='0' Z='0.6'/>
-            <point X='0.7' Y='0' Z='0.6'/>
+            <point X='7' Y='00' Z='-6'/>
+            <point X='-7' Y='00' Z='-6'/>
+            <point X='-7' Y='00' Z='6'/>
+            <point X='7' Y='00' Z='6'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -336,10 +336,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-0.4' Y='-0.7' Z='-0.6'/>
-            <point X='-0.4' Y='-0.7' Z='0.6'/>
-            <point X='0.4' Y='-0.7' Z='0.6'/>
-            <point X='0.4' Y='-0.7' Z='-0.6'/>
+            <point X='-4' Y='-7' Z='-6'/>
+            <point X='-4' Y='-7' Z='6'/>
+            <point X='4' Y='-7' Z='6'/>
+            <point X='4' Y='-7' Z='-6'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -347,10 +347,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0.7' Y='0.7' Z='0.6'/>
-            <point X='0.7' Y='0.7' Z='-0.6'/>
-            <point X='-0.7' Y='0.7' Z='-0.6'/>
-            <point X='-0.7' Y='0.7' Z='0.6'/>
+            <point X='7' Y='7' Z='6'/>
+            <point X='7' Y='7' Z='-6'/>
+            <point X='-7' Y='7' Z='-6'/>
+            <point X='-7' Y='7' Z='6'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -358,10 +358,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-0.7' Y='-0.6' Z='-0.1'/>
-            <point X='-0.7' Y='-0.6' Z='0.1'/>
-            <point X='0.7' Y='-0.6' Z='0.1'/>
-            <point X='0.7' Y='-0.6' Z='-0.1'/>
+            <point X='-7' Y='-6' Z='-1'/>
+            <point X='-7' Y='-6' Z='1'/>
+            <point X='7' Y='-6' Z='1'/>
+            <point X='7' Y='-6' Z='-1'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -370,20 +370,20 @@
     </group>
     <group>
       <translate time='13.5'>
-          <point X='37' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='-37'/>
-          <point X='-37' Y='0' Z='0'/>
-          <point X='0' Y='0' Z='37'/>
+          <point X='370' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='-370'/>
+          <point X='-370' Y='00' Z='00'/>
+          <point X='00' Y='00' Z='370'/>
         </translate>
       <models>
         <model file='neptune.3d'/>
       </models>
       <group>
         <translate time='5'>
-            <point X='0.7' Y='0' Z='-0.6'/>
-            <point X='-0.7' Y='0' Z='-0.6'/>
-            <point X='-0.7' Y='0' Z='0.6'/>
-            <point X='0.7' Y='0' Z='0.6'/>
+            <point X='7' Y='00' Z='-6'/>
+            <point X='-7' Y='00' Z='-6'/>
+            <point X='-7' Y='00' Z='6'/>
+            <point X='7' Y='00' Z='6'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -391,10 +391,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='-0.4' Y='-0.7' Z='-0.6'/>
-            <point X='-0.4' Y='-0.7' Z='0.6'/>
-            <point X='0.4' Y='-0.7' Z='0.6'/>
-            <point X='0.4' Y='-0.7' Z='-0.6'/>
+            <point X='-4' Y='-7' Z='-6'/>
+            <point X='-4' Y='-7' Z='6'/>
+            <point X='4' Y='-7' Z='6'/>
+            <point X='4' Y='-7' Z='-6'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
@@ -402,10 +402,10 @@
       </group>
       <group>
         <translate time='5'>
-            <point X='0.7' Y='0.7' Z='0.6'/>
-            <point X='0.7' Y='0.7' Z='-0.6'/>
-            <point X='-0.7' Y='0.7' Z='-0.6'/>
-            <point X='-0.7' Y='0.7' Z='0.6'/>
+            <point X='7' Y='7' Z='6'/>
+            <point X='7' Y='7' Z='-6'/>
+            <point X='-7' Y='7' Z='-6'/>
+            <point X='-7' Y='7' Z='6'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
