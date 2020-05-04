@@ -141,7 +141,7 @@
             <point X='00' Y='00' Z='10'/>
             <point X='-10' Y='00' Z='00'/>
             <point X='00' Y='00' Z='-10'/>
-            <point X='00' Y='00' Z='50'/>
+            <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
           <model file='moon.3d'/>
@@ -151,8 +151,8 @@
         <translate time='5'>
             <point X='00' Y='-11' Z='-12'/>
             <point X='12' Y='-11' Z='00'/>
-            <point X='00' Y='-11' Z='120'/>
-            <point X='-12' Y='-110' Z='00'/>
+            <point X='00' Y='-11' Z='12'/>
+            <point X='-12' Y='-11' Z='00'/>
           </translate>
         <models>
           <model file='fakemoon.3d'/>
