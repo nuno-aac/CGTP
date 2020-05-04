@@ -40,7 +40,7 @@ void changeSize(int w, int h) {
 	if (h == 0)
 		h = 1;
 
-	// compute window's aspect ratio 
+	// compute window's aspect ratio
 	float ratio = w * 1.0 / h;
 
 	// Set the projection matrix as current
@@ -101,7 +101,7 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 	int pointCount;
 	float catmullTime;
 	vector<vector<float>> points;
-		
+
 	points = catmull->getPoints();
 	pointCount = points.size();
 	catmullTime = catmull->getTime();
@@ -164,7 +164,7 @@ void drawModel(Model* model) {
 }
 
 void drawModels(vector<Model*> models){
-	
+
 	for (int i = 0; i < models.size(); i++) {
 		drawModel(models[i]);
 		currentModel++;
@@ -173,7 +173,7 @@ void drawModels(vector<Model*> models){
 
 void drawGroup(Group* g){
 	glPushMatrix();
-	
+
 	applyTransformations(g);
 
 	drawModels(g->getModels());
@@ -199,10 +199,10 @@ void renderScene(void) {
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
-	
+
 
 	//glTranslatef(-5.0f, 0.0f, 0.0f);
-	
+
 
 	// put drawing instructions here
 			//AXIS
@@ -233,7 +233,7 @@ void renderScene(void) {
 }
 
 void keyUp(int keyCode, int x, int y){
-                                                                                                                    	
+
 	switch (keyCode)    {
 	case GLUT_KEY_UP:
 		vert -= 0.05f;
@@ -273,7 +273,7 @@ void keyRotate(unsigned char keyCode, int x, int y) {
 	}
 	glutPostRedisplay();
 }
- 
+
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -301,7 +301,7 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(keyUp);
 	glutKeyboardFunc(keyRotate);
 
-	// OpenGL settings 
+	// OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
