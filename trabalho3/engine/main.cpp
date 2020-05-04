@@ -289,6 +289,7 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Trabalho fase 1");
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glewInit();
 	glGenBuffers(300, modelsBuf);

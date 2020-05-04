@@ -1,7 +1,6 @@
 <?xml version="2.0" ?>
 <scene>
   <group>
-    <rotate time='5' X='0' Y='0' Z='1'/>
     <models>1
       <model file='bez.3d'/>
     </models>

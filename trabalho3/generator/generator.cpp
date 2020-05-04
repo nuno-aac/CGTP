@@ -64,7 +64,7 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		cout << n << "\n";
 		patches = n;
 		totalControlOrder = numPerPatch * patches;
-		vector <int> pointsOrder; //totalControlOrder 32
+		vector <int> pointsOrder;
 		while (i < patches) {
 			while (j < numPerPatch && fs >> skipws >> n >> v) {
 				pointsOrder.push_back(n);
@@ -79,9 +79,9 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		totalControlPoints = n;
 		getline(fs, line);
 		cout << line;
-		vector <float> pointsX; //28 totalControlPoints
-		vector <float> pointsY; //28 totalControlPoints
-		vector <float> pointsZ; //28 totalControlPoints
+		vector <float> pointsX;
+		vector <float> pointsY;
+		vector <float> pointsZ;
 		for (i = 0; i < totalControlPoints; i++) {
 			(fs >> skipws >> f >> v);
 			pointsX.push_back(f);
@@ -102,12 +102,12 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 			cout << pointsY.at(l) << " ";
 			cout << pointsZ.at(l) << "\n";
 		}
-		vector <float> bezCurveX; // totalControlPoints * 3
-		vector <float> bezCurveY; // totalControlPoints * 3
-		vector <float> bezCurveZ; // totalControlPoints * 3
-		vector <float> auxX; // 15 (tesselation + 1) * (sqrt(numPerPatch) - 1)
-		vector <float> auxY; // 15 (tesselation + 1) * (sqrt(numPerPatch) - 1)
-		vector <float> auxZ; // 15 (tesselation + 1) * (sqrt(numPerPatch) - 1)
+		vector <float> bezCurveX;
+		vector <float> bezCurveY;
+		vector <float> bezCurveZ;
+		vector <float> auxX;
+		vector <float> auxY;
+		vector <float> auxZ;
 		for (i = 0; i < (tesselation + 1) * (sqrt(numPerPatch) - 1); i++) {
 			auto iteX = auxX.begin() + i;
 			auto iteY = auxY.begin() + i;
@@ -125,9 +125,9 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 							int tes = i * (tesselation + 1) + l;
 							float t = ((1 / ((float) tesselation)) * l);
 							if (k == sqrtf(numPerPatch) - 1) {
-								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) - n + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
+								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
 							}
 							else {
 								auxX[tes] = (1 - t) * auxX.at(((tesselation + 1) * i) + l) + (t * auxX.at(((tesselation + 1) * (i + 1)) + l));
@@ -201,15 +201,13 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		for (k = 0; k < patches; k++) {
 			for (j = 0; j < tesselation; j++) {
 				for (i = 0; i < tesselation; i++) {
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + (j * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << endl;
-					
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << endl;
 
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + ((j + 1) * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + (j * (tesselation + 1))) << endl;
-					fs << bezPatchX.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) ^ 2)) + i + 1 + ((j + 1) * (tesselation + 1))) << endl;			
-
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))) << endl;
+					fs << bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << " " << bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) << endl;
 				}
 			}
 		}
