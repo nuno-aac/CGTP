@@ -159,6 +159,34 @@ void VerticesList::sphere(float r, int slices, int stacks){
   }
 }
 
+void VerticesList::sphereNormal(float r, int slices, int stacks){
+  float stackStep = (float) (M_PI) / stacks;
+  float sliceStep = (float) (2 * M_PI) / slices;
+  float alpha0, beta0, alpha1, beta1;
+  float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
+
+  alpha0 = 0;
+
+  for(int a = 0; a < slices; a++){
+
+    beta0 = (M_PI/2) * 1;
+
+    for(int b = 0; b < stacks; b++){
+
+      height = sin(beta0) * r;
+
+      x = cos(beta0) * sin(alpha0) * r;
+
+      z = cos(beta0) * cos(alpha0) * r;
+
+      addPoint(x, height, z);
+
+      beta0 -= stackStep;
+    }
+    alpha0 += sliceStep;
+  }
+}
+
 void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
   float stackStep = (float) maxHeight / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;

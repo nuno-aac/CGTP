@@ -20,6 +20,7 @@ public:
 	void plane(float);
   void box(float, float, float);
 	void sphere(float, int, int);
+	void sphereNormal(r,int,int);
 	void cone(float, float, int, int);
 
 };

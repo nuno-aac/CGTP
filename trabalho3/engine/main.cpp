@@ -158,14 +158,14 @@ void applyTransformations(Group* g) {
 		currentModel++;
 	}
 
-	rotA = g->getRotationAnimation();
-	if (rotA != NULL) {
-		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
-	}
-
 	t = g -> getTranslation();
 	if (t != NULL) {
 		glTranslatef(t->getX(), t -> getY(), t -> getZ());
+	}
+
+	rotA = g->getRotationAnimation();
+	if (rotA != NULL) {
+		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
 	}
 
 	t = g -> getStaticRotation();

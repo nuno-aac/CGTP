@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include "headers/tinyxml2.h"
-#include "group.h"
+#include "scene.h"
 
 using namespace tinyxml2;
 

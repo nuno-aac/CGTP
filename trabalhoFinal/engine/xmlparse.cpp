@@ -81,41 +81,58 @@ Group* parseGroup(XMLElement* g) {
 	Group* group = new Group();
 	string fileName;
 
-	XMLElement* translation = g ->FirstChildElement("translate");
+	XMLElement* translation = g->FirstChildElement("translate");
 	if (translation != nullptr) {
 		if (translation->Attribute("time")) group->setCatmull(parseCatmull(translation));
 		else group->setTranslation(parseTransformation(translation));
 	}
 
-	XMLElement* rotation = g -> FirstChildElement("rotate");
+	XMLElement* rotation = g->FirstChildElement("rotate");
 	if (rotation != nullptr) {
 		if (rotation->Attribute("time")) group->setRotationAnimation(parseRotation(rotation));
 		else group->setStaticRotation(parseTransformation(rotation));
 	}
 
-	XMLElement* scale = g -> FirstChildElement("scale");
-	if (scale != nullptr) group -> setScale(parseTransformation(scale));
+	XMLElement* scale = g->FirstChildElement("scale");
+	if (scale != nullptr) group->setScale(parseTransformation(scale));
 
-	XMLElement* models = g -> FirstChildElement("models");
-	XMLElement* model = models -> FirstChildElement("model");
+	XMLElement* models = g->FirstChildElement("models");
+	XMLElement* model = models->FirstChildElement("model");
 	while (model != nullptr) {
 		fileName = model->Attribute("file");
-		group -> pushModel(parse3dFile("..\\..\\generator\\3dfiles\\" + fileName));
+		group->pushModel(parse3dFile("..\\..\\generator\\3dfiles\\" + fileName));
 		model = model->NextSiblingElement();
 	}
 
-	XMLElement* nextGroup = g -> FirstChildElement("group");
-	while (nextGroup != nullptr) {;
-		group -> pushGroup(parseGroup(nextGroup));
+	XMLElement* nextGroup = g->FirstChildElement("group");
+	while (nextGroup != nullptr) {
+		;
+		group->pushGroup(parseGroup(nextGroup));
 		nextGroup = nextGroup->NextSiblingElement();
 	}
 
 	return group;
 }
 
+Light* parseLight(XMLElement* l) {
+	int type;
+	float x, y, z;
+	string fileName;
 
-vector<Group*> parseXML(string nome) {
-	vector<Group*> scene;
+	if (l->Attribute("type")) type = atoi(l->Attribute("type"));
+
+	if (l->Attribute("X")) x = atof(l->Attribute("x"));
+	if (l->Attribute("Y")) y = atof(l->Attribute("y"));
+	if (l->Attribute("Z")) z = atof(l->Attribute("z"));
+
+
+	return new Light(type,z,y,z);
+}
+
+
+Scene* parseXML(string nome) {
+	vector<Group*> groups;
+	vector<Light*> lights;
 	XMLDocument d;
 	string str;
 
@@ -125,20 +142,29 @@ vector<Group*> parseXML(string nome) {
 		XMLElement* root = d.FirstChildElement("scene");
 
 		if (root == nullptr) 
-			return scene;
+			return NULL;
 
-		XMLElement* elemento = root->FirstChildElement("group");
+		XMLElement* xmllights = root->FirstChildElement("lights");
+		XMLElement* light = xmllights->FirstChildElement("light");
 
-		while (elemento != nullptr) {
+		while (light != nullptr) {
 
-			scene.push_back(parseGroup(elemento));
-			elemento = elemento->NextSiblingElement();
+			lights.push_back(parseLight(light));
+			light = light->NextSiblingElement();
 		}
 
-		return scene;
+		XMLElement* grupo = root->FirstChildElement("group");
+
+		while (grupo != nullptr) {
+
+			groups.push_back(parseGroup(grupo));
+			grupo = grupo->NextSiblingElement();
+		}
+
+		return new Scene(groups, lights);
 	}
 	else {
 		std::cout << "Error: " << d.ErrorStr() << "\n";
 	}
-	return scene;
+	return NULL;
 }
