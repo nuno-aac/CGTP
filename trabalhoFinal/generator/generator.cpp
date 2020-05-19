@@ -7,6 +7,8 @@
 
 using namespace std;
 
+vector<float> normal;
+
 void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b) {
   fstream fs;
   fs.open("3dfiles/" + figura + ".3d", fstream::out);
@@ -59,7 +61,7 @@ void subtractV(float* a, float* b, float* res) {
 	res[2] = a[2] - b[2];
 }
 
-void computeNormal(float p1[], float p2[], float p3[], float p4[], vector<float> normal) {
+void computeNormal(float p1[], float p2[], float p3[], float p4[]) {
 	float v1[3];
 	float v2[3];
 	float normalV[3];
@@ -67,9 +69,10 @@ void computeNormal(float p1[], float p2[], float p3[], float p4[], vector<float>
 	subtractV(p2, p1, v1);
 	subtractV(p4, p3, v2);
 
-	//std::cout << v1[0] << '/' << v1[1] << '/' << v1[2] << '\n';
+	
 	cross(v1, v2, normalV);
 	normalize(normalV);
+	//cout << normalV[0] << '/' << normalV[1] << '/' << normalV[2] << '\n';
 
 	normal.push_back(normalV[0]);
 	normal.push_back(normalV[1]);
@@ -216,8 +219,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		fs << g << " ";
 		fs << b << endl;
 
-		vector<float> normal;
-
 		for (k = 0; k < patches; k++) {
 			for (j = 0; j < tesselation; j++) {
 				for (i = 0; i < tesselation; i++) {
@@ -242,57 +243,56 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 					//calculate normals
 
 					if(i == 0 && j == 0){
-						computeNormal(p2, p1, p3, p1, normal);
+						computeNormal(p2, p1, p3, p1);
 					}
 					else if (i == 0 && j == tesselation - 1) {
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p1, normal);
-						computeNormal(p1, p2, p4, p2, normal);
+						computeNormal(p2, p6, p3, p1);
+						computeNormal(p1, p2, p4, p2);
 					}
 					else if (i == tesselation - 1 && j == 0) {
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						computeNormal(p2, p1, p3, p5, normal);
-						computeNormal(p4, p3, p1, p3, normal);
+						computeNormal(p2, p1, p3, p5);
+						computeNormal(p4, p3, p1, p3);
 					}
 					else if (i == tesselation - 1 && j == tesselation - 1){
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5, normal);
-						computeNormal(p1, p2, p4, p2, normal);
-						computeNormal(p4, p3, p1, p3, normal);
-						computeNormal(p3, p4, p2, p4, normal);
+						computeNormal(p2, p6, p3, p5);
+						computeNormal(p1, p2, p4, p2);
+						computeNormal(p4, p3, p1, p3);
+						computeNormal(p3, p4, p2, p4);
 					}
 					else if (i == 0){
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p1, normal);
+						computeNormal(p2, p6, p3, p1);
 					}
 					else if (i == tesselation - 1){
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5, normal);
+						computeNormal(p2, p6, p3, p5);
 						float p7[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p4, p7, p1, p3, normal);
+						computeNormal(p4, p7, p1, p3);
 					}
 					else if (j == 0) {
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						computeNormal(p2, p1, p3, p5, normal);
+						computeNormal(p2, p1, p3, p5);
 					}
 					else if (j == tesselation - 1) {
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5, normal);
+						computeNormal(p2, p6, p3, p5);
 						float p8[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))) };
-						computeNormal(p1, p2, p8, p4, normal);
+						computeNormal(p1, p2, p8, p4);
 					}
 					else {
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2,p6,p3,p5, normal);
+						computeNormal(p2,p6,p3,p5);
 					}
 				}
 			}
 		}
-		cout << normal.size() << '\n';
 
 		fs.close();
 	}
@@ -301,8 +301,18 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 
 }
 
+void geraNormaisFich(string figura) {
+	fstream fs;
+	fs.open("3dfiles/" + figura + ".3dn", fstream::out);
 
+	for (int i = 0; i < normal.size(); i++) {
+		if (i % 3 == 2) fs << normal[i] << endl;
+		else fs << normal[i] << " ";
+	}
 
+	fs.close();
+
+}
 
 int main(int argc, char* argv[]) {
 	VerticesList* vL = new VerticesList();
@@ -317,6 +327,7 @@ int main(int argc, char* argv[]) {
 		g = stof(argv[6]);
 		b = stof(argv[7]);
 		geraPontosBezier(fileIn, fileOut, tesselations,r,g,b);
+		geraNormaisFich(fileOut);
 		return 0;
 	}
 	
