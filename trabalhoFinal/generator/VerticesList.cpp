@@ -12,6 +12,14 @@ vector<float> VerticesList::getPoints(){
   return points;
 }
 
+void VerticesList::normalize(float* a) {
+
+    float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+    a[0] = a[0] / l;
+    a[1] = a[1] / l;
+    a[2] = a[2] / l;
+}
+
 void VerticesList::setPoints(vector<float> p){
   points = p;
 }
@@ -135,7 +143,7 @@ void VerticesList::sphere(float r, int slices, int stacks){
         addPoint(xBChange , heightBChange, zBChange);
         addPoint(xABChange , heightBChange, zABChange);
       }
-      else if (b != stacks - 1){
+      else {
         //CORPO
         addPoint(x, height, z);
         addPoint(xAChange, height, zAChange);
@@ -145,46 +153,73 @@ void VerticesList::sphere(float r, int slices, int stacks){
         addPoint(xABChange, heightBChange, zABChange);
         addPoint(xBChange, heightBChange, zBChange);
       }
-      else {
-          //FUNDO
-          addPoint(0, -r, 0);
-          addPoint(xAChange, height, zAChange);
-          addPoint(x, height, z);
-      }
       beta1 -= stackStep;
       beta0 -= stackStep;
     }
+    //FUNDO
+    addPoint(0, -r, 0);
+    addPoint(xAChange, height, zAChange);
+    addPoint(x, height, z);
     alpha0 += sliceStep;
     alpha1 += sliceStep;
   }
 }
 
 void VerticesList::sphereNormal(float r, int slices, int stacks){
-  float stackStep = (float) (M_PI) / stacks;
-  float sliceStep = (float) (2 * M_PI) / slices;
-  float alpha0, beta0, alpha1, beta1;
-  float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
+    float stackStep = (float)(M_PI) / stacks;
+    float sliceStep = (float)(2 * M_PI) / slices;
+    float alpha0, beta0, alpha1, beta1;
+    float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
 
-  alpha0 = 0;
+    alpha0 = 0;
+    alpha1 = sliceStep;
 
-  for(int a = 0; a < slices; a++){
+    for (int a = 0; a < slices; a++) {
 
-    beta0 = (M_PI/2) * 1;
+        beta0 = (M_PI / 2) * 1;
+        beta1 = beta0 + stackStep;
 
-    for(int b = 0; b < stacks; b++){
+        for (int b = 0; b < stacks; b++) {
 
-      height = sin(beta0) * r;
+            height = sin(beta0) * r;
+            heightBChange = sin(beta1) * r;
 
-      x = cos(beta0) * sin(alpha0) * r;
+            x = cos(beta0) * sin(alpha0) * r;
+            xAChange = cos(beta0) * sin(alpha1) * r;
+            xBChange = cos(beta1) * sin(alpha0) * r;
+            xABChange = cos(beta1) * sin(alpha1) * r;
 
-      z = cos(beta0) * cos(alpha0) * r;
+            z = cos(beta0) * cos(alpha0) * r;
+            zAChange = cos(beta0) * cos(alpha1) * r;
+            zBChange = cos(beta1) * cos(alpha0) * r;
+            zABChange = cos(beta1) * cos(alpha1) * r;
 
-      addPoint(x, height, z);
+            if (b == 0) {
+                //TOPO
+                addPoint(0, r, 0);
+                addPoint(xBChange, heightBChange, zBChange);
+                addPoint(xABChange, heightBChange, zABChange);
+            }
+            else {
+                //CORPO
+                addPoint(x, height, z);
+                addPoint(xAChange, height, zAChange);
+                addPoint(xABChange, heightBChange, zABChange);
 
-      beta0 -= stackStep;
+                addPoint(x, height, z);
+                addPoint(xABChange, heightBChange, zABChange);
+                addPoint(xBChange, heightBChange, zBChange);
+            }
+            beta1 -= stackStep;
+            beta0 -= stackStep;
+        }
+        //FUNDO
+        addPoint(0, -r, 0);
+        addPoint(xAChange, height, zAChange);
+        addPoint(x, height, z);
+        alpha0 += sliceStep;
+        alpha1 += sliceStep;
     }
-    alpha0 += sliceStep;
-  }
 }
 
 void VerticesList::cone(float r, float maxHeight, int slices, int stacks){

@@ -34,6 +34,10 @@ vector<float> Model::getVertices() {
 	return vertices;
 }
 
+vector<float> Model::getNormals() {
+	return normals;
+}
+
 float Model::getVertice(int i) {
 	return vertices.at(i);
 }
@@ -57,4 +61,8 @@ void Model::setB(float b) {
 void Model::pushVertice(float v) {
 	numPontos++;
 	vertices.push_back(v);
+}
+
+void Model::pushNormal(float n) {
+	normals.push_back(n);
 }

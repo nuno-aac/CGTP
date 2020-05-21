@@ -17,14 +17,14 @@
 
 #define _USE_MATH_DEFINES
 
-float p[5][3] = {{-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0}};
-
 using namespace std;
 
 vector<Group*> scene;
+vector<Light*> lights;
 vector<vector<float>> vertices;
 
 GLuint modelsBuf[300];
+GLuint normalsBuf[300];
 int currentModel = 0;
 
 float time = 0.0f;
@@ -158,14 +158,14 @@ void applyTransformations(Group* g) {
 		currentModel++;
 	}
 
-	rotA = g->getRotationAnimation();
-	if (rotA != NULL) {
-		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
-	}
-
 	t = g -> getTranslation();
 	if (t != NULL) {
 		glTranslatef(t->getX(), t -> getY(), t -> getZ());
+	}
+
+	rotA = g->getRotationAnimation();
+	if (rotA != NULL) {
+		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
 	}
 
 	t = g -> getStaticRotation();
@@ -180,11 +180,27 @@ void applyTransformations(Group* g) {
 
 void drawModel(Model* model) {
 	vector<float> modelVertex = model->getVertices();
-	glColor3f(model -> getR(), model -> getG(), model -> getB());
+	vector<float> normals = model->getNormals();
+	//glColor3f(model -> getR(), model -> getG(), model -> getB());
+	GLfloat qaBlack[] = { 0.0, 0.0, 0.0, 1.0 }; //Black Color
+	GLfloat qaGreen[] = { 0.0, 1.0, 0.0, 1.0 }; //Green Color
+	GLfloat qaWhite[] = { 1.0, 1.0, 1.0, 1.0 }; //White Color
+	GLfloat qaRed[] = { 1.0, 0.0, 0.0, 1.0 }; //White Color
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, qaGreen);
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, qaGreen);
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, qaWhite);
+
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 20);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[currentModel]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * model->getVertices().size(), &modelVertex[0], GL_STATIC_DRAW);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, normalsBuf[currentModel]);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
+	glNormalPointer(GL_FLOAT, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, model->getVertices().size()/3);
 }
 
@@ -211,6 +227,21 @@ void drawGroup(Group* g){
 	glPopMatrix();
 }
 
+void setupLights(vector<Light*> l) {
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	float pos[4] = { 1, 10, 0, 1 };
+	float quad_att = 0.001f;
+	GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
+	GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
+	GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, quad_att);
+}
+
 void renderScene(void) {
 	int size, numFigura;
 	// clear buffers
@@ -222,6 +253,8 @@ void renderScene(void) {
 	gluLookAt(zoom+vert, zoom, zoom + hor,
 		vert, 0.0, hor,
 		0.0f, 1.0f, 0.0f);
+
+	setupLights(lights);
 
 	// put the geometric transformations here
 
@@ -306,9 +339,11 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	scene = parseXML("SolarSystem.xml");
+	Scene* fullScene = parseXML("modelsToRender.xml");
+	scene = fullScene->getScene();
+	lights = fullScene->getLights();
 	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
-	zoom = 300;
+	zoom = 7;
 	vert = 0;
 	hor = 0;
 	showOrbit = false;
@@ -322,6 +357,7 @@ int main(int argc, char** argv) {
 
 	glewInit();
 	glGenBuffers(300, modelsBuf);
+	glGenBuffers(300, normalsBuf);
 	// put callback registration here
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
@@ -332,6 +368,7 @@ int main(int argc, char** argv) {
 	glutKeyboardFunc(keyRotate);
 
 	// OpenGL settings
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //WIRES
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

@@ -15,6 +15,7 @@ public:
 	VerticesList();
 	VerticesList(vector<float>);
 	vector<float> getPoints();
+	void normalize(float*);
 	void setPoints(vector<float>);
   void addPoint(float, float, float);
 	void plane(float);

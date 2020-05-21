@@ -29,6 +29,21 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
 }
 
+void geraPontosNormal(VerticesList* vN, string figura) {
+	fstream fs;
+	fs.open("3dfiles/" + figura + ".3dn", fstream::out);
+
+	vector <float> vector = vN->getPoints();
+
+	for (int i = 0; i < vector.size(); i++) {
+		if (i % 3 == 2) fs << vector[i] << endl;
+		else fs << vector[i] << " ";
+	}
+
+	fs.close();
+
+}
+
 int countPontos(string line) {
 	int r = 0;
 	for (int i = 0; i < line.length(); i++) {
@@ -316,6 +331,7 @@ void geraNormaisFich(string figura) {
 
 int main(int argc, char* argv[]) {
 	VerticesList* vL = new VerticesList();
+	VerticesList* vN = new VerticesList();
 	string figura;
 
 	if (strcmp(argv[1], "bezier") == 0 && argc == 8) {
@@ -368,7 +384,9 @@ int main(int argc, char* argv[]) {
 		b = stof(argv[7]);
 		figura = argv[8];
 		vL->sphere(raio, slices, stacks);
+		vN->sphereNormal(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
+		geraPontosNormal(vN, figura);
 		return 0;
 	}
 

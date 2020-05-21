@@ -2,10 +2,9 @@
 
 using namespace std;
 
-Model* parse3dFile(string file) {
+void parse3dFile(string file, Model * m) {
 	float x, y, z;
 	float r, g, b;
-	Model* m;
 
 	ifstream infile(file);
 	
@@ -13,7 +12,9 @@ Model* parse3dFile(string file) {
 	
 	infile >> r >> g >> b;
 
-	m = new Model(r, g, b);
+	m ->setR(r);
+	m->setG(g);
+	m->setB(b);
 	m->setNumPontos(x);
 
 	while (infile >> x >> y >> z) {
@@ -21,7 +22,25 @@ Model* parse3dFile(string file) {
 		m->pushVertice(y);
 		m->pushVertice(z);
 	}
+}
 
+void parseNormalFile(string file, Model* m) {
+	float x, y, z;
+
+	ifstream infile(file+"n");
+
+
+	while (infile >> x >> y >> z) {
+		m->pushNormal(x);
+		m->pushNormal(y);
+		m->pushNormal(z);
+	}
+}
+ 
+Model* parseFiles(string file) {
+	Model* m = new Model();
+	parse3dFile(file, m);
+	parseNormalFile(file, m);
 	return m;
 }
 
@@ -100,7 +119,7 @@ Group* parseGroup(XMLElement* g) {
 	XMLElement* model = models->FirstChildElement("model");
 	while (model != nullptr) {
 		fileName = model->Attribute("file");
-		group->pushModel(parse3dFile("..\\..\\generator\\3dfiles\\" + fileName));
+		group->pushModel(parseFiles("..\\..\\generator\\3dfiles\\" + fileName));
 		model = model->NextSiblingElement();
 	}
 
@@ -121,9 +140,9 @@ Light* parseLight(XMLElement* l) {
 
 	if (l->Attribute("type")) type = atoi(l->Attribute("type"));
 
-	if (l->Attribute("X")) x = atof(l->Attribute("x"));
-	if (l->Attribute("Y")) y = atof(l->Attribute("y"));
-	if (l->Attribute("Z")) z = atof(l->Attribute("z"));
+	if (l->Attribute("X")) x = atof(l->Attribute("X"));
+	if (l->Attribute("Y")) y = atof(l->Attribute("Y"));
+	if (l->Attribute("Z")) z = atof(l->Attribute("Z"));
 
 
 	return new Light(type,z,y,z);
@@ -145,7 +164,8 @@ Scene* parseXML(string nome) {
 			return NULL;
 
 		XMLElement* xmllights = root->FirstChildElement("lights");
-		XMLElement* light = xmllights->FirstChildElement("light");
+		XMLElement* light = nullptr;
+		if(xmllights) light = xmllights->FirstChildElement("light");
 
 		while (light != nullptr) {
 

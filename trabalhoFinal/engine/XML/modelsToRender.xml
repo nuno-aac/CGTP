@@ -1,9 +1,13 @@
 <?xml version="2.0" ?>
 <scene>
+  <lights>
+    <light type='POINT' X='0' Y='0' Z='0'/>
+  </lights>
   <group>
-    <translate X='4' Y='0' Z='0'/>
+    <translate X='0' Y='0' Z='0'/>
+    <rotate time='5' X='0' Y='1' Z='0'/>
     <models>
-      <model file='ball.3d'/>
+      <model file='ola.3d'/>
     </models>
   </group>
 </scene>
