@@ -29,6 +29,7 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
 }
 
+/*
 void geraPontosNormal(VerticesList* vN, string figura) {
 	fstream fs;
 	fs.open("3dfiles/" + figura + ".3dn", fstream::out);
@@ -42,7 +43,7 @@ void geraPontosNormal(VerticesList* vN, string figura) {
 
 	fs.close();
 
-}
+}*/
 
 int countPontos(string line) {
 	int r = 0;
@@ -52,7 +53,7 @@ int countPontos(string line) {
 	r++;
 	return r;
 }
-
+/*
 void cross(float* a, float* b, float* res) {
 	//std::cout << a[0] << '/' << a[1] << '/' << a[2] << '\n';
 	res[0] = a[1] * b[2] - a[2] * b[1];
@@ -92,7 +93,7 @@ void computeNormal(float p1[], float p2[], float p3[], float p4[]) {
 	normal.push_back(normalV[0]);
 	normal.push_back(normalV[1]);
 	normal.push_back(normalV[2]);
-}
+}*/
 
 void geraPontosBezier(string file, string figura, int tesselation,float r, float g, float b) {
 	int i = 0;
@@ -172,6 +173,7 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 							float t = ((1 / ((float) tesselation)) * l);
 							if (k == sqrtf(numPerPatch) - 1) {
 								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
+								cout << pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) << '\n';
 								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
 								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
 							}
@@ -256,7 +258,7 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 					fs << p3[0] << " " << p3[1] << " " << p3[2] << endl;
 					
 					//calculate normals
-
+					/*
 					if(i == 0 && j == 0){
 						computeNormal(p2, p1, p3, p1);
 					}
@@ -304,6 +306,19 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
 						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
 						computeNormal(p2,p6,p3,p5);
+					}*/
+
+					//calculate normals
+
+					for (int i = 0; i <= tesselation; i++) {
+						for (int j = 0; j <= tesselation; j++) {
+							int ti = (1 / tesselation) * i;
+							int tj = (1 / tesselation) * j;
+
+							//normal.push_back(calculateNormal(ti, tj, pointsX));
+							//normal.push_back(calculateNormal(ti, tj, pointsY));
+							//normal.push_back(calculateNormal(ti, tj, pointsZ));
+						}
 					}
 				}
 			}
@@ -386,7 +401,7 @@ int main(int argc, char* argv[]) {
 		vL->sphere(raio, slices, stacks);
 		vN->sphereNormal(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
-		geraPontosNormal(vN, figura);
+		//geraPontosNormal(vN, figura);
 		return 0;
 	}
 
