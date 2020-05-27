@@ -95,6 +95,39 @@ void computeNormal(float p1[], float p2[], float p3[], float p4[]) {
 	normal.push_back(normalV[2]);
 }*/
 
+float calculateNormal(float ti, float tj, vector<float> vet, int patch) {
+	int m[4][4]{ {-1,3,-3,1},{3,-6,3,0},{-3,3,0,0},{1,0,0,0} };
+	float u[4] = { ti *ti*ti,ti *ti,ti,1 };
+	float v[4] = { tj * tj * tj,tj * tj,tj,1 };
+	float r[4] = { 0 };
+	float ret = 0;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			r[i] += u[j] * m[j][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		u[i] = 0;
+	}	
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			u[i] += r[j] * vet.at(4*j + i + (16 * patch));
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		r[i] = 0;
+	}
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			r[i] += u[j] * m[j][i];
+		}
+	}
+	for (int j = 0; j < 4; j++) {
+		ret += r[j] * v[j];
+	}
+	return ret;
+}
+
 void geraPontosBezier(string file, string figura, int tesselation,float r, float g, float b) {
 	int i = 0;
 	int k = 0;
@@ -173,7 +206,6 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 							float t = ((1 / ((float) tesselation)) * l);
 							if (k == sqrtf(numPerPatch) - 1) {
 								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
-								cout << pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) << '\n';
 								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
 								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
 							}
@@ -257,69 +289,64 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 					fs << p4[0] << " " << p4[1] << " " << p4[2] << endl;
 					fs << p3[0] << " " << p3[1] << " " << p3[2] << endl;
 					
-					//calculate normals
-					/*
-					if(i == 0 && j == 0){
-						computeNormal(p2, p1, p3, p1);
-					}
-					else if (i == 0 && j == tesselation - 1) {
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p1);
-						computeNormal(p1, p2, p4, p2);
-					}
-					else if (i == tesselation - 1 && j == 0) {
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						computeNormal(p2, p1, p3, p5);
-						computeNormal(p4, p3, p1, p3);
-					}
-					else if (i == tesselation - 1 && j == tesselation - 1){
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5);
-						computeNormal(p1, p2, p4, p2);
-						computeNormal(p4, p3, p1, p3);
-						computeNormal(p3, p4, p2, p4);
-					}
-					else if (i == 0){
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p1);
-					}
-					else if (i == tesselation - 1){
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5);
-						float p7[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p4, p7, p1, p3);
-					}
-					else if (j == 0) {
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						computeNormal(p2, p1, p3, p5);
-					}
-					else if (j == tesselation - 1) {
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2, p6, p3, p5);
-						float p8[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + ((j + 1) * (tesselation + 1))) };
-						computeNormal(p1, p2, p8, p4);
-					}
-					else {
-						float p5[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i - 1 + (j * (tesselation + 1))) };
-						float p6[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j - 1) * (tesselation + 1))) };
-						computeNormal(p2,p6,p3,p5);
-					}*/
+				}
+			}
+		}
+		fs.close();
 
-					//calculate normals
+		//calculate normals
 
-					for (int i = 0; i <= tesselation; i++) {
-						for (int j = 0; j <= tesselation; j++) {
-							int ti = (1 / tesselation) * i;
-							int tj = (1 / tesselation) * j;
+		vector<float> tempX;
+		vector<float> tempY;
+		vector<float> tempZ;
 
-							//normal.push_back(calculateNormal(ti, tj, pointsX));
-							//normal.push_back(calculateNormal(ti, tj, pointsY));
-							//normal.push_back(calculateNormal(ti, tj, pointsZ));
-						}
-					}
+		for each (int var in pointsOrder)
+		{
+			tempX.push_back(pointsX.at(var));
+			tempY.push_back(pointsY.at(var));
+			tempZ.push_back(pointsZ.at(var));
+		}
+
+		float mX[5][5] = { 0 };
+		float mY[5][5] = { 0 };
+		float mZ[5][5] = { 0 };
+
+		fs.open("3dfiles/wowow.3d", fstream::out);
+
+		fs << to_string(patches * tesselation * tesselation * 6) << endl;
+		fs << r << " ";
+		fs << g << " ";
+		fs << b << endl;
+
+
+		for (int patch = 0; patch < patches; patch++) {
+			for (int j = 0; j <= tesselation; j++) {
+				for (int i = 0; i <= tesselation; i++) {
+					float ti = (1.0 / (float)tesselation) * i;
+					float tj = (1.0 / (float)tesselation) * j;
+
+					mX[i][j] = calculateNormal(ti, tj, tempX, patch);
+					mY[i][j] = calculateNormal(ti, tj, tempY, patch);
+					mZ[i][j] = calculateNormal(ti, tj, tempZ, patch);
+
+					cout << mX[i][j] << ' ';
+					cout << mY[i][j] << ' ';
+					cout << mZ[i][j] << '\n';
+
+				}
+			}
+
+			for (int j = 0; j < tesselation; j++) {
+				for (int i = 0; i < tesselation; i++) {
+
+					fs << mX[i][j] << " " << mY[i][j] << " " << mZ[i][j] << endl;
+					fs << mX[i][j + 1] << " " << mY[i][j + 1] << " " << mZ[i][j + 1] << endl;
+					fs << mX[i + 1][j] << " " << mY[i + 1][j] << " " << mZ[i + 1][j] << endl;
+
+					fs << mX[i][j + 1] << " " << mY[i][j + 1] << " " << mZ[i][j + 1] << endl;
+					fs << mX[i + 1][j + 1] << " " << mY[i + 1][j + 1] << " " << mZ[i + 1][j + 1] << endl;
+					fs << mX[i + 1][j] << " " << mY[i + 1][j] << " " << mZ[i + 1][j] << endl;
+
 				}
 			}
 		}
