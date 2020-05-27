@@ -30,16 +30,28 @@ void VerticesList::addPoint(float x, float y, float z){
   points.push_back(z);
 }
 
+void VerticesList::addNormal(float x, float y, float z){
+  normals.push_back(x);
+  normals.push_back(y);
+  normals.push_back(z);
+}
+
 void VerticesList::plane(float size){
   float cord = size/2;
   //T1
     addPoint(cord, 0, cord);
+    addNormal(0,1,0);
     addPoint(cord,0,-cord);
+    addNormal(0,1,0);
     addPoint(-cord, 0, cord);
+    addNormal(0,1,0);
   //T2
     addPoint(-cord, 0, -cord);
+    addNormal(0,1,0);
     addPoint(-cord, 0, cord);
+    addNormal(0,1,0);
     addPoint(cord, 0, -cord);
+    addNormal(0,1,0);
 }
 
 void VerticesList::box(float x, float y, float z){
@@ -50,62 +62,98 @@ void VerticesList::box(float x, float y, float z){
   //Topo
     //T1
     addPoint(cordX, cordY, cordZ);
+    addNormal(0,1,0);
     addPoint(cordX,cordY,-cordZ);
+    addNormal(0,1,0);
     addPoint(-cordX, cordY, cordZ);
+    addNormal(0,1,0);
     //T2
     addPoint(-cordX, cordY, -cordZ);
+    addNormal(0,1,0);
     addPoint(-cordX, cordY, cordZ);
+    addNormal(0,1,0);
     addPoint(cordX, cordY, -cordZ);
+    addNormal(0,1,0);
 
   //Base
     //T1
     addPoint(cordX, -cordY, cordZ);
+    addNormal(0,-1,0);
     addPoint(-cordX, -cordY, cordZ);
+    addNormal(0,-1,0);
     addPoint(cordX,-cordY,-cordZ);
+    addNormal(0,-1,0);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
+    addNormal(0,-1,0);
     addPoint(cordX, -cordY, -cordZ);
+    addNormal(0,-1,0);
     addPoint(-cordX, -cordY, cordZ);
+    addNormal(0,-1,0);
 
   //Lado X positivo
     //T1
     addPoint(cordX, cordY, cordZ);
+    addNormal(1,0,0);
     addPoint(cordX, -cordY, cordZ);
+    addNormal(1,0,0);
     addPoint(cordX,cordY,-cordZ);
+    addNormal(1,0,0);
     //T2
     addPoint(cordX, -cordY, -cordZ);
+    addNormal(1,0,0);
     addPoint(cordX, cordY, -cordZ);
+    addNormal(1,0,0);
     addPoint(cordX, -cordY, cordZ);
+    addNormal(1,0,0);
 
   //Lado X negativo
     //T1
     addPoint(-cordX, cordY, cordZ);
+    addNormal(-1,0,0);
     addPoint(-cordX,cordY,-cordZ);
+    addNormal(-1,0,0);
     addPoint(-cordX, -cordY, cordZ);
+    addNormal(-1,0,0);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
+    addNormal(-1,0,0);
     addPoint(-cordX, -cordY, cordZ);
+    addNormal(-1,0,0);
     addPoint(-cordX, cordY, -cordZ);
+    addNormal(-1,0,0);
 
   //Lado Z positivo
     //T1
     addPoint(cordX, cordY, cordZ);
+    addNormal(0,0,1);
     addPoint(-cordX, cordY, cordZ);
+    addNormal(0,0,1);
     addPoint(cordX, -cordY, cordZ);
+    addNormal(0,0,1);
     //T2
     addPoint(-cordX, -cordY, cordZ);
+    addNormal(0,0,1);
     addPoint(cordX, -cordY, cordZ);
+    addNormal(0,0,1);
     addPoint(-cordX, cordY, cordZ);
+    addNormal(0,0,1);
 
   //Lado Z negativo
     //T1
     addPoint(cordX, cordY, -cordZ);
+    addNormal(0,0,-1);
     addPoint(cordX,-cordY, -cordZ);
+    addNormal(0,0,-1);
     addPoint(-cordX, cordY, -cordZ);
+    addNormal(0,0,-1);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
+    addNormal(0,0,-1);
     addPoint(-cordX, cordY, -cordZ);
+    addNormal(0,0,-1);
     addPoint(cordX, -cordY, -cordZ);
+    addNormal(0,0,-1);
 }
 
 void VerticesList::sphere(float r, int slices, int stacks){

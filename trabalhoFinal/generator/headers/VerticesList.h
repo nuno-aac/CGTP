@@ -10,6 +10,7 @@ using namespace std;
 
 class VerticesList {
 	vector<float> points;
+	vector<float> normals;
 
 public:
 	VerticesList();
@@ -18,6 +19,7 @@ public:
 	void normalize(float*);
 	void setPoints(vector<float>);
   void addPoint(float, float, float);
+	void addNormal(float, float, float);
 	void plane(float);
   void box(float, float, float);
 	void sphere(float, int, int);

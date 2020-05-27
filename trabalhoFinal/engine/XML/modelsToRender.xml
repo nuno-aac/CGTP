@@ -4,10 +4,14 @@
     <light type='POINT' X='0' Y='0' Z='0'/>
   </lights>
   <group>
-    <translate X='0' Y='0' Z='0'/>
     <rotate time='5' X='0' Y='1' Z='0'/>
     <models>
-      <model file='ola.3d'/>
     </models>
+    <group>
+      <translate X='3' Y='0' Z='0'/>
+      <models>
+        <model file='wowow.3d'/>
+      </models>
+    </group>
   </group>
 </scene>

@@ -228,18 +228,24 @@ void drawGroup(Group* g){
 }
 
 void setupLights(vector<Light*> l) {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	float pos[4] = { 1, 10, 0, 1 };
-	float quad_att = 0.001f;
-	GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
-	GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
-	GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, quad_att);
+	float pos[4];
+	for (int i = 0; i < l.size(); i++) {
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0+i);
+		if (l[i]->getType() == L_POINT);
+		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 0;
+		if (l[i]->getType() == L_DIRECTIONAL);
+		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 1;
+		float quad_att = 0.1f;
+		GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
+		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
+		GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+		glLightfv(GL_LIGHT0, GL_POSITION, pos);
+		glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, quad_att);
+	}
 }
 
 void renderScene(void) {

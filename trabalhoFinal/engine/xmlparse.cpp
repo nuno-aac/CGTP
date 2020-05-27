@@ -134,11 +134,15 @@ Group* parseGroup(XMLElement* g) {
 }
 
 Light* parseLight(XMLElement* l) {
-	int type;
+	string typeS;
 	float x, y, z;
+	int type;
+	type = L_POINT;
 	string fileName;
 
-	if (l->Attribute("type")) type = atoi(l->Attribute("type"));
+	if (l->Attribute("type")) typeS = l->Attribute("type");
+	if (typeS.compare("POINT") == 0) type = L_POINT;
+	if (typeS.compare("DIRECTIONAL") == 0) type = L_DIRECTIONAL;
 
 	if (l->Attribute("X")) x = atof(l->Attribute("X"));
 	if (l->Attribute("Y")) y = atof(l->Attribute("Y"));
