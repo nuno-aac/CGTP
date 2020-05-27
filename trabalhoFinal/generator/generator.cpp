@@ -7,7 +7,9 @@
 
 using namespace std;
 
-vector<float> normal;
+vector<float> normalX;
+vector<float> normalY;
+vector<float> normalZ;
 
 void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b) {
   fstream fs;
@@ -29,22 +31,6 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
 }
 
-/*
-void geraPontosNormal(VerticesList* vN, string figura) {
-	fstream fs;
-	fs.open("3dfiles/" + figura + ".3dn", fstream::out);
-
-	vector <float> vector = vN->getPoints();
-
-	for (int i = 0; i < vector.size(); i++) {
-		if (i % 3 == 2) fs << vector[i] << endl;
-		else fs << vector[i] << " ";
-	}
-
-	fs.close();
-
-}*/
-
 int countPontos(string line) {
 	int r = 0;
 	for (int i = 0; i < line.length(); i++) {
@@ -53,52 +39,25 @@ int countPontos(string line) {
 	r++;
 	return r;
 }
-/*
-void cross(float* a, float* b, float* res) {
-	//std::cout << a[0] << '/' << a[1] << '/' << a[2] << '\n';
-	res[0] = a[1] * b[2] - a[2] * b[1];
-	res[1] = a[2] * b[0] - a[0] * b[2];
-	res[2] = a[0] * b[1] - a[1] * b[0];
-}
 
 
-void normalize(float* a) {
 
-	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-	a[0] = a[0] / l;
-	a[1] = a[1] / l;
-	a[2] = a[2] / l;
-}
-
-void subtractV(float* a, float* b, float* res) {
-	//std::cout << a[0] << '/' << a[1] << '/' << a[2] << '\n';
-	res[0] = a[0] - b[0];
-	res[1] = a[1] - b[1];
-	res[2] = a[2] - b[2];
-}
-
-void computeNormal(float p1[], float p2[], float p3[], float p4[]) {
-	float v1[3];
-	float v2[3];
-	float normalV[3];
-
-	subtractV(p2, p1, v1);
-	subtractV(p4, p3, v2);
-
-	
-	cross(v1, v2, normalV);
-	normalize(normalV);
-	//cout << normalV[0] << '/' << normalV[1] << '/' << normalV[2] << '\n';
-
-	normal.push_back(normalV[0]);
-	normal.push_back(normalV[1]);
-	normal.push_back(normalV[2]);
-}*/
-
-float calculateNormal(float ti, float tj, vector<float> vet, int patch) {
+float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flagU, int flagV) {
 	int m[4][4]{ {-1,3,-3,1},{3,-6,3,0},{-3,3,0,0},{1,0,0,0} };
 	float u[4] = { ti *ti*ti,ti *ti,ti,1 };
+	if (flagU == 1) {
+		u[0] = 3 * ti * ti;
+		u[1] = 2 * ti;
+		u[2] = 1;
+		u[3] = 0;
+	}
 	float v[4] = { tj * tj * tj,tj * tj,tj,1 };
+	if (flagV == 1) {
+		v[0] = 3 * tj * tj;
+		v[1] = 2 * tj;
+		v[2] = 1;
+		v[3] = 0;
+	}
 	float r[4] = { 0 };
 	float ret = 0;
 	for (int i = 0; i < 4; i++) {
@@ -128,7 +87,28 @@ float calculateNormal(float ti, float tj, vector<float> vet, int patch) {
 	return ret;
 }
 
-void geraPontosBezier(string file, string figura, int tesselation,float r, float g, float b) {
+
+void cross(float a0, float a1, float a2, float b0, float b1, float b2, float* res) {
+	res[0] = a1 * b2 - a2 * b1;
+	res[1] = a2 * b0 - a0 * b2;
+	res[2] = a0 * b1 - a1 * b0;
+}
+
+
+void normalize(float* a) {
+
+	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+	a[0] = a[0] / l;
+	a[1] = a[1] / l;
+	a[2] = a[2] / l;
+}
+
+void computeNormal(float uX, float uY, float uZ, float vX, float vY, float vZ, float* normalV) {
+	cross(uX, uY, uZ, vX, vY, vZ, normalV);
+	normalize(normalV);
+}
+
+void geraPontosBezier(string file, string figura, int const tesselation,float r, float g, float b) {
 	int i = 0;
 	int k = 0;
 	int n;
@@ -183,118 +163,8 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 			pointsZ.push_back(f);
 			l++;
 		}
-		vector <float> bezCurveX;
-		vector <float> bezCurveY;
-		vector <float> bezCurveZ;
-		vector <float> auxX;
-		vector <float> auxY;
-		vector <float> auxZ;
-		for (i = 0; i < (tesselation + 1) * (sqrt(numPerPatch) - 1); i++) {
-			auto iteX = auxX.begin() + i;
-			auto iteY = auxY.begin() + i;
-			auto iteZ = auxZ.begin() + i;
-			auxX.insert(iteX, 0);
-			auxY.insert(iteY, 0);
-			auxZ.insert(iteZ, 0);
-		}
-		for (n = 0; n < patches; n++) { // patches
-			for (j = 0; j < sqrt(numPerPatch); j++) { //curves
-				for (k = sqrt(numPerPatch) - 1; k > 0; k--) { //level of func
-					for (i = 0; i < k; i++) { //func
-						for (l = 0; l <= tesselation; l++) { // individual point
-							int tes = i * (tesselation + 1) + l;
-							float t = ((1 / ((float) tesselation)) * l);
-							if (k == sqrtf(numPerPatch) - 1) {
-								auxX[tes] = (1 - t) * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsX.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxY[tes] = (1 - t) * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsY.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
-								auxZ[tes] = (1 - t) * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)))) + (t * pointsZ.at(pointsOrder.at((n * numPerPatch) + (i + (sqrt(numPerPatch) * j)) + 1)));
-							}
-							else {
-								auxX[tes] = (1 - t) * auxX.at(((tesselation + 1) * i) + l) + (t * auxX.at(((tesselation + 1) * (i + 1)) + l));
-								auxY[tes] = (1 - t) * auxY.at(((tesselation + 1) * i) + l) + (t * auxY.at(((tesselation + 1) * (i + 1)) + l));
-								auxZ[tes] = (1 - t) * auxZ.at(((tesselation + 1) * i) + l) + (t * auxZ.at(((tesselation + 1) * (i + 1)) + l));
-							}
-							if (k == 1) {
-								bezCurveX.push_back(auxX.at(tes));
-								bezCurveY.push_back(auxY.at(tes));
-								bezCurveZ.push_back(auxZ.at(tes));
-							}
-						}
-					}
-				}
-			}
-		}
-		vector <float> bezPatchX;
-		vector <float> bezPatchY;
-		vector <float> bezPatchZ;
-
-		for (n = 0; n < patches; n++) { // patches
-			for (j = 0; j < tesselation + 1; j++) { //tesselation
-				for (k = sqrt(numPerPatch) - 1; k > 0; k--) { //level of func
-					for (i = 0; i < k; i++) { //func
-						for (l = 0; l <= tesselation; l++) { // indivual point
-							int tes = i * (tesselation + 1) + l;
-							float t = ((1 / ((float)tesselation)) * l);
-
-							
-
-
-							if (k == sqrtf(numPerPatch) - 1) {
-								auxX[tes] = (1 - t) * bezCurveX.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * i) + j) + (t * bezCurveX.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * (i + 1)) + j));
-								auxY[tes] = (1 - t) * bezCurveY.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * i) + j) + (t * bezCurveY.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * (i + 1)) + j));
-								auxZ[tes] = (1 - t) * bezCurveZ.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * i) + j) + (t * bezCurveZ.at((n * ((tesselation + 1) * sqrt(numPerPatch))) + ((tesselation + 1) * (i + 1)) + j));
-							}
-							else {
-								auxX[tes] = (1 - t) * auxX.at(((tesselation + 1) * i) + l) + (t * auxX.at(((tesselation + 1) * (i + 1)) + l));
-								auxY[tes] = (1 - t) * auxY.at(((tesselation + 1) * i) + l) + (t * auxY.at(((tesselation + 1) * (i + 1)) + l));
-								auxZ[tes] = (1 - t) * auxZ.at(((tesselation + 1) * i) + l) + (t * auxZ.at(((tesselation + 1) * (i + 1)) + l));
-							}
-							if (k == 1) {
-								bezPatchX.push_back(auxX.at(tes));
-								bezPatchY.push_back(auxY.at(tes));
-								bezPatchZ.push_back(auxZ.at(tes));
-							}
-						}
-					}
-				}
-			}
-		}
 		fs.close();
-
-		fs.open("3dfiles/" + figura + ".3d", fstream::out);
-
-		fs << to_string(patches * tesselation * tesselation * 6) << endl;
-		fs << r << " ";
-		fs << g << " ";
-		fs << b << endl;
-
-		for (k = 0; k < patches; k++) {
-			for (j = 0; j < tesselation; j++) {
-				for (i = 0; i < tesselation; i++) {
-					//points
-
-					float p1[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + (j * (tesselation + 1))) };
-					float p2[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))),bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + ((j + 1) * (tesselation + 1))) };
-					float p3[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))), bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + (j * (tesselation + 1))) };
-					float p4[3] = { bezPatchX.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))),  bezPatchY.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))), bezPatchZ.at((k * ((tesselation + 1) * (tesselation + 1))) + i + 1 + ((j + 1) * (tesselation + 1))) };
-					
-
-					//write to file
-
-					fs << p1[0] << " " << p1[1] << " " << p1[2] << endl;
-					fs << p2[0] << " " << p2[1] << " " << p2[2] << endl;
-					fs << p3[0] << " " << p3[1] << " " << p3[2] << endl;
-
-					fs << p2[0] << " " << p2[1] << " " << p2[2] << endl;
-					fs << p4[0] << " " << p4[1] << " " << p4[2] << endl;
-					fs << p3[0] << " " << p3[1] << " " << p3[2] << endl;
-					
-				}
-			}
-		}
-		fs.close();
-
-		//calculate normals
+		//calculate points
 
 		vector<float> tempX;
 		vector<float> tempY;
@@ -307,11 +177,17 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 			tempZ.push_back(pointsZ.at(var));
 		}
 
-		float mX[5][5] = { 0 };
-		float mY[5][5] = { 0 };
-		float mZ[5][5] = { 0 };
+		float mX[20][20] = { 0 };
+		float mY[20][20] = { 0 };
+		float mZ[20][20] = { 0 };
+		float mUX[20][20] = { 0 };
+		float mUY[20][20] = { 0 };
+		float mUZ[20][20] = { 0 };
+		float mVX[20][20] = { 0 };
+		float mVY[20][20] = { 0 };
+		float mVZ[20][20] = { 0 };
 
-		fs.open("3dfiles/wowow.3d", fstream::out);
+		fs.open("3dfiles/" + figura + ".3d", fstream::out);
 
 		fs << to_string(patches * tesselation * tesselation * 6) << endl;
 		fs << r << " ";
@@ -325,13 +201,9 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 					float ti = (1.0 / (float)tesselation) * i;
 					float tj = (1.0 / (float)tesselation) * j;
 
-					mX[i][j] = calculateNormal(ti, tj, tempX, patch);
-					mY[i][j] = calculateNormal(ti, tj, tempY, patch);
-					mZ[i][j] = calculateNormal(ti, tj, tempZ, patch);
-
-					cout << mX[i][j] << ' ';
-					cout << mY[i][j] << ' ';
-					cout << mZ[i][j] << '\n';
+					mX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 0);
+					mY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 0);
+					mZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 0);
 
 				}
 			}
@@ -352,22 +224,63 @@ void geraPontosBezier(string file, string figura, int tesselation,float r, float
 		}
 
 		fs.close();
+
+		//calculate normals
+		fs.open("3dfiles/" + figura + ".3dn", fstream::out);
+
+		
+		float norm[3] = { 0 };
+		float mNormaisX[20][20] = {0};
+		float mNormaisY[20][20] = { 0 };
+		float mNormaisZ[20][20] = { 0 };
+
+		for (int patch = 0; patch < patches; patch++) {
+			for (int j = 0; j <= tesselation; j++) {
+				for (int i = 0; i <= tesselation; i++) {
+					float ti = (1.0 / (float)tesselation) * i;
+					float tj = (1.0 / (float)tesselation) * j;
+
+					mUX[i][j] = calculatePoints(ti, tj, tempX, patch, 1, 0);
+					mUY[i][j] = calculatePoints(ti, tj, tempY, patch, 1, 0);
+					mUZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 1, 0);
+
+					mVX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 1);
+					mVY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 1);
+					mVZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 1);
+
+				}
+			}
+
+			for (int j = 0; j <= tesselation; j++) {
+				for (int i = 0; i <= tesselation; i++) {
+					computeNormal(mUX[i][j], mUY[i][j], mUZ[i][j], mVX[i][j], mVY[i][j], mVZ[i][j],norm);
+					mNormaisX[i][j] = norm[0];
+					mNormaisY[i][j] = norm[1];
+					mNormaisZ[i][j] = norm[2];
+				}
+			}
+
+			for (int j = 0; j < tesselation; j++) {
+				for (int i = 0; i < tesselation; i++) {
+
+					fs << mNormaisX[i][j] << " " << mNormaisY[i][j] << " " << mNormaisZ[i][j] << endl;
+					fs << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
+					fs << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
+
+					fs << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
+					fs << mNormaisX[i + 1][j + 1] << " " << mNormaisY[i + 1][j + 1] << " " << mNormaisZ[i + 1][j + 1] << endl;
+					fs << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
+
+				}
+			}
+		}
+		
+
+		fs.close();
+
 	}
 
 	else cout << "Unable to open file";
-
-}
-
-void geraNormaisFich(string figura) {
-	fstream fs;
-	fs.open("3dfiles/" + figura + ".3dn", fstream::out);
-
-	for (int i = 0; i < normal.size(); i++) {
-		if (i % 3 == 2) fs << normal[i] << endl;
-		else fs << normal[i] << " ";
-	}
-
-	fs.close();
 
 }
 
@@ -385,7 +298,6 @@ int main(int argc, char* argv[]) {
 		g = stof(argv[6]);
 		b = stof(argv[7]);
 		geraPontosBezier(fileIn, fileOut, tesselations,r,g,b);
-		geraNormaisFich(fileOut);
 		return 0;
 	}
 	
