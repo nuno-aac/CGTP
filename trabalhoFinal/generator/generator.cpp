@@ -98,7 +98,7 @@ void cross(float a0, float a1, float a2, float b0, float b1, float b2, float* re
 		cout << "uZ == " << a2 << ' ';
 		cout << "vX == " << b0 << ' ';
 		cout << "vY == " << b1 << ' ';
-		cout << "vZ == " << b2 << ' ';
+		cout << "vZ == " << b2 << '\n';
 	}
 }
 
