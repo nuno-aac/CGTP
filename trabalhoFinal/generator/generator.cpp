@@ -98,6 +98,7 @@ void cross(float a0, float a1, float a2, float b0, float b1, float b2, float* re
 void normalize(float* a) {
 
 	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+	if (l == 0) cout << "hello man\n";
 	a[0] = -a[0] / l;
 	a[1] = -a[1] / l;
 	a[2] = -a[2] / l;
