@@ -92,13 +92,20 @@ void cross(float a0, float a1, float a2, float b0, float b1, float b2, float* re
 	res[0] = a1 * b2 - a2 * b1;
 	res[1] = a2 * b0 - a0 * b2;
 	res[2] = a0 * b1 - a1 * b0;
+	if (sqrt(res[0] * res[0] + res[1] * res[1] + res[2] * res[2]) == 0) {
+		cout << "uX == " << a0 << ' ';
+		cout << "uY == " << a1 << ' ';
+		cout << "uZ == " << a2 << ' ';
+		cout << "vX == " << b0 << ' ';
+		cout << "vY == " << b1 << ' ';
+		cout << "vZ == " << b2 << ' ';
+	}
 }
 
 
 void normalize(float* a) {
 
 	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-	if (l == 0) cout << "hello man\n";
 	a[0] = -a[0] / l;
 	a[1] = -a[1] / l;
 	a[2] = -a[2] / l;
