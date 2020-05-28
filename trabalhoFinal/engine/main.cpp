@@ -236,7 +236,7 @@ void setupLights(vector<Light*> l) {
 		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 0;
 		if (l[i]->getType() == L_DIRECTIONAL);
 		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 1;
-		float quad_att = 0.1f;
+		float quad_att = 0.001f;
 		GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
 		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
 		GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
