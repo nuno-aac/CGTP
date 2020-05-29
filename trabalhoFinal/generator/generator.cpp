@@ -145,7 +145,7 @@ void computeNormal(float uX, float uY, float uZ, float vX, float vY, float vZ, f
 	if (normalV[0] != normalV[0] || normalV[1] != normalV[1] || normalV[2] != normalV[2]) {
 		normalV[0] = 0;
 		normalV[1] = 0;
-		normalV[2] = 1;
+		normalV[2] = -1;
 	}
 }
 
