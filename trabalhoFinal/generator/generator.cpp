@@ -42,7 +42,7 @@ int countPontos(string line) {
 
 
 
-float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flagU, int flagV, int print) {
+float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flagU, int flagV) {
 	int m[4][4]{ {-1,3,-3,1},{3,-6,3,0},{-3,3,0,0},{1,0,0,0} };
 	float u[4] = { ti *ti*ti,ti *ti,ti,1 };
 	if (flagU == 1) {
@@ -60,29 +60,29 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 	}
 	float r[4] = { 0 };
 	float ret = 0;
-	if (print) {
+	/*if (print) {
 		for (int i = 0; i < 4; i++) {
-			//cout << "u " << u[i] << " ";
+			cout << "u " << u[i] << " ";
 		}
-		//cout << '\n';
+		cout << '\n';
 	}
 	if (print) {
 		for (int i = 0; i < 4; i++) {
-			//cout << "v " << v[i] << " ";
+			cout << "v " << v[i] << " ";
 		}
-		//cout << '\n';
-	}
+		cout << '\n';
+	}*/
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			r[i] += u[j] * m[j][i];
 		}
 	}
-	if (print) {
+	/*if (print) {
 		for (int i = 0; i < 4; i++) {
-			//cout << "r1 " << r[i] << " ";
+			cout << "r1 " << r[i] << " ";
 		}
-		//cout << '\n';
-	}
+		cout << '\n';
+	}*/
 	for (int i = 0; i < 4; i++) {
 		u[i] = 0;
 	}	
@@ -93,12 +93,12 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 		}
 		//if(print) cout << '\n';
 	}
-	if (print) {
+	/*if (print) {
 		for (int i = 0; i < 4; i++) {
-			//cout << "u1 " << u[i] << " ";
+			cout << "u1 " << u[i] << " ";
 		}
-		//cout << '\n';
-	}
+		cout << '\n';
+	}*/
 	for (int i = 0; i < 4; i++) {
 		r[i] = 0;
 	}
@@ -107,18 +107,18 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 			r[i] += u[j] * m[j][i];
 		}
 	}
-	if (print) {
+	/*if (print) {
 		for (int i = 0; i < 4; i++) {
-			//cout << "r2 " << r[i] << " ";
+			cout << "r2 " << r[i] << " ";
 		}
-		//cout << '\n';
-	}
+		cout << '\n';
+	}*/
 	for (int j = 0; j < 4; j++) {
 		ret += r[j] * v[j];
 	}
-	if (print) {
-		//cout << "ret " << ret << '\n';
-	}
+	/*if (print) {
+		cout << "ret " << ret << '\n';
+	}*/
 	return ret;
 }
 
@@ -259,9 +259,9 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 					float ti = (1.0 / (float)tesselation) * i;
 					float tj = (1.0 / (float)tesselation) * j;
 
-					mX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 0, 0);
-					mY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 0, 0);
-					mZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 0, 0);
+					mX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 0);
+					mY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 0);
+					mZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 0);
 
 				}
 			}
@@ -287,13 +287,14 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 
 					float flagX, flagY, flagZ;
 
-					mUX[i][j] = calculatePoints(ti, tj, tempX, patch, 1, 0, 0);
-					mUY[i][j] = calculatePoints(ti, tj, tempY, patch, 1, 0, 0);
-					mUZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 1, 0, 0);
+					mUX[i][j] = calculatePoints(ti, tj, tempX, patch, 1, 0);
+					mUY[i][j] = calculatePoints(ti, tj, tempY, patch, 1, 0);
+					mUZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 1, 0);
 
-					mVX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 1, 0);
-					mVY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 1, 0);
-					mVZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 1, 0);
+					mVX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 1);
+					mVY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 1);
+					mVZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 1);
+
 				}
 			}
 
