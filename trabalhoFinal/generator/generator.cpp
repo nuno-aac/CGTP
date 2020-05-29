@@ -170,6 +170,7 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 	int totalControlOrder;
 	int totalControlPoints;
 	fstream fs;
+	fstream fsNorms;
 	string line;
 	fs.open(file, fstream::in);
 	if (fs.is_open())
@@ -235,20 +236,23 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		float mVY[20][20] = { 0 };
 		float mVZ[20][20] = { 0 };
 
-		
+		fs.open("3dfiles/" + figura + ".3d", fstream::out);
+
+		fs << to_string(patches * tesselation * tesselation * 6) << endl;
+		fs << r << " ";
+		fs << g << " ";
+		fs << b << endl;
+
+		//calculate normals
+		fsNorms.open("3dfiles/" + figura + ".3dn", fstream::out);
+
 		float norm[3] = { 0 };
 		float mNormaisX[20][20] = { 0 };
 		float mNormaisY[20][20] = { 0 };
 		float mNormaisZ[20][20] = { 0 };
 
 		for (int patch = 0; patch < patches; patch++) {
-			fs.open("3dfiles/" + figura + ".3d", fstream::out);
-
-			fs << to_string(patches * tesselation * tesselation * 6) << endl;
-			fs << r << " ";
-			fs << g << " ";
-			fs << b << endl;
-
+			
 
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
@@ -273,19 +277,8 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 					fs << mX[i + 1][j + 1] << " " << mY[i + 1][j + 1] << " " << mZ[i + 1][j + 1] << endl;
 					fs << mX[i + 1][j] << " " << mY[i + 1][j] << " " << mZ[i + 1][j] << endl;
 
-
-					
-
 				}
 			}
-
-			fs.close();
-
-			//calculate normals
-			fs.open("3dfiles/" + figura + ".3dn", fstream::out);
-
-
-			
 
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
@@ -317,20 +310,20 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 			for (int j = 0; j < tesselation; j++) {
 				for (int i = 0; i < tesselation; i++) {
 
-					fs << mNormaisX[i][j] << " " << mNormaisY[i][j] << " " << mNormaisZ[i][j] << endl;
-					fs << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
-					fs << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
+					fsNorms << mNormaisX[i][j] << " " << mNormaisY[i][j] << " " << mNormaisZ[i][j] << endl;
+					fsNorms << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
+					fsNorms << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
 
-					fs << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
-					fs << mNormaisX[i + 1][j + 1] << " " << mNormaisY[i + 1][j + 1] << " " << mNormaisZ[i + 1][j + 1] << endl;
-					fs << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
+					fsNorms << mNormaisX[i][j + 1] << " " << mNormaisY[i][j + 1] << " " << mNormaisZ[i][j + 1] << endl;
+					fsNorms << mNormaisX[i + 1][j + 1] << " " << mNormaisY[i + 1][j + 1] << " " << mNormaisZ[i + 1][j + 1] << endl;
+					fsNorms << mNormaisX[i + 1][j] << " " << mNormaisY[i + 1][j] << " " << mNormaisZ[i + 1][j] << endl;
 
 				}
 			}
-			fs.close();
 		}
 
-
+		fs.close();
+		fsNorms.close();
 	}
 
 	else cout << "Unable to open file";
