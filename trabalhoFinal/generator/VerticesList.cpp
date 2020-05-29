@@ -36,10 +36,10 @@ void VerticesList::addNormal(float x, float y, float z){
   normals.push_back(z);
 }
 
-void VerticesList::addTextures(float x, float y, float z){
+void VerticesList::addTextures(float x, float y){
   textures.push_back(x);
   textures.push_back(y);
-  textures.push_back(z);
+  //textures.push_back(z);
 }
 
 void VerticesList::plane(float size){
@@ -165,6 +165,8 @@ void VerticesList::box(float x, float y, float z){
 void VerticesList::sphere(float r, int slices, int stacks){
   float stackStep = (float) (M_PI) / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;
+  float stackText = 1 / stacks;
+  float sliceText = 1 / slices;
   float alpha0, beta0, alpha1, beta1;
   float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
 
@@ -194,26 +196,39 @@ void VerticesList::sphere(float r, int slices, int stacks){
       if(b  == 0){
         //TOPO
         addPoint(0, r, 0);
+        addTextures(sliceText * a, 1 - (stackText * b));
         addPoint(xBChange , heightBChange, zBChange);
+        addTextures(sliceText * a, 1 - (stackText * (b+1)));
         addPoint(xABChange , heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
+        
       }
       else {
         //CORPO
         addPoint(x, height, z);
+        addTextures(sliceText * a, 1 - (stackText * b));
         addPoint(xAChange, height, zAChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * b));
         addPoint(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
 
         addPoint(x, height, z);
+        addTextures(sliceText * a, 1 - (stackText * b));
         addPoint(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
         addPoint(xBChange, heightBChange, zBChange);
+        addTextures(sliceText * a, 1 - (stackText * (b+1)));
       }
       beta1 -= stackStep;
       beta0 -= stackStep;
     }
     //FUNDO
     addPoint(0, -r, 0);
+    addTextures(sliceText * a, 0));
     addPoint(xAChange, height, zAChange);
+    addTextures(sliceText * (a+1), stackText));
     addPoint(x, height, z);
+    addTextures(sliceText * a, stackText);
     alpha0 += sliceStep;
     alpha1 += sliceStep;
   }
