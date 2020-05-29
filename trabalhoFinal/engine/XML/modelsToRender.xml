@@ -1,7 +1,7 @@
 <?xml version="2.0" ?>
 <scene>
   <lights>
-    <light type='POINT' X='0' Y='5' Z='0'/>
+    <light type='POINT' posX='0' posY='5' posZ='0'/>
   </lights>
   <group>
     <rotate time='5' X='0' Y='1' Z='0'/>
@@ -11,7 +11,7 @@
       <rotate angle='90' X='-1' Y='0' Z='0'/>
       <translate X='0' Y='0' Z='3'/>
       <models>
-        <model file='bez.3d'/>
+        <model file='bez.3d' material='material1.mat'/>
       </models>
     </group>
   </group>

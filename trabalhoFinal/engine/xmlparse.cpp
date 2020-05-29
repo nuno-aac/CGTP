@@ -185,12 +185,25 @@ Light* parseLight(XMLElement* l) {
 	if (l->Attribute("type")) typeS = l->Attribute("type");
 	if (typeS.compare("POINT") == 0) {
 		type = L_POINT;
+		if (l->Attribute("posX")) light->setPosX(atof(l->Attribute("posX")));
+		if (l->Attribute("posY")) light->setPosY(atof(l->Attribute("posY")));
+		if (l->Attribute("posZ")) light->setPosZ(atof(l->Attribute("posZ")));
 	}
 	if (typeS.compare("DIRECTIONAL") == 0) {
 		type = L_DIRECTIONAL;
+		if (l->Attribute("dirX")) light->setDirX(atof(l->Attribute("dirX")));
+		if (l->Attribute("dirY")) light->setDirY(atof(l->Attribute("dirY")));
+		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
 	}
 	if (typeS.compare("SPOTLIGHT") == 0) {
 		type = L_SPOTLIGHT;
+		if (l->Attribute("posX")) light->setPosX(atof(l->Attribute("posX")));
+		if (l->Attribute("posY")) light->setPosY(atof(l->Attribute("posY")));
+		if (l->Attribute("posZ")) light->setPosZ(atof(l->Attribute("posZ")));
+		if (l->Attribute("dirX")) light->setDirX(atof(l->Attribute("dirX")));
+		if (l->Attribute("dirY")) light->setDirY(atof(l->Attribute("dirY")));
+		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
+		if (l->Attribute("ang")) light->setAngCuttof(atof(l->Attribute("ang")));
 	}
 
 	if (l->Attribute("X")) x = atof(l->Attribute("X"));
