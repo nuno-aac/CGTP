@@ -141,6 +141,12 @@ void normalize(float* a) {
 void computeNormal(float uX, float uY, float uZ, float vX, float vY, float vZ, float* normalV) {
 	cross(uX, uY, uZ, vX, vY, vZ, normalV);
 	normalize(normalV);
+
+	if (normalV[0] != normalV[0] || normalV[1] != normalV[1] || normalV[2] != normalV[2]) {
+		normalV[0] = 0;
+		normalV[1] = 0;
+		normalV[2] = 1;
+	}
 }
 
 void geraPontosBezier(string file, string figura, int const tesselation,float r, float g, float b) {
@@ -291,40 +297,9 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 					mUY[i][j] = calculatePoints(ti, tj, tempY, patch, 1, 0, 0);
 					mUZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 1, 0, 0);
 
-					flagX = calculatePoints(ti, tj, tempX, patch, 0, 1, 0);
-					flagY = calculatePoints(ti, tj, tempY, patch, 0, 1, 0);
-					flagZ = calculatePoints(ti, tj, tempZ, patch, 0, 1, 0);
-
-					if (flagX == 0 && flagY == 0 && flagZ != 0) {
-						mVX[i][j] = 0;
-						mVY[i][j] = 0;
-						mVZ[i][j] = flagZ/sqrt(flagZ*flagZ);
-					}
-					else if (flagX == 0 && flagZ == 0 && flagY != 0) {
-						mVX[i][j] = 0;
-						mVY[i][j] = flagY / sqrt(flagY * flagY);
-						mVZ[i][j] = 0;
-					}
-					else if (flagY == 0 && flagZ == 0 && flagX != 0) {
-						mVX[i][j] = flagX / sqrt(flagX * flagX);
-						mVY[i][j] = 0;
-						mVZ[i][j] = 0;
-					}
-					else
-					{
-						mVX[i][j] = flagX;
-						mVY[i][j] = flagY;
-						mVZ[i][j] = flagZ;
-					}
-
-					/*if (mVX[i][j] == 0 && mVY[i][j] == 0 && mVZ[i][j] == 0) {
-						cout << "x\n";
-						mVX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 1, 1);
-						cout << "y\n";
-						mVY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 1, 1);
-						cout << "z\n";
-						mVZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 1, 1);
-					}*/
+					mVX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 1, 0);
+					mVY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 1, 0);
+					mVZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 1, 0);
 				}
 			}
 
