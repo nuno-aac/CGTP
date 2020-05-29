@@ -205,10 +205,7 @@ Light* parseLight(XMLElement* l) {
 		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
 		if (l->Attribute("ang")) light->setAngCuttof(atof(l->Attribute("ang")));
 	}
-
-	if (l->Attribute("X")) x = atof(l->Attribute("X"));
-	if (l->Attribute("Y")) y = atof(l->Attribute("Y"));
-	if (l->Attribute("Z")) z = atof(l->Attribute("Z"));
+	return light;
 }
 
 

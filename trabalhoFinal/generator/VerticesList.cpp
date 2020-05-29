@@ -36,6 +36,12 @@ void VerticesList::addNormal(float x, float y, float z){
   normals.push_back(z);
 }
 
+void VerticesList::addTextures(float x, float y, float z){
+  textures.push_back(x);
+  textures.push_back(y);
+  textures.push_back(z);
+}
+
 void VerticesList::plane(float size){
   float cord = size/2;
   //T1
