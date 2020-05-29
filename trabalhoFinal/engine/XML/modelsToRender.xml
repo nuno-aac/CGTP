@@ -4,12 +4,12 @@
     <light type='POINT' X='0' Y='5' Z='0'/>
   </lights>
   <group>
-    <rotate tme='0' X='0' Y='1' Z='0'/>
+    <rotate time='5' X='0' Y='1' Z='0'/>
     <models>
     </models>
     <group>
       <rotate angle='90' X='-1' Y='0' Z='0'/>
-      <translate X='0' Y='0' Z='0'/>
+      <translate X='0' Y='0' Z='3'/>
       <models>
         <model file='bez.3d'/>
       </models>

@@ -7,6 +7,16 @@ Light::Light() {
 	type = L_POINT;
 }
 
+Light::Light(int newType, float newX, float newY, float newZ) {
+	posX = newX;
+	posY = newY;
+	posZ = newZ;
+	dirX = newX;
+	dirY = newY;
+	dirZ = newZ;
+	type = newType;
+}
+
 
 float Light::getPosX(){
 	return posX;

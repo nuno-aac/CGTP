@@ -233,9 +233,9 @@ void setupLights(vector<Light*> l) {
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0+i);
 		if (l[i]->getType() == L_POINT);
-		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 0;
+		pos[0] = l[i]->getPosX(); pos[1] = l[i]->getPosY(); pos[2] = l[i]->getPosZ(); pos[3] = 0;
 		if (l[i]->getType() == L_DIRECTIONAL);
-		pos[0] = l[i]->getX(); pos[1] = l[i]->getY(); pos[2] = l[i]->getZ(); pos[3] = 1;
+		pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 1;
 		float quad_att = 0.001f;
 		GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
 		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
@@ -374,7 +374,7 @@ int main(int argc, char** argv) {
 	glutKeyboardFunc(keyRotate);
 
 	// OpenGL settings
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //WIRES
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //WIRES
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

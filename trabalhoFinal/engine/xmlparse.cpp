@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void parseMaterialFile(string file, Model* m) {
+/*void parseMaterialFile(string file, Model* m) {
 	string title;
 	float val1, val2, val3;
 	int valInt;
@@ -11,7 +11,7 @@ void parseMaterialFile(string file, Model* m) {
 
 	ifstream infile(file);
 
-	if (!infile.is_open) {
+	if (infile.is_open != 1) {
 		cout << "Invalida Materials file" << file;
 		return;
 	}
@@ -41,7 +41,7 @@ void parseMaterialFile(string file, Model* m) {
 		}
 
 	}
-}
+}*/
 
 void parse3dFile(string file, Model * m) {
 	float x, y, z;
@@ -180,17 +180,22 @@ Light* parseLight(XMLElement* l) {
 	int type;
 	type = L_POINT;
 	string fileName;
+	Light * light = new Light();
 
 	if (l->Attribute("type")) typeS = l->Attribute("type");
-	if (typeS.compare("POINT") == 0) type = L_POINT;
-	if (typeS.compare("DIRECTIONAL") == 0) type = L_DIRECTIONAL;
+	if (typeS.compare("POINT") == 0) {
+		type = L_POINT;
+	}
+	if (typeS.compare("DIRECTIONAL") == 0) {
+		type = L_DIRECTIONAL;
+	}
+	if (typeS.compare("SPOTLIGHT") == 0) {
+		type = L_SPOTLIGHT;
+	}
 
 	if (l->Attribute("X")) x = atof(l->Attribute("X"));
 	if (l->Attribute("Y")) y = atof(l->Attribute("Y"));
 	if (l->Attribute("Z")) z = atof(l->Attribute("Z"));
-
-
-	return new Light(type,z,y,z);
 }
 
 
