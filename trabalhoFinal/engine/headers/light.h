@@ -2,25 +2,37 @@
 #define __LIGHT_H__
 
 const int L_POINT = 0;
-const int L_DIRECTIONAL = 0;
-const int L_SPOTLIGHT = 0;
+const int L_DIRECTIONAL = 1;
+const int L_SPOTLIGHT = 2;
 
 class Light {
 	int type;
-	float x, y, z;
+	float posX, posY, posZ;
+	float dirX, dirY, dirZ;
+	float ang;
 
 public:
 	Light();
 	Light(int type, float newX, float newY, float newZ);
+	Light(int type, float px, float py, float pz, float dx, float dy, float dz, float ang);
 
-	float getX();
-	float getY();
-	float getZ();
+	float getPosX();
+	float getPosY();
+	float getPosZ();
+	float getDirX();
+	float getDirY();
+	float getDirZ();
+	float getAngCuttof();
 	float getType();
 
-	void setX(float newX);
-	void setY(float newY);
-	void setZ(float newZ);
+
+	void setPosX(float px);
+	void setPosY(float py);
+	void setPosZ(float pz);
+	void setDirX(float dx);
+	void setDirY(float dy);
+	void setDirZ(float dz);
+	void setAngCuttof(float newAng);
 	void setType(int newType);
 };
 
