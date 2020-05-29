@@ -138,14 +138,21 @@ void normalize(float* a) {
 	a[2] = -a[2] / l;
 }
 
-void computeNormal(float uX, float uY, float uZ, float vX, float vY, float vZ, float* normalV) {
+void computeNormal(float uX, float uY, float uZ, float vX, float vY, float vZ, float* normalV, float z) {
 	cross(uX, uY, uZ, vX, vY, vZ, normalV);
 	normalize(normalV);
 
 	if (normalV[0] != normalV[0] || normalV[1] != normalV[1] || normalV[2] != normalV[2]) {
-		normalV[0] = 0;
-		normalV[1] = 0;
-		normalV[2] = -1;
+		if (z > 0) {
+			normalV[0] = 0;
+			normalV[1] = 0;
+			normalV[2] = 1;
+		}
+		if (z <= 0) {
+			normalV[0] = 0;
+			normalV[1] = 0;
+			normalV[2] = -1;
+		}
 	}
 }
 
@@ -228,15 +235,17 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		float mVY[20][20] = { 0 };
 		float mVZ[20][20] = { 0 };
 
-		fs.open("3dfiles/" + figura + ".3d", fstream::out);
-
-		fs << to_string(patches * tesselation * tesselation * 6) << endl;
-		fs << r << " ";
-		fs << g << " ";
-		fs << b << endl;
-
+		
 
 		for (int patch = 0; patch < patches; patch++) {
+			fs.open("3dfiles/" + figura + ".3d", fstream::out);
+
+			fs << to_string(patches * tesselation * tesselation * 6) << endl;
+			fs << r << " ";
+			fs << g << " ";
+			fs << b << endl;
+
+
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
 					float ti = (1.0 / (float)tesselation) * i;
@@ -245,13 +254,6 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 					mX[i][j] = calculatePoints(ti, tj, tempX, patch, 0, 0, 0);
 					mY[i][j] = calculatePoints(ti, tj, tempY, patch, 0, 0, 0);
 					mZ[i][j] = calculatePoints(ti, tj, tempZ, patch, 0, 0, 0);
-
-
-					if (mZ[i][j] > 3.14 && mZ[i][j] < 3.16) {
-						cout << "x " << mX[i][j] << ' ';
-						cout << "y " << mY[i][j] << ' ';
-						cout << "z " << mZ[i][j] << '\n';
-					}
 
 				}
 			}
@@ -272,20 +274,18 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 
 				}
 			}
-		}
 
-		fs.close();
+			fs.close();
 
-		//calculate normals
-		fs.open("3dfiles/" + figura + ".3dn", fstream::out);
+			//calculate normals
+			fs.open("3dfiles/" + figura + ".3dn", fstream::out);
 
-		
-		float norm[3] = { 0 };
-		float mNormaisX[20][20] = {0};
-		float mNormaisY[20][20] = { 0 };
-		float mNormaisZ[20][20] = { 0 };
 
-		for (int patch = 0; patch < patches; patch++) {
+			float norm[3] = { 0 };
+			float mNormaisX[20][20] = { 0 };
+			float mNormaisY[20][20] = { 0 };
+			float mNormaisZ[20][20] = { 0 };
+
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
 					float ti = (1.0 / (float)tesselation) * i;
@@ -305,8 +305,8 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
-					computeNormal(mUX[i][j], mUY[i][j], mUZ[i][j], mVX[i][j], mVY[i][j], mVZ[i][j],norm);
-					
+					computeNormal(mUX[i][j], mUY[i][j], mUZ[i][j], mVX[i][j], mVY[i][j], mVZ[i][j], norm, mZ[i][j]);
+
 					mNormaisX[i][j] = norm[0];
 					mNormaisY[i][j] = norm[1];
 					mNormaisZ[i][j] = norm[2];
@@ -326,10 +326,9 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 
 				}
 			}
+			fs.close();
 		}
-		
 
-		fs.close();
 
 	}
 
