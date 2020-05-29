@@ -2,6 +2,47 @@
 
 using namespace std;
 
+void parseMaterialFile(string file, Model* m) {
+	string title;
+	float val1, val2, val3;
+	int valInt;
+
+	Material * mat = new Material();
+
+	ifstream infile(file);
+
+	if (!infile.is_open) {
+		cout << "Invalida Materials file" << file;
+		return;
+	}
+
+	while (infile >> title) {
+		if (strcmp(title.c_str(), "Diffuse") == 0) {
+			infile >> val1 >> val2 >> val3;
+			mat->setDiffR(val1);
+			mat->setDiffG(val2);
+			mat->setDiffB(val3);
+		}
+		if (strcmp(title.c_str(), "Ambient") == 0) {
+			infile >> val1 >> val2 >> val3;
+			mat->setAmbR(val1);
+			mat->setAmbG(val2);
+			mat->setAmbB(val3);
+		}
+		if (strcmp(title.c_str(), "Specular") == 0) {
+			infile >> val1 >> val2 >> val3;
+			mat->setSpecR(val1);
+			mat->setSpecG(val2);
+			mat->setSpecB(val3);
+		}
+		if (strcmp(title.c_str(), "Shininess") == 0) {
+			infile >> valInt;
+			mat->setShininess(valInt);
+		}
+
+	}
+}
+
 void parse3dFile(string file, Model * m) {
 	float x, y, z;
 	float r, g, b;

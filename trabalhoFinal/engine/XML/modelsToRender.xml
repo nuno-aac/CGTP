@@ -1,16 +1,17 @@
 <?xml version="2.0" ?>
 <scene>
   <lights>
-    <light type='POINT' X='0' Y='2' Z='0'/>
+    <light type='POINT' X='0' Y='5' Z='0'/>
   </lights>
   <group>
-    <rotate ang='0' X='0' Y='1' Z='0'/>
+    <rotate tme='0' X='0' Y='1' Z='0'/>
     <models>
     </models>
     <group>
-      <translate X='0' Y='0' Z='10'/>
+      <rotate angle='90' X='-1' Y='0' Z='0'/>
+      <translate X='0' Y='0' Z='0'/>
       <models>
-        <model file='new.3d'/>
+        <model file='bez.3d'/>
       </models>
     </group>
   </group>

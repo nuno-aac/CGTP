@@ -1,46 +1,71 @@
 #include "headers/light.h"
 
 Light::Light() {
-	x = 0;
-	y = 0;
-	z = 0;
+	posX = posY = posZ = 0;
+	dirX = dirY = dirZ = 0;
+	ang = 0;
 	type = L_POINT;
 }
 
-Light::Light(int t, float newX, float newY, float newZ) {
-	x = newX;
-	y = newY;
-	z = newZ;
-	type = t;
+
+float Light::getPosX(){
+	return posX;
 }
 
-
-float Light::getX(){
-	return x;
+float Light::getPosY(){
+	return posY;
 }
 
-float Light::getY(){
-	return y;
+float Light::getPosZ(){
+	return posZ;
 }
 
-float Light::getZ(){
-	return z;
+float Light::getDirX() {
+	return dirX;
+}
+
+float Light::getDirY() {
+	return dirY;
+}
+
+float Light::getDirZ() {
+	return posZ;
+}
+
+float Light::getAngCuttof() {
+	return ang;
 }
 
 float Light::getType(){
 	return type;
 }
 
-void Light::setX(float newX){
-	x = newX;
+void Light::setPosX(float px){
+	posX = px;
 }
 
-void Light::setY(float newY){
-	y = newY;
+void Light::setPosY(float py){
+	posY = py;
 }
 
-void Light::setZ(float newZ){
-	z = newZ;
+void Light::setPosZ(float pz){
+	posZ = pz;
+}
+
+void Light::setDirX(float dx) {
+	dirX = dx;
+}
+
+void Light::setDirY(float dy) {
+	dirY = dy;
+}
+
+void Light::setDirZ(float dz) {
+	dirZ = dz;
+}
+
+void Light::setAngCuttof(float newAng) {
+	ang = newAng;
 }
 
 void Light::setType(int newType){
