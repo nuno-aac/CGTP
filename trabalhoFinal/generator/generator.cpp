@@ -236,6 +236,10 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		float mVZ[20][20] = { 0 };
 
 		
+		float norm[3] = { 0 };
+		float mNormaisX[20][20] = { 0 };
+		float mNormaisY[20][20] = { 0 };
+		float mNormaisZ[20][20] = { 0 };
 
 		for (int patch = 0; patch < patches; patch++) {
 			fs.open("3dfiles/" + figura + ".3d", fstream::out);
@@ -281,10 +285,7 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 			fs.open("3dfiles/" + figura + ".3dn", fstream::out);
 
 
-			float norm[3] = { 0 };
-			float mNormaisX[20][20] = { 0 };
-			float mNormaisY[20][20] = { 0 };
-			float mNormaisZ[20][20] = { 0 };
+			
 
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
