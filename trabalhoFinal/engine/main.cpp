@@ -25,6 +25,7 @@ vector<vector<float>> vertices;
 
 GLuint modelsBuf[300];
 GLuint normalsBuf[300];
+GLuint texturesBuf[300];
 int currentModel = 0;
 
 float time = 0.0f;
@@ -179,20 +180,20 @@ void applyTransformations(Group* g) {
 
 
 void drawModel(Model* model) {
+	Material * material = model->getMaterial();
 	vector<float> modelVertex = model->getVertices();
 	vector<float> normals = model->getNormals();
-	//glColor3f(model -> getR(), model -> getG(), model -> getB());
-	GLfloat qaBlack[] = { 0.0, 0.0, 0.0, 1.0 }; //Black Color
-	GLfloat qaGreen[] = { 0.0, 1.0, 0.0, 1.0 }; //Green Color
-	GLfloat qaWhite[] = { 1.0, 1.0, 1.0, 1.0 }; //White Color
-	GLfloat qaRed[] = { 1.0, 0.0, 0.0, 1.0 }; //White Color
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, qaGreen);
+	vector<float> textures = model->getTextures();
+	glColor3f(model -> getR(), model -> getG(), model -> getB());
+	if (material) {
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material->getDiff());
 
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, qaGreen);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material->getAmb());
 
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, qaWhite);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material->getSpec());
 
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 20);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material->getShininess());
+	}
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, modelsBuf[currentModel]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * model->getVertices().size(), &modelVertex[0], GL_STATIC_DRAW);
@@ -201,6 +202,14 @@ void drawModel(Model* model) {
 	glBindBuffer(GL_ARRAY_BUFFER, normalsBuf[currentModel]);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
 	glNormalPointer(GL_FLOAT, 0, 0);
+	if (textures.size() != 0) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindTexture(GL_TEXTURE_2D, model->getTextureID());
+		glBindBuffer(GL_ARRAY_BUFFER, texturesBuf[currentModel]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * textures.size(), &textures[0], GL_STATIC_DRAW);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+	}
+
 	glDrawArrays(GL_TRIANGLES, 0, model->getVertices().size()/3);
 }
 
@@ -232,10 +241,12 @@ void setupLights(vector<Light*> l) {
 	for (int i = 0; i < l.size(); i++) {
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0+i);
-		if (l[i]->getType() == L_POINT);
-		pos[0] = l[i]->getPosX(); pos[1] = l[i]->getPosY(); pos[2] = l[i]->getPosZ(); pos[3] = 0;
-		if (l[i]->getType() == L_DIRECTIONAL);
-		pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 1;
+		if (l[i]->getType() == L_POINT) { 
+			pos[0] = l[i]->getPosX(); pos[1] = l[i]->getPosY(); pos[2] = l[i]->getPosZ(); pos[3] = 1;
+		}
+		if (l[i]->getType() == L_DIRECTIONAL) { 
+			pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 0; 
+		}
 		float quad_att = 0.001f;
 		GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
 		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
@@ -363,6 +374,7 @@ int main(int argc, char** argv) {
 
 	glewInit();
 	glGenBuffers(300, modelsBuf);
+	glGenBuffers(300, texturesBuf);
 	glGenBuffers(300, normalsBuf);
 	// put callback registration here
 	glutDisplayFunc(renderScene);

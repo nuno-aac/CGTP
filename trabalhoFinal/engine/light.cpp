@@ -46,7 +46,7 @@ float Light::getAngCuttof() {
 	return ang;
 }
 
-float Light::getType(){
+int Light::getType(){
 	return type;
 }
 

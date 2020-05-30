@@ -1,47 +1,59 @@
 #include "headers/material.h"
 
 Material::Material() {
-	diffR = diffG = diffB = 0;
-	ambR = ambG = ambB = 0;
-	specR = specG = specB = 0;
+	for (int i = 0; i < 3; i++) {
+		diff[i] = amb[i] = spec[i] = 0;
+	}
+	diff[3] = amb[3] = spec[3] = 1;
 	shininess = 0;
 }
 
+float* Material::getDiff() {
+	return diff;
+}
 
 float Material::getDiffR() {
-	return diffR;
+	return diff[0];
 }
 
 float Material::getDiffG() {
-	return diffG;
+	return diff[1];
 }
 
 float Material::getDiffB() {
-	return diffB;
+	return diff[2];
+}
+
+float* Material::getAmb() {
+	return amb;
 }
 
 float Material::getAmbR() {
-	return ambR;
+	return amb[0];
 }
 
 float Material::getAmbG() {
-	return ambG;
+	return amb[1];
 }
 
 float Material::getAmbB() {
-	return ambB;
+	return amb[2];
+}
+
+float* Material::getSpec() {
+	return spec;
 }
 
 float Material::getSpecR() {
-	return specR;
+	return spec[0];
 }
 
 float Material::getSpecG() {
-	return specG;
+	return spec[1];
 }
 
 float Material::getSpecB() {
-	return specB;
+	return spec[2];
 }
 
 int Material::getShininess() {
@@ -50,39 +62,39 @@ int Material::getShininess() {
 
 
 void Material::setDiffR(float dr) {
-	diffR = dr;
+	diff[0] = dr;
 }
 
 void Material::setDiffG(float dg) {
-	diffG = dg;
+	diff[1]= dg;
 }
 
 void Material::setDiffB(float db) {
-	diffB = db;
+	diff[2] = db;
 }
 
 void Material::setAmbR(float ar) {
-	ambR = ar;
+	amb[0] = ar;
 }
 
 void Material::setAmbG(float ag) {
-	ambG = ag;
+	amb[1]= ag;
 }
 
 void Material::setAmbB(float ab) {
-	ambB = ab;
+	amb[2] = ab;
 }
 
 void Material::setSpecR(float sr) {
-	specR = sr;
+	spec[0] = sr;
 }
 
 void Material::setSpecG(float sg) {
-	specG = sg;
+	spec[1]= sg;
 }
 
 void Material::setSpecB(float sb) {
-	specB = sb;
+	spec[2] = sb;
 }
 
 void Material::setShininess(int s) {
