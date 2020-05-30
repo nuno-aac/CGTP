@@ -241,11 +241,11 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		vector <float> tempY;
 		vector <float> tempZ;
 
-		for each (int var in pointsOrder)
+		for (int i = 0; i < pointsOrder.size(); i++)
 		{
-			tempX.push_back(pointsX.at(var));
-			tempY.push_back(pointsY.at(var));
-			tempZ.push_back(pointsZ.at(var));
+			tempX.push_back(pointsX.at(pointsOrder.at(i)));
+			tempY.push_back(pointsY.at(pointsOrder.at(i)));
+			tempZ.push_back(pointsZ.at(pointsOrder.at(i)));
 		}
 
 		float mX[20][20] = { 0 };
