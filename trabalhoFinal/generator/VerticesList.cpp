@@ -12,6 +12,14 @@ vector<float> VerticesList::getPoints(){
   return points;
 }
 
+vector<float> VerticesList::getNormals() {
+    return normals;
+}
+
+vector<float> VerticesList::getTextures() {
+    return textures;
+}
+
 void VerticesList::normalize(float* a) {
 
     float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
@@ -224,9 +232,9 @@ void VerticesList::sphere(float r, int slices, int stacks){
     }
     //FUNDO
     addPoint(0, -r, 0);
-    addTextures(sliceText * a, 0));
+    addTextures(sliceText * a, 0);
     addPoint(xAChange, height, zAChange);
-    addTextures(sliceText * (a+1), stackText));
+    addTextures(sliceText * (a+1), stackText);
     addPoint(x, height, z);
     addTextures(sliceText * a, stackText);
     alpha0 += sliceStep;

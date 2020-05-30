@@ -12,8 +12,14 @@ vector<float> normalY;
 vector<float> normalZ;
 
 void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b) {
-  fstream fs;
+  fstream fs, fsNormals, fsTextures;
   fs.open("3dfiles/" + figura + ".3d", fstream::out);
+  fsNormals.open("3dfiles/" + figura + ".3dn", fstream::out);
+  fsTextures.open("3dfiles/" + figura + ".3dt", fstream::out);
+
+  vector <float> vectorN = vL->getNormals();
+
+  vector <float> vectorT = vL->getTextures();
 
   vector <float> vector = vL->getPoints();
 
@@ -23,11 +29,23 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
   fs << b << endl;
 
   for(int i = 0; i < vector.size() ; i++) {
-    if (i % 3 == 2) fs << vector[i] << endl;
-    else fs << vector[i] << " ";
+	  if (i % 3 == 2) {
+		  fs << vector[i] << endl;
+		  fsNormals << vectorN[i] << endl;
+	  }
+	  else {
+		  fs << vector[i] << " ";
+		  fsNormals << vectorN[i] << " ";
+	  }
+  }
+  for (int i = 0; i < vectorT.size(); i++) {
+	  fsTextures << vectorT[i] << ' ' << vectorT[i + 1] << endl;
+	  i++;
   }
 
   fs.close();
+  fsNormals.close();
+  fsTextures.close();
 
 }
 
@@ -215,9 +233,9 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		fs.close();
 		//calculate points
 
-		vector<float> tempX;
-		vector<float> tempY;
-		vector<float> tempZ;
+		vector <float> tempX;
+		vector <float> tempY;
+		vector <float> tempZ;
 
 		for each (int var in pointsOrder)
 		{
