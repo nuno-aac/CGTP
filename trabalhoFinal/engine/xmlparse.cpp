@@ -206,6 +206,10 @@ Group* parseGroup(XMLElement* g) {
 	Model* currentModel;
 	string fileName, texName;
 
+	if (g == nullptr) {
+		return nullptr;
+	}
+
 	XMLElement* translation = g->FirstChildElement("translate");
 	if (translation != nullptr) {
 		if (translation->Attribute("time")) group->setCatmull(parseCatmull(translation));
@@ -283,12 +287,35 @@ Light* parseLight(XMLElement* l) {
 	return light;
 }
 
+void parseCamera(XMLElement * cam, Scene* scene) {
+	float pX, pY, pZ, dX, dY, dZ;
+	Group* camGroup;
+	
+	pX = pY = pZ = dX = dY = dZ = 0;
+
+	if (cam->Attribute("posX")) pX = atof(cam->Attribute("posX"));
+	if (cam->Attribute("posY")) pY = atof(cam->Attribute("posY"));
+	if (cam->Attribute("posZ")) pZ = atof(cam->Attribute("posZ"));
+	if (cam->Attribute("dirX")) dX = atof(cam->Attribute("dirX"));
+	if (cam->Attribute("dirY")) dY = atof(cam->Attribute("dirY"));
+	if (cam->Attribute("dirZ")) dZ = atof(cam->Attribute("dirZ"));
+
+	XMLElement* xmlgroup = cam->FirstChildElement("group");
+	camGroup = parseGroup(xmlgroup);
+
+	scene->setCamPos(pX, pY, pZ);
+	scene->setCamDir(dX, dY, dZ);
+	scene->setCamGroup(camGroup);
+
+}
+
 
 Scene* parseXML(string nome) {
 	vector<Group*> groups;
 	vector<Light*> lights;
 	XMLDocument d;
 	string str;
+	Scene* scene = new Scene();
 
 	string path = "..\\XML\\" + nome;
 
@@ -297,6 +324,9 @@ Scene* parseXML(string nome) {
 
 		if (root == nullptr) 
 			return NULL;
+
+		XMLElement* xmlcam = root->FirstChildElement("camera");
+		parseCamera(xmlcam, scene);
 
 		XMLElement* xmllights = root->FirstChildElement("lights");
 		XMLElement* light = nullptr;
@@ -307,6 +337,7 @@ Scene* parseXML(string nome) {
 			lights.push_back(parseLight(light));
 			light = light->NextSiblingElement();
 		}
+		scene->setLights(lights);
 
 		XMLElement* grupo = root->FirstChildElement("group");
 
@@ -315,8 +346,9 @@ Scene* parseXML(string nome) {
 			groups.push_back(parseGroup(grupo));
 			grupo = grupo->NextSiblingElement();
 		}
+		scene->setScene(groups);
 
-		return new Scene(groups, lights);
+		return scene;
 	}
 	else {
 		std::cout << "Error: " << d.ErrorStr() << "\n";

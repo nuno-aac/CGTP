@@ -19,6 +19,7 @@
 
 using namespace std;
 
+Scene* fullScene;
 vector<Group*> scene;
 vector<Light*> lights;
 vector<vector<float>> vertices;
@@ -33,6 +34,9 @@ float vert = 0.0f;
 float hor = 0.0f;
 float ang = 0.0f;
 float zoom = 0.0f;
+
+float camX, camY, camZ;
+float lcamX, lcamY, lcamZ;
 
 bool showOrbit;
 
@@ -266,11 +270,11 @@ void renderScene(void) {
 	// clear buffers
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	drawGroup(fullScene->getCamGroup());
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(zoom+vert, zoom, zoom + hor,
-		vert, 0.0, hor,
+	gluLookAt(camX, camY, camZ,
+		lcamX, lcamY, lcamZ,
 		0.0f, 1.0f, 0.0f);
 
 	setupLights(lights);
@@ -309,11 +313,20 @@ void renderScene(void) {
 	time /= 1000;
 }
 
+void setupCam() {
+	camX = fullScene ->getCamX();
+	camY = fullScene->getCamY();
+	camZ = fullScene->getCamZ();
+	lcamX = fullScene->getCamDirX() + fullScene->getCamX();
+	lcamY = fullScene->getCamDirY() + fullScene->getCamY();
+	lcamZ = fullScene->getCamDirZ() + fullScene->getCamZ();
+}
+
 void keyUp(int keyCode, int x, int y){
 
 	switch (keyCode)    {
 	case GLUT_KEY_UP:
-		vert -= 1.0f;
+		camZ -= 1.0f;
 		break;
 	case GLUT_KEY_DOWN:
 		vert += 1.0f;
@@ -385,7 +398,7 @@ int main(int argc, char** argv) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	//Get models
-	Scene* fullScene = parseXML("modelsToRender.xml");
+	fullScene = parseXML("modelsToRender.xml");
 	scene = fullScene->getScene();
 	lights = fullScene->getLights();
 	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
@@ -394,7 +407,7 @@ int main(int argc, char** argv) {
 	hor = 0;
 	showOrbit = false;
 
-
+	setupCam();
 	// enter GLUT's main loop
 	glutMainLoop();
 

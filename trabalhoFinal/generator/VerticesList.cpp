@@ -58,7 +58,7 @@ void VerticesList::plane(float size){
     addTextures(1, 0);
     addPoint(cord,0,-cord);
     addNormal(0,1,0);
-    addTextures(0, 1);
+    addTextures(1, 1);
     addPoint(-cord, 0, cord);
     addNormal(0,1,0);
     addTextures(0, 0);
