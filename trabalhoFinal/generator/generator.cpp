@@ -103,7 +103,7 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 	}*/
 	for (int i = 0; i < 4; i++) {
 		u[i] = 0;
-	}	
+	}
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			u[i] += r[j] * vet.at(4*j + i + (16 * patch));
@@ -206,7 +206,7 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		while (i < patches) {
 			while (j < numPerPatch && fs >> skipws >> n >> v) {
 				pointsOrder.push_back(n);
-				j++;				
+				j++;
 			}
 			j = 1;
 			fs >> n;
@@ -270,7 +270,7 @@ void geraPontosBezier(string file, string figura, int const tesselation,float r,
 		float mNormaisZ[20][20] = { 0 };
 
 		for (int patch = 0; patch < patches; patch++) {
-			
+
 
 			for (int j = 0; j <= tesselation; j++) {
 				for (int i = 0; i <= tesselation; i++) {
@@ -365,7 +365,7 @@ int main(int argc, char* argv[]) {
 		geraPontosBezier(fileIn, fileOut, tesselations,r,g,b);
 		return 0;
 	}
-	
+
 
 	if (strcmp(argv[1], "plane") == 0 && argc == 7) {
 		float size = stof(argv[2]);
@@ -403,7 +403,6 @@ int main(int argc, char* argv[]) {
 		b = stof(argv[7]);
 		figura = argv[8];
 		vL->sphere(raio, slices, stacks);
-		vN->sphereNormal(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
 		//geraPontosNormal(vN, figura);
 		return 0;
