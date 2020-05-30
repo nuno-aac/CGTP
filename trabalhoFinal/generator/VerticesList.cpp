@@ -319,8 +319,9 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
   float sliceStep = (float) (2 * M_PI) / slices;
   float stackText = 0.625 / stacks;
   float sliceText = 1.0 / slices;
-  float vY = sin(atan(r / maxHeight));
-  float vR = cos(atan(r / maxHeight));
+  float ang(atan(r / maxHeight));
+  float vY = cos(ang) * (sin(ang) * r);
+  float vR = r - sin(ang) * (sin(ang) * r);
   float vX, vNextX, vZ, vNextZ;
   float currentR, nextR;
   float height, nextHeight, x, nextX, z, nextZ, xHigher, nextXHigher, zHigher, nextZHigher;
