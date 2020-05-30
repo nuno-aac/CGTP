@@ -231,12 +231,12 @@ void VerticesList::sphere(float r, int slices, int stacks){
       beta0 -= stackStep;
     }
     //FUNDO
-    /*addPoint(0, -r, 0);
+    addPoint(0, -r, 0);
     addTextures(sliceText * a + (sliceText / 2), 0);
     addPoint(xAChange, height, zAChange);
     addTextures(sliceText * (a+1), stackText);
     addPoint(x, height, z);
-    addTextures(sliceText * a, stackText);*/
+    addTextures(sliceText * a, stackText);
     alpha0 += sliceStep;
     alpha1 += sliceStep;
   }
@@ -291,9 +291,9 @@ void VerticesList::sphereNormal(float r, int slices, int stacks){
             beta0 -= stackStep;
         }
         //FUNDO
-        //addNormal(0, -r, 0);
-        //addNormal(xAChange, height, zAChange);
-        //addNormal(x, height, z);
+        addNormal(0, -r, 0);
+        addNormal(xAChange, height, zAChange);
+        addNormal(x, height, z);
         alpha0 += sliceStep;
         alpha1 += sliceStep;
     }
