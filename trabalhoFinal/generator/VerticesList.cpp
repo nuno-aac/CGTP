@@ -55,17 +55,23 @@ void VerticesList::plane(float size){
   //T1
     addPoint(cord, 0, cord);
     addNormal(0,1,0);
+    addTextures(1, 0);
     addPoint(cord,0,-cord);
     addNormal(0,1,0);
+    addTextures(0, 1);
     addPoint(-cord, 0, cord);
     addNormal(0,1,0);
+    addTextures(0, 0);
   //T2
     addPoint(-cord, 0, -cord);
     addNormal(0,1,0);
+    addTextures(0, 1);
     addPoint(-cord, 0, cord);
     addNormal(0,1,0);
+    addTextures(0, 0);
     addPoint(cord, 0, -cord);
     addNormal(0,1,0);
+    addTextures(1, 1);
 }
 
 void VerticesList::box(float x, float y, float z){
@@ -77,97 +83,133 @@ void VerticesList::box(float x, float y, float z){
     //T1
     addPoint(cordX, cordY, cordZ);
     addNormal(0,1,0);
+    addTextures(1, 0);
     addPoint(cordX,cordY,-cordZ);
     addNormal(0,1,0);
+    addTextures(1, 1);
     addPoint(-cordX, cordY, cordZ);
     addNormal(0,1,0);
+    addTextures(0, 0);
     //T2
     addPoint(-cordX, cordY, -cordZ);
     addNormal(0,1,0);
+    addTextures(0, 1);
     addPoint(-cordX, cordY, cordZ);
     addNormal(0,1,0);
+    addTextures(0, 0);
     addPoint(cordX, cordY, -cordZ);
     addNormal(0,1,0);
+    addTextures(1, 1);
 
   //Base
     //T1
     addPoint(cordX, -cordY, cordZ);
     addNormal(0,-1,0);
+    addTextures(1, 0);
     addPoint(-cordX, -cordY, cordZ);
     addNormal(0,-1,0);
+    addTextures(1, 1);
     addPoint(cordX,-cordY,-cordZ);
     addNormal(0,-1,0);
+    addTextures(0, 0);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
     addNormal(0,-1,0);
+    addTextures(0, 1);
     addPoint(cordX, -cordY, -cordZ);
     addNormal(0,-1,0);
+    addTextures(0, 0);
     addPoint(-cordX, -cordY, cordZ);
     addNormal(0,-1,0);
+    addTextures(1, 1);
 
   //Lado X positivo
     //T1
     addPoint(cordX, cordY, cordZ);
     addNormal(1,0,0);
+    addTextures(0, 1);
     addPoint(cordX, -cordY, cordZ);
     addNormal(1,0,0);
+    addTextures(0, 0);
     addPoint(cordX,cordY,-cordZ);
     addNormal(1,0,0);
+    addTextures(1, 1);
     //T2
     addPoint(cordX, -cordY, -cordZ);
     addNormal(1,0,0);
+    addTextures(1, 0);
     addPoint(cordX, cordY, -cordZ);
     addNormal(1,0,0);
+    addTextures(1, 1);
     addPoint(cordX, -cordY, cordZ);
     addNormal(1,0,0);
+    addTextures(0, 0);
 
   //Lado X negativo
     //T1
     addPoint(-cordX, cordY, cordZ);
     addNormal(-1,0,0);
+    addTextures(1, 1);
     addPoint(-cordX,cordY,-cordZ);
     addNormal(-1,0,0);
+    addTextures(0, 1);
     addPoint(-cordX, -cordY, cordZ);
     addNormal(-1,0,0);
+    addTextures(1, 0);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
     addNormal(-1,0,0);
+    addTextures(0, 0);
     addPoint(-cordX, -cordY, cordZ);
     addNormal(-1,0,0);
+    addTextures(1, 0);
     addPoint(-cordX, cordY, -cordZ);
     addNormal(-1,0,0);
+    addTextures(0, 1);
 
   //Lado Z positivo
     //T1
     addPoint(cordX, cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(1, 1);
     addPoint(-cordX, cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(0, 1);
     addPoint(cordX, -cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(1, 0);
     //T2
     addPoint(-cordX, -cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(0, 0);
     addPoint(cordX, -cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(1, 0);
     addPoint(-cordX, cordY, cordZ);
     addNormal(0,0,1);
+    addTextures(0, 1);
 
   //Lado Z negativo
     //T1
     addPoint(cordX, cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(0, 1);
     addPoint(cordX,-cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(0, 0);
     addPoint(-cordX, cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(1, 1);
     //T2
     addPoint(-cordX, -cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(1, 0);
     addPoint(-cordX, cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(1, 1);
     addPoint(cordX, -cordY, -cordZ);
     addNormal(0,0,-1);
+    addTextures(0, 0);
 }
 
 void VerticesList::sphere(float r, int slices, int stacks){
