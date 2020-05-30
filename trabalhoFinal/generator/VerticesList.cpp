@@ -319,6 +319,9 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
   float sliceStep = (float) (2 * M_PI) / slices;
   float stackText = 0.625 / stacks;
   float sliceText = 1.0 / slices;
+  float vY = sin(atan(r / maxHeight));
+  float vR = cos(atan(r / maxHeight));
+  float vX, vNextX, vZ, vNextZ;
   float currentR, nextR;
   float height, nextHeight, x, nextX, z, nextZ, xHigher, nextXHigher, zHigher, nextZHigher;
 
@@ -343,26 +346,41 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
       nextZ = sin((a + 1)* sliceStep) * currentR;
       nextZHigher = sin((a + 1)* sliceStep) * nextR;
 
+      //GET NORM
+      vX = cos(a * sliceStep) * vR;
+      vNextX = cos((a + 1) * sliceStep * vR);
+      vZ = sin(a * sliceStep) * vR;
+      vNextZ = sin((a + 1) * sliceStep * vR);
+
       if(b == 0){
         addPoint(0, 0, 0);
+        addNormal(0, -1, 0);
         addTextures(0.8125, 0.1875);
         addPoint(x, 0 ,z);
+        addNormal(0, -1, 0);
         addTextures(r * cos(sliceStep*a), r * sin(sliceStep * a));
         addPoint(nextX, 0, nextZ);
+        addNormal(0, -1, 0);
         addTextures(r * cos(sliceStep * (a + 1)), r * sin(sliceStep * (a + 1)));
       }
       addPoint(x, height, z);
+      addNormal(vX, vY, vZ);
       addTextures(a * sliceText, 0.375 + stackText * b);
       addPoint(xHigher, nextHeight, zHigher);
+      addNormal(vX, vY, vZ);
       addTextures(a*sliceText,0.375 + stackText*(b+1));
       addPoint(nextX, height, nextZ);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * b);
 
       addPoint(nextXHigher, nextHeight, nextZHigher);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * (b+1));
       addPoint(nextX, height, nextZ);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * b);
       addPoint(xHigher, nextHeight, zHigher);
+      addNormal(vX, vY, vZ);
       addTextures(a * sliceText, 0.375 + stackText * (b+1));
     }
   }
