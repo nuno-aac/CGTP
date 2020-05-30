@@ -173,8 +173,8 @@ void VerticesList::box(float x, float y, float z){
 void VerticesList::sphere(float r, int slices, int stacks){
   float stackStep = (float) (M_PI) / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;
-  float stackText = 1 / stacks;
-  float sliceText = 1 / slices;
+  float stackText = 1.0 / stacks;
+  float sliceText = 1.0 / slices;
   float alpha0, beta0, alpha1, beta1;
   float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
 
@@ -273,27 +273,27 @@ void VerticesList::sphereNormal(float r, int slices, int stacks){
 
             if (b == 0) {
                 //TOPO
-                addPoint(0, r, 0);
-                addPoint(xBChange, heightBChange, zBChange);
-                addPoint(xABChange, heightBChange, zABChange);
+                addNormal(0, r, 0);
+                addNormal(xBChange, heightBChange, zBChange);
+                addNormal(xABChange, heightBChange, zABChange);
             }
             else {
                 //CORPO
-                addPoint(x, height, z);
-                addPoint(xAChange, height, zAChange);
-                addPoint(xABChange, heightBChange, zABChange);
+                addNormal(x, height, z);
+                addNormal(xAChange, height, zAChange);
+                addNormal(xABChange, heightBChange, zABChange);
 
-                addPoint(x, height, z);
-                addPoint(xABChange, heightBChange, zABChange);
-                addPoint(xBChange, heightBChange, zBChange);
+                addNormal(x, height, z);
+                addNormal(xABChange, heightBChange, zABChange);
+                addNormal(xBChange, heightBChange, zBChange);
             }
             beta1 -= stackStep;
             beta0 -= stackStep;
         }
         //FUNDO
-        addPoint(0, -r, 0);
-        addPoint(xAChange, height, zAChange);
-        addPoint(x, height, z);
+        addNormal(0, -r, 0);
+        addNormal(xAChange, height, zAChange);
+        addNormal(x, height, z);
         alpha0 += sliceStep;
         alpha1 += sliceStep;
     }
