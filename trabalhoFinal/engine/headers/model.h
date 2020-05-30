@@ -10,7 +10,7 @@ class Model {
 	int numPontos;
 	float colorR, colorG, colorB;
 	int textureID;
-	Material material;
+	Material * material;
 	vector<float> vertices;
 	vector<float> normals;
 	vector<float> textures;
@@ -26,12 +26,16 @@ public:
 	vector<float> getVertices();
 	vector<float> getNormals();
 	vector<float> getTextures();
+	Material * getMaterial();
 	float getVertice(int i);
+	int getTextureID();
 
 	void setNumPontos(int n);
 	void setR(float r);
 	void setG(float g);
 	void setB(float b);
+	void setMaterial(Material * m);
+	void setTextureID(int id);
 	void pushVertice(float v);
 	void pushNormal(float n);
 	void pushTexture(float t);

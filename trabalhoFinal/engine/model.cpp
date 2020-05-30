@@ -5,6 +5,7 @@ Model::Model() {
 	colorR = 1;
 	colorG = 1;
 	colorB = 1;
+	material = nullptr;
 }
 
 Model::Model(float r, float g, float b) {
@@ -12,6 +13,7 @@ Model::Model(float r, float g, float b) {
 	colorR = r;
 	colorG = g;
 	colorB = b;
+	material = nullptr;
 }
 
 int Model::getNumPontos() {
@@ -30,6 +32,10 @@ float Model::getB() {
 	return colorB;
 }
 
+Material * Model::getMaterial() {
+	return material;
+}
+
 vector<float> Model::getVertices() {
 	return vertices;
 }
@@ -40,6 +46,10 @@ vector<float> Model::getNormals() {
 
 vector<float> Model::getTextures() {
 	return textures;
+}
+
+int Model::getTextureID() {
+	return textureID;
 }
 
 float Model::getVertice(int i) {
@@ -60,6 +70,14 @@ void Model::setG(float g) {
 
 void Model::setB(float b) {
 	colorB = b;
+}
+
+void Model::setMaterial(Material * m) {
+	material = m;
+}
+
+void Model::setTextureID(int id) {
+	textureID = id;
 }
 
 void Model::pushVertice(float v) {

@@ -23,7 +23,7 @@ public:
 	float getDirY();
 	float getDirZ();
 	float getAngCuttof();
-	float getType();
+	int getType();
 
 
 	void setPosX(float px);

@@ -6,20 +6,23 @@
 using namespace std;
 
 class Material {
-	float diffR, diffG, diffB;
-	float ambR, ambG, ambB;
-	float specR, specG, specB;
+	float diff[4];
+	float amb[4];
+	float spec[4];
 	int shininess;
 
 public:
 	Material();
 
+	float* getDiff();
 	float getDiffR();
 	float getDiffG();
 	float getDiffB();
+	float* getAmb();
 	float getAmbR();
 	float getAmbG();
 	float getAmbB();
+	float* getSpec();
 	float getSpecR();
 	float getSpecG();
 	float getSpecB();

@@ -1,8 +1,50 @@
 #include "headers/xmlparse.h"
+#include <IL/il.h>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
 
 using namespace std;
 
-/*void parseMaterialFile(string file, Model* m) {
+void loadTexture(std::string s, Model * model) {
+
+	unsigned int t, tw, th;
+	unsigned char* texData;
+	unsigned int texID;
+
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+	ilGenImages(1, &t);
+	ilBindImage(t);
+	ilLoadImage((ILstring)s.c_str());
+	tw = ilGetInteger(IL_IMAGE_WIDTH);
+	th = ilGetInteger(IL_IMAGE_HEIGHT);
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	texData = ilGetData();
+
+	glGenTextures(1, &texID);
+
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	model -> setTextureID(texID);
+
+}
+
+void parseMaterialFile(string file, Model* m) {
 	string title;
 	float val1, val2, val3;
 	int valInt;
@@ -11,7 +53,7 @@ using namespace std;
 
 	ifstream infile(file);
 
-	if (infile.is_open != 1) {
+	if (infile.is_open() != 1) {
 		cout << "Invalida Materials file" << file;
 		return;
 	}
@@ -41,7 +83,8 @@ using namespace std;
 		}
 
 	}
-}*/
+	m->setMaterial(mat);
+}
 
 void parse3dFile(string file, Model * m) {
 	float x, y, z;
@@ -63,6 +106,8 @@ void parse3dFile(string file, Model * m) {
 		m->pushVertice(y);
 		m->pushVertice(z);
 	}
+
+	infile.close();
 }
 
 void parseNormalFile(string file, Model* m) {
@@ -76,6 +121,22 @@ void parseNormalFile(string file, Model* m) {
 		m->pushNormal(y);
 		m->pushNormal(z);
 	}
+
+	infile.close();
+}
+
+void parseTextureFile(string file, Model* m) {
+	float x, y;
+
+	ifstream infile(file + "t");
+
+
+	while (infile >> x >> y) {
+		m->pushTexture(x);
+		m->pushTexture(y);
+	}
+
+	infile.close();
 }
  
 Model* parseFiles(string file) {
@@ -139,6 +200,7 @@ RotationAnimation* parseRotation(XMLElement* t) {
 
 Group* parseGroup(XMLElement* g) {
 	Group* group = new Group();
+	Model* currentModel;
 	string fileName;
 
 	XMLElement* translation = g->FirstChildElement("translate");
@@ -160,7 +222,14 @@ Group* parseGroup(XMLElement* g) {
 	XMLElement* model = models->FirstChildElement("model");
 	while (model != nullptr) {
 		fileName = model->Attribute("file");
-		group->pushModel(parseFiles("..\\..\\generator\\3dfiles\\" + fileName));
+		currentModel = parseFiles("..\\..\\generator\\3dfiles\\" + fileName);
+		fileName = model->Attribute("material");
+		if (model->Attribute("material")) parseMaterialFile("..\\materials\\" + fileName, currentModel);
+		if (model->Attribute("textures")) {
+			loadTexture("..\\textures\\" + fileName, currentModel);
+			parseTextureFile("..\\..\\generator\\3dfiles\\" + fileName, currentModel);
+		}
+		group->pushModel(currentModel);
 		model = model->NextSiblingElement();
 	}
 
@@ -184,19 +253,19 @@ Light* parseLight(XMLElement* l) {
 
 	if (l->Attribute("type")) typeS = l->Attribute("type");
 	if (typeS.compare("POINT") == 0) {
-		type = L_POINT;
+		light -> setType(L_POINT);
 		if (l->Attribute("posX")) light->setPosX(atof(l->Attribute("posX")));
 		if (l->Attribute("posY")) light->setPosY(atof(l->Attribute("posY")));
 		if (l->Attribute("posZ")) light->setPosZ(atof(l->Attribute("posZ")));
 	}
 	if (typeS.compare("DIRECTIONAL") == 0) {
-		type = L_DIRECTIONAL;
+		light->setType(L_DIRECTIONAL);
 		if (l->Attribute("dirX")) light->setDirX(atof(l->Attribute("dirX")));
 		if (l->Attribute("dirY")) light->setDirY(atof(l->Attribute("dirY")));
 		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
 	}
 	if (typeS.compare("SPOTLIGHT") == 0) {
-		type = L_SPOTLIGHT;
+		light->setType(L_SPOTLIGHT);
 		if (l->Attribute("posX")) light->setPosX(atof(l->Attribute("posX")));
 		if (l->Attribute("posY")) light->setPosY(atof(l->Attribute("posY")));
 		if (l->Attribute("posZ")) light->setPosZ(atof(l->Attribute("posZ")));
