@@ -214,18 +214,18 @@ void VerticesList::sphere(float r, int slices, int stacks){
       else {
         //CORPO
         addPoint(x, height, z);
-        addTextures(sliceText * a, 1 - (stackText * b));
+        addTextures(sliceText * a, 1 - (stackText * (b+1)));
         addPoint(xAChange, height, zAChange);
-        addTextures(sliceText * (a+1), 1 - (stackText * b));
-        addPoint(xABChange, heightBChange, zABChange);
         addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
+        addPoint(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * b));
 
         addPoint(x, height, z);
-        addTextures(sliceText * a, 1 - (stackText * b));
-        addPoint(xABChange, heightBChange, zABChange);
-        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
-        addPoint(xBChange, heightBChange, zBChange);
         addTextures(sliceText * a, 1 - (stackText * (b+1)));
+        addPoint(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * b));
+        addPoint(xBChange, heightBChange, zBChange);
+        addTextures(sliceText * a, 1 - (stackText * b));
       }
       beta1 -= stackStep;
       beta0 -= stackStep;
