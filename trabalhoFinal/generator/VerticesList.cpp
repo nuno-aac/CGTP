@@ -204,7 +204,7 @@ void VerticesList::sphere(float r, int slices, int stacks){
       if(b  == 0){
         //TOPO
         addPoint(0, r, 0);
-        addTextures(0.5, 1);
+        addTextures(sliceText*a +(sliceText/2), 1);
         addPoint(xBChange , heightBChange, zBChange);
         addTextures(sliceText * a, 1 - (stackText * (b+1)));
         addPoint(xABChange , heightBChange, zABChange);
@@ -232,7 +232,7 @@ void VerticesList::sphere(float r, int slices, int stacks){
     }
     //FUNDO
     addPoint(0, -r, 0);
-    addTextures(0.5, 0);
+    addTextures(sliceText * a + (sliceText / 2), 0);
     addPoint(xAChange, height, zAChange);
     addTextures(sliceText * (a+1), stackText);
     addPoint(x, height, z);
