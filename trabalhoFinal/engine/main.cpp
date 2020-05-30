@@ -203,7 +203,6 @@ void drawModel(Model* model) {
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
 	glNormalPointer(GL_FLOAT, 0, 0);
 	if (textures.size() != 0) {
-		cout << "TEXID RENDER" << model->getTextureID() << '\n';
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, model->getTextureID());
 		glBindBuffer(GL_ARRAY_BUFFER, texturesBuf[currentModel]);

@@ -173,21 +173,21 @@ void VerticesList::box(float x, float y, float z){
 void VerticesList::sphere(float r, int slices, int stacks){
   float stackStep = (float) (M_PI) / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;
-  float stackText = 1.0 / stacks;
+  float stackText = 1.0 / (stacks);
   float sliceText = 1.0 / slices;
   float alpha0, beta0, alpha1, beta1;
   float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
-
+  int numStacks = 0;
   alpha0 = 0;
   alpha1 = sliceStep;
 
   for(int a = 0; a < slices; a++){
 
     beta0 = (M_PI/2) * 1;
-    beta1 = beta0 + stackStep;
+    beta1 = beta0 - stackStep;
 
-    for(int b = 0; b < stacks; b++){
-
+    for(int b = 0; b < stacks -1; b++){
+      numStacks ++;
       height = sin(beta0) * r;
       heightBChange = sin(beta1) * r;
 
@@ -201,102 +201,75 @@ void VerticesList::sphere(float r, int slices, int stacks){
       zBChange = cos(beta1) * cos(alpha0) * r;
       zABChange = cos(beta1) * cos(alpha1) * r;
 
-      if(b  == 0){
-        //TOPO
+      if(b == 0){
         addPoint(0, r, 0);
-        addTextures(sliceText*a +(sliceText/2), 1);
+        addNormal(0, r, 0);
+        addTextures(sliceText * a + (sliceText/2), 1);
         addPoint(xBChange , heightBChange, zBChange);
+        addNormal(xBChange , heightBChange, zBChange);
         addTextures(sliceText * a, 1 - (stackText * (b+1)));
         addPoint(xABChange , heightBChange, zABChange);
+        addNormal(xABChange , heightBChange, zABChange);
         addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
-        
+        if(a == 0){
+          cout << "BOTTOM TEXTURES: " << 1 - (stackText * (b+1)) << "| TOP TEXTURE: " << 1 << '\n';
+        }
       }
       else {
-        //CORPO
+        if(a == 0){
+          cout << "BOTTOM TEXTURES: " << 1 - (stackText * (b+1)) << "| TOP TEXTURE: " << 1 - (stackText * (b)) << '\n';
+        }
         addPoint(x, height, z);
-        addTextures(sliceText * a, 1 - (stackText * (b+1)));
-        addPoint(xAChange, height, zAChange);
-        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
+        addNormal(x, height, z);
+        addTextures(sliceText * a, 1 - (stackText * b));
         addPoint(xABChange, heightBChange, zABChange);
+        addNormal(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
+        addPoint(xAChange, height, zAChange);
+        addNormal(xAChange, height, zAChange);
         addTextures(sliceText * (a+1), 1 - (stackText * b));
 
         addPoint(x, height, z);
+        addNormal(x, height, z);
+        addTextures(sliceText * a, 1 - (stackText * b));
+        addPoint(xBChange, heightBChange, zBChange);
+        addNormal(xBChange, heightBChange, zBChange);
         addTextures(sliceText * a, 1 - (stackText * (b+1)));
         addPoint(xABChange, heightBChange, zABChange);
-        addTextures(sliceText * (a+1), 1 - (stackText * b));
-        addPoint(xBChange, heightBChange, zBChange);
-        addTextures(sliceText * a, 1 - (stackText * b));
+        addNormal(xABChange, heightBChange, zABChange);
+        addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
       }
       beta1 -= stackStep;
       beta0 -= stackStep;
     }
+    height = sin(beta0) * r;
+    heightBChange = sin(beta1) * r;
+
+    x = cos(beta0) * sin(alpha0) * r;
+    xAChange = cos(beta0) * sin(alpha1) * r;
+    xBChange = cos(beta1) * sin(alpha0) * r;
+    xABChange = cos(beta1) * sin(alpha1) * r;
+
+    z = cos(beta0) * cos(alpha0) * r;
+    zAChange = cos(beta0) * cos(alpha1) * r;
+    zBChange = cos(beta1) * cos(alpha0) * r;
+    zABChange = cos(beta1) * cos(alpha1) * r;
     //FUNDO
     addPoint(0, -r, 0);
-    addTextures(sliceText * a + (sliceText / 2), 0);
+    addNormal(0, -r, 0);
+    addTextures(sliceText * a + (sliceText/2), 0);
     addPoint(xAChange, height, zAChange);
+    addNormal(xAChange, height, zAChange);
     addTextures(sliceText * (a+1), stackText);
     addPoint(x, height, z);
+    addNormal(x, height, z);
     addTextures(sliceText * a, stackText);
+    if(a == 0){
+      cout << "BOTTOM TEXTURES: " << 0 << "| TOP TEXTURE: " << stackText << '\n';
+    }
     alpha0 += sliceStep;
     alpha1 += sliceStep;
   }
-}
-
-void VerticesList::sphereNormal(float r, int slices, int stacks){
-    float stackStep = (float)(M_PI) / stacks;
-    float sliceStep = (float)(2 * M_PI) / slices;
-    float alpha0, beta0, alpha1, beta1;
-    float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
-
-    alpha0 = 0;
-    alpha1 = sliceStep;
-
-    for (int a = 0; a < slices; a++) {
-
-        beta0 = (M_PI / 2) * 1;
-        beta1 = beta0 + stackStep;
-
-        for (int b = 0; b < stacks; b++) {
-
-            height = sin(beta0) * r;
-            heightBChange = sin(beta1) * r;
-
-            x = cos(beta0) * sin(alpha0) * r;
-            xAChange = cos(beta0) * sin(alpha1) * r;
-            xBChange = cos(beta1) * sin(alpha0) * r;
-            xABChange = cos(beta1) * sin(alpha1) * r;
-
-            z = cos(beta0) * cos(alpha0) * r;
-            zAChange = cos(beta0) * cos(alpha1) * r;
-            zBChange = cos(beta1) * cos(alpha0) * r;
-            zABChange = cos(beta1) * cos(alpha1) * r;
-
-            if (b == 0) {
-                //TOPO
-                addNormal(0, r, 0);
-                addNormal(xBChange, heightBChange, zBChange);
-                addNormal(xABChange, heightBChange, zABChange);
-            }
-            else {
-                //CORPO
-                addNormal(x, height, z);
-                addNormal(xAChange, height, zAChange);
-                addNormal(xABChange, heightBChange, zABChange);
-
-                addNormal(x, height, z);
-                addNormal(xABChange, heightBChange, zABChange);
-                addNormal(xBChange, heightBChange, zBChange);
-            }
-            beta1 -= stackStep;
-            beta0 -= stackStep;
-        }
-        //FUNDO
-        addNormal(0, -r, 0);
-        addNormal(xAChange, height, zAChange);
-        addNormal(x, height, z);
-        alpha0 += sliceStep;
-        alpha1 += sliceStep;
-    }
 }
 
 void VerticesList::cone(float r, float maxHeight, int slices, int stacks){

@@ -407,7 +407,6 @@ int main(int argc, char* argv[]) {
 		b = stof(argv[7]);
 		figura = argv[8];
 		vL->sphere(raio, slices, stacks);
-		vL->sphereNormal(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
 		//geraPontosNormal(vN, figura);
 		return 0;
