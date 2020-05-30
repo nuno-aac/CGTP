@@ -23,6 +23,10 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
   vector <float> vector = vL->getPoints();
 
+  cout << "size " << vector.size() << '\n';
+  cout << "sizeN " << vectorN.size() << '\n';
+  cout << "sizeT " << vectorT.size() << '\n';
+
   fs << to_string(vector.size()/3) << endl;
   fs << r << " ";
   fs << g << " ";
@@ -403,6 +407,7 @@ int main(int argc, char* argv[]) {
 		b = stof(argv[7]);
 		figura = argv[8];
 		vL->sphere(raio, slices, stacks);
+		vL->sphereNormal(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
 		//geraPontosNormal(vN, figura);
 		return 0;
