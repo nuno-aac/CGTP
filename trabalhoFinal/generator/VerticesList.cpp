@@ -215,7 +215,7 @@ void VerticesList::box(float x, float y, float z){
 void VerticesList::sphere(float r, int slices, int stacks){
   float stackStep = (float) (M_PI) / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;
-  float stackText = 1.0 / (stacks);
+  float stackText = 1.0 / stacks;
   float sliceText = 1.0 / slices;
   float alpha0, beta0, alpha1, beta1;
   float height, heightBChange, x, xAChange, xBChange, xABChange, z, zAChange, zBChange, zABChange;
@@ -317,6 +317,8 @@ void VerticesList::sphere(float r, int slices, int stacks){
 void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
   float stackStep = (float) maxHeight / stacks;
   float sliceStep = (float) (2 * M_PI) / slices;
+  float stackText = 0.625 / stacks;
+  float sliceText = 1.0 / slices;
   float currentR, nextR;
   float height, nextHeight, x, nextX, z, nextZ, xHigher, nextXHigher, zHigher, nextZHigher;
 
@@ -343,16 +345,25 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
 
       if(b == 0){
         addPoint(0, 0, 0);
+        addTextures(0.8125, 0.1875);
         addPoint(x, 0 ,z);
+        addTextures(r * cos(sliceStep*a), r * sin(sliceStep * a));
         addPoint(nextX, 0, nextZ);
+        addTextures(r * cos(sliceStep * (a + 1)), r * sin(sliceStep * (a + 1)));
       }
       addPoint(x, height, z);
+      addTextures(a * sliceText, 0.375 + stackText * b);
       addPoint(xHigher, nextHeight, zHigher);
+      addTextures(a*sliceText,0.375 + stackText*(b+1));
       addPoint(nextX, height, nextZ);
+      addTextures((a + 1) * sliceText, 0.375 + stackText * b);
 
       addPoint(nextXHigher, nextHeight, nextZHigher);
+      addTextures((a + 1) * sliceText, 0.375 + stackText * (b+1));
       addPoint(nextX, height, nextZ);
+      addTextures((a + 1) * sliceText, 0.375 + stackText * b);
       addPoint(xHigher, nextHeight, zHigher);
+      addTextures(a * sliceText, 0.375 + stackText * (b+1));
     }
   }
 }
