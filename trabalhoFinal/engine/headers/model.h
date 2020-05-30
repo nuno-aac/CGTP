@@ -9,7 +9,7 @@ using namespace std;
 class Model {
 	int numPontos;
 	float colorR, colorG, colorB;
-	int textureID;
+	unsigned int textureID;
 	Material * material;
 	vector<float> vertices;
 	vector<float> normals;
@@ -28,14 +28,14 @@ public:
 	vector<float> getTextures();
 	Material * getMaterial();
 	float getVertice(int i);
-	int getTextureID();
+	unsigned int getTextureID();
 
 	void setNumPontos(int n);
 	void setR(float r);
 	void setG(float g);
 	void setB(float b);
 	void setMaterial(Material * m);
-	void setTextureID(int id);
+	void setTextureID(unsigned int id);
 	void pushVertice(float v);
 	void pushNormal(float n);
 	void pushTexture(float t);

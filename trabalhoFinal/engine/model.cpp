@@ -48,7 +48,7 @@ vector<float> Model::getTextures() {
 	return textures;
 }
 
-int Model::getTextureID() {
+unsigned int Model::getTextureID() {
 	return textureID;
 }
 
@@ -76,7 +76,7 @@ void Model::setMaterial(Material * m) {
 	material = m;
 }
 
-void Model::setTextureID(int id) {
+void Model::setTextureID(unsigned int id) {
 	textureID = id;
 }
 

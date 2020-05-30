@@ -14,7 +14,7 @@ void loadTexture(std::string s, Model * model) {
 	unsigned int t, tw, th;
 	unsigned char* texData;
 	unsigned int texID;
-
+	cout << s << '\n';
 	ilInit();
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
@@ -23,6 +23,7 @@ void loadTexture(std::string s, Model * model) {
 	ilLoadImage((ILstring)s.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
+	cout << tw << "/" << th << '\n';
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 
@@ -39,6 +40,8 @@ void loadTexture(std::string s, Model * model) {
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	cout << "TEXID LOAD" << texID << '\n';
 
 	model -> setTextureID(texID);
 
@@ -201,7 +204,7 @@ RotationAnimation* parseRotation(XMLElement* t) {
 Group* parseGroup(XMLElement* g) {
 	Group* group = new Group();
 	Model* currentModel;
-	string fileName;
+	string fileName, texName;
 
 	XMLElement* translation = g->FirstChildElement("translate");
 	if (translation != nullptr) {
@@ -223,10 +226,13 @@ Group* parseGroup(XMLElement* g) {
 	while (model != nullptr) {
 		fileName = model->Attribute("file");
 		currentModel = parseFiles("..\\..\\generator\\3dfiles\\" + fileName);
-		fileName = model->Attribute("material");
-		if (model->Attribute("material")) parseMaterialFile("..\\materials\\" + fileName, currentModel);
-		if (model->Attribute("textures")) {
-			loadTexture("..\\textures\\" + fileName, currentModel);
+		if (model->Attribute("material")){
+			fileName = model->Attribute("material");
+			parseMaterialFile("..\\materials\\" + fileName, currentModel);
+		}
+		if (model->Attribute("texture")) {
+			texName = model->Attribute("texture");
+			loadTexture("..\\texturas\\" + texName, currentModel);
 			parseTextureFile("..\\..\\generator\\3dfiles\\" + fileName, currentModel);
 		}
 		group->pushModel(currentModel);

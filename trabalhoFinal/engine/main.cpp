@@ -203,14 +203,17 @@ void drawModel(Model* model) {
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
 	glNormalPointer(GL_FLOAT, 0, 0);
 	if (textures.size() != 0) {
+		cout << "TEXID RENDER" << model->getTextureID() << '\n';
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, model->getTextureID());
 		glBindBuffer(GL_ARRAY_BUFFER, texturesBuf[currentModel]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * textures.size(), &textures[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, texturesBuf[currentModel]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, model->getVertices().size()/3);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void drawModels(vector<Model*> models){
@@ -248,7 +251,7 @@ void setupLights(vector<Light*> l) {
 			pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 0; 
 		}
 		float quad_att = 0.001f;
-		GLfloat qaAmbientLight[] = { 0.1, 0.1, 0.1, 1.0 };
+		GLfloat qaAmbientLight[] = { 0.9, 0.9, 0.9, 1.0 };
 		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
 		GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
 		glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
@@ -355,16 +358,6 @@ void keyRotate(unsigned char keyCode, int x, int y) {
 using namespace std;
 
 int main(int argc, char** argv) {
-	//Get models
-	Scene* fullScene = parseXML("modelsToRender.xml");
-	scene = fullScene->getScene();
-	lights = fullScene->getLights();
-	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
-	zoom = 7;
-	vert = 0;
-	hor = 0;
-	showOrbit = false;
-
 	// put GLUT init here
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -389,7 +382,19 @@ int main(int argc, char** argv) {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //WIRES
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	
+	//Get models
+	Scene* fullScene = parseXML("modelsToRender.xml");
+	scene = fullScene->getScene();
+	lights = fullScene->getLights();
+	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
+	zoom = 7;
+	vert = 0;
+	hor = 0;
+	showOrbit = false;
+
 
 	// enter GLUT's main loop
 	glutMainLoop();

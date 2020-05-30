@@ -4,14 +4,13 @@
     <light type='POINT' posX='0' posY='0' posZ='0'/>
   </lights>
   <group>
-    <rotate time='5' X='0' Y='1' Z='0'/>
+    <rotate time='10' X='0' Y='1' Z='0'/>
     <models>
     </models>
     <group>
-      <rotate angle='90' X='-1' Y='0' Z='0'/>
-      <translate X='0' Y='0' Z='4'/>
+      <translate X='0' Y='0' Z='0'/>
       <models>
-        <model file='bez.3d' material='material1.mat'/>
+        <model file='bola.3d' texture='earth.jpg'/>
       </models>
     </group>
   </group>
