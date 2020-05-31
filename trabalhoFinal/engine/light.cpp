@@ -4,6 +4,8 @@ Light::Light() {
 	posX = posY = posZ = 0;
 	dirX = dirY = dirZ = 0;
 	ang = 0;
+	att = 1;
+	exp = 0;
 	type = L_POINT;
 }
 
@@ -46,6 +48,13 @@ float Light::getAngCuttof() {
 	return ang;
 }
 
+float Light::getAtt() {
+	return att;
+}
+int Light::getExponent() {
+	return exp;
+}
+
 int Light::getType(){
 	return type;
 }
@@ -76,6 +85,14 @@ void Light::setDirZ(float dz) {
 
 void Light::setAngCuttof(float newAng) {
 	ang = newAng;
+}
+
+void Light::setAtt(float a) {
+	att = a;
+}
+
+void Light::setExponent(int e) {
+	exp = e;
 }
 
 void Light::setType(int newType){

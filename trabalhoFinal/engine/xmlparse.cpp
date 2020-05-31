@@ -261,12 +261,15 @@ Light* parseLight(XMLElement* l) {
 	string fileName;
 	Light * light = new Light();
 
+	if (l == nullptr) return nullptr;
+
 	if (l->Attribute("type")) typeS = l->Attribute("type");
 	if (typeS.compare("POINT") == 0) {
 		light -> setType(L_POINT);
 		if (l->Attribute("posX")) light->setPosX(atof(l->Attribute("posX")));
 		if (l->Attribute("posY")) light->setPosY(atof(l->Attribute("posY")));
 		if (l->Attribute("posZ")) light->setPosZ(atof(l->Attribute("posZ")));
+		if (l->Attribute("att")) light->setAtt(atof(l->Attribute("att")));
 	}
 	if (typeS.compare("DIRECTIONAL") == 0) {
 		light->setType(L_DIRECTIONAL);
@@ -283,13 +286,18 @@ Light* parseLight(XMLElement* l) {
 		if (l->Attribute("dirY")) light->setDirY(atof(l->Attribute("dirY")));
 		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
 		if (l->Attribute("ang")) light->setAngCuttof(atof(l->Attribute("ang")));
+		if (l->Attribute("exponent")) light->setExponent(atof(l->Attribute("exponent")));
+		if (l->Attribute("att")) light->setAtt(atof(l->Attribute("att")));
 	}
 	return light;
 }
 
 void parseCamera(XMLElement * cam, Scene* scene) {
 	float pX, pY, pZ, dX, dY, dZ;
+	int camType;
 	Group* camGroup;
+	Light* camLight;
+	camType = 0;
 	
 	pX = pY = pZ = dX = dY = dZ = 0;
 
@@ -299,13 +307,18 @@ void parseCamera(XMLElement * cam, Scene* scene) {
 	if (cam->Attribute("dirX")) dX = atof(cam->Attribute("dirX"));
 	if (cam->Attribute("dirY")) dY = atof(cam->Attribute("dirY"));
 	if (cam->Attribute("dirZ")) dZ = atof(cam->Attribute("dirZ"));
+	if (cam->Attribute("type")) camType = atof(cam->Attribute("type"));
 
 	XMLElement* xmlgroup = cam->FirstChildElement("group");
 	camGroup = parseGroup(xmlgroup);
+	XMLElement* xmllight = cam->FirstChildElement("light");
+	camLight = parseLight(xmllight);
 
+	scene->setCamLight(camLight);
 	scene->setCamPos(pX, pY, pZ);
 	scene->setCamDir(dX, dY, dZ);
 	scene->setCamGroup(camGroup);
+	scene->setCamType(camType);
 
 }
 

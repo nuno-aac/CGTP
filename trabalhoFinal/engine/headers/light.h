@@ -10,6 +10,8 @@ class Light {
 	float posX, posY, posZ;
 	float dirX, dirY, dirZ;
 	float ang;
+	float att;
+	int exp;
 
 public:
 	Light();
@@ -23,6 +25,8 @@ public:
 	float getDirY();
 	float getDirZ();
 	float getAngCuttof();
+	float getAtt();
+	int getExponent();
 	int getType();
 
 
@@ -33,6 +37,8 @@ public:
 	void setDirY(float dy);
 	void setDirZ(float dz);
 	void setAngCuttof(float newAng);
+	void setAtt(float a);
+	void setExponent(int e);
 	void setType(int newType);
 };
 

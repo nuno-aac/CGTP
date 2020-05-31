@@ -250,26 +250,30 @@ void drawGroup(Group* g){
 	glPopMatrix();
 }
 
-void setupLights(vector<Light*> l) {
+void setupLight(Light* l, int i) {
 	float pos[4];
-	for (int i = 0; i < l.size(); i++) {
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0+i);
-		if (l[i]->getType() == L_POINT) { 
-			pos[0] = l[i]->getPosX(); pos[1] = l[i]->getPosY(); pos[2] = l[i]->getPosZ(); pos[3] = 1;
-		}
-		if (l[i]->getType() == L_DIRECTIONAL) { 
-			pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 0; 
-		}
-		float quad_att = 0.001f;
-		GLfloat qaAmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
-		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
-		GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-		glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
-		glLightfv(GL_LIGHT0, GL_POSITION, pos);
-		glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, quad_att);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0 + i);
+	if (l->getType() == L_POINT) {
+		pos[0] = l->getPosX(); pos[1] = l->getPosY(); pos[2] = l->getPosZ(); pos[3] = 1;
+	}
+	if (l->getType() == L_DIRECTIONAL) {
+		pos[0] = l->getDirX(); pos[1] = l->getDirY(); pos[2] = l->getDirZ(); pos[3] = 0;
+	}
+	float quad_att = 0.001f;
+	GLfloat qaAmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
+	GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
+	GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+	glLightfv(GL_LIGHT0 + i, GL_AMBIENT, qaAmbientLight);
+	glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, qaDiffuseLight);
+	glLightfv(GL_LIGHT0 + i, GL_SPECULAR, qaSpecularLight);
+	glLightfv(GL_LIGHT0 + i, GL_POSITION, pos);
+	glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, quad_att);
+}
+
+void setupLights(vector<Light*> l, int isCamLight) {
+	for (int i = isCamLight; i <= l.size(); i++) {
+		setupLight(l[i-isCamLight], i);
 	}
 }
 
@@ -280,7 +284,8 @@ void polar2Cartesian(float r, float angH, float angV, float* x, float* y, float*
 }
 
 void renderScene(void) {
-	int size, numFigura;
+	int size, numFigura, isCamLight;
+	isCamLight = 0;
 	float lookX, lookY, lookZ;
 	// clear buffers
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -288,6 +293,10 @@ void renderScene(void) {
 	glLoadIdentity();
 
 	drawGroup(fullScene->getCamGroup());
+	if (fullScene->getCamLight() != nullptr) {
+		setupLight(fullScene->getCamLight(),0);
+		isCamLight = 1;
+	}
 	// set the camera
 	polar2Cartesian(1, angHor, angVert, &lookX, &lookY, &lookZ);
 	//cout << "LOOK VECTOR: " << lookX << '|' << lookY << '|' << lookZ << '\n';
@@ -295,7 +304,7 @@ void renderScene(void) {
 		camX + lookX, camY + lookY, camZ + lookZ,
 		0.0f, 1.0f, 0.0f);
 
-	setupLights(lights);
+	setupLights(lights, isCamLight);
 
 
 	// put drawing instructions here

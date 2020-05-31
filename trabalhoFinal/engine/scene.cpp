@@ -27,6 +27,14 @@ Group* Scene::getCamGroup() {
 	return camGroup;
 }
 
+Light* Scene::getCamLight() {
+	return camLight;
+}
+
+int Scene::getCamType() {
+	return camType;
+}
+
 float Scene::getCamX() {
 	return camX;
 }
@@ -60,6 +68,13 @@ void Scene::setLights(vector<Light*> l) {
 
 void Scene::setCamGroup(Group* g) {
 	camGroup = g;
+}
+
+void Scene::setCamLight(Light* g) {
+	camLight = g;
+}
+void Scene::setCamType(int t) {
+	camType = t;
 }
 
 void Scene::setCamPos(float x, float y, float z) {

@@ -10,6 +10,8 @@ class Scene {
 	vector<Group*> scene;
 	vector<Light*> lights;
 	Group* camGroup;
+	Light* camLight;
+	int camType;
 	float camX, camY, camZ, camDirX, camDirY, camDirZ;
 
 public:
@@ -19,6 +21,8 @@ public:
 	vector<Group*> getScene();
 	vector<Light*> getLights();
 	Group* getCamGroup();
+	Light* getCamLight();
+	int getCamType();
 	float getCamX();
 	float getCamY();
 	float getCamZ();
@@ -30,6 +34,8 @@ public:
 	void setScene(vector<Group*> s);
 	void setLights(vector<Light*> l);
 	void setCamGroup(Group* g);
+	void setCamLight(Light* g);
+	void setCamType(int t);
 	void setCamPos(float x, float y, float z);
 	void setCamDir(float x, float y, float z);
 };
