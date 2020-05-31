@@ -431,7 +431,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Get models
-	fullScene = parseXML("montanha.xml");
+	fullScene = parseXML("SolarSystem.xml");
 	scene = fullScene->getScene();
 	lights = fullScene->getLights();
 	cout << "|w/s = move/zoom \n|arrow keys = look-around\n|q = toogle orbitas\n|p = pause \n";

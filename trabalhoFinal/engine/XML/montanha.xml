@@ -19,6 +19,12 @@
     <group>
       <translate X='0' Y='0' Z='0'/>
       <models>
+        <model file='planiao.3d' texture='Concrete.jpg'/>
+      </models>
+      </group>
+    <group>
+      <translate X='0' Y='0' Z='0'/>
+      <models>
         <model file='coniao.3d' texture='oildrum.jpg'/>
       </models>
       </group>
