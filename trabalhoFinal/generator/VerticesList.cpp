@@ -255,14 +255,8 @@ void VerticesList::sphere(float r, int slices, int stacks){
         addPoint(xABChange , heightBChange, zABChange);
         addNormal(xABChange , heightBChange, zABChange);
         addTextures(sliceText * (a+1), 1 - (stackText * (b+1)));
-        if(a == 0){
-          cout << "BOTTOM TEXTURES: " << 1 - (stackText * (b+1)) << "| TOP TEXTURE: " << 1 << '\n';
-        }
       }
       else {
-        if(a == 0){
-          cout << "BOTTOM TEXTURES: " << 1 - (stackText * (b+1)) << "| TOP TEXTURE: " << 1 - (stackText * (b)) << '\n';
-        }
         addPoint(x, height, z);
         addNormal(x, height, z);
         addTextures(sliceText * a, 1 - (stackText * b));
@@ -308,9 +302,6 @@ void VerticesList::sphere(float r, int slices, int stacks){
     addPoint(x, height, z);
     addNormal(x, height, z);
     addTextures(sliceText * a, stackText);
-    if(a == 0){
-      cout << "BOTTOM TEXTURES: " << 0 << "| TOP TEXTURE: " << stackText << '\n';
-    }
     alpha0 += sliceStep;
     alpha1 += sliceStep;
   }
