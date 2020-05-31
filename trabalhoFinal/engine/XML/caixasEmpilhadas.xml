@@ -1,0 +1,30 @@
+<?xml version="2.0" ?>
+<scene>
+	<camera dirX='1' dirY='-1' dirZ='1' posX='-20' posY='20' posZ='-20' type='1'>
+		<light type='SPOTLIGHT' posX='0' posY='-0.5' posZ='-4' dirX='0' dirY='0' dirZ='-1' ang='10' att='0.05' exponent='2'/>
+		<group>
+			<translate X='0' Y='0' Z='2'/>
+			<models>
+				<model file='plano3.3d' texture='Concrete.jpg'/>
+			</models>
+		</group>
+		<group>
+			<translate X='0' Y='0' Z='5'/>
+			<models>
+				<model file='box1.3d' texture='caixa.png'/>
+			</models>
+		</group>
+		<group>
+			<translate X='0' Y='0' Z='5.5'/>
+			<models>
+				<model file='box1.3d' texture='caixa.png'/>
+			</models>
+		</group>
+		<group>
+			<translate X='0' Y='0' Z='6'/>
+			<models>
+				<model file='box1.3d' texture='caixa.png'/>
+			</models>
+		</group>
+	</camera>
+</scene>
