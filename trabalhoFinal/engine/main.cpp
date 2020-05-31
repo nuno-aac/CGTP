@@ -37,9 +37,7 @@ float zoom = 0.0f;
 
 float camX, camY, camZ;
 float vcamX, vcamY, vcamZ;
-float angHor = 0, lookHeight = 0;
-
-
+float angHor, angVert;
 
 bool showOrbit;
 
@@ -275,9 +273,10 @@ void setupLights(vector<Light*> l) {
 	}
 }
 
-void polar2Cartesian(float r, float angH, float* x, float* z) {
-	*x = r * cos(angH);
-	*z = r * sin(angH);
+void polar2Cartesian(float r, float angH, float angV, float* x, float* y, float* z) {
+	*x = r * sin(angV) * cos(angH);
+	*y = r * cos(angV);
+	*z = r * sin(angV) * sin(angH);
 }
 
 void renderScene(void) {
@@ -290,9 +289,10 @@ void renderScene(void) {
 
 	drawGroup(fullScene->getCamGroup());
 	// set the camera
-	polar2Cartesian(0.5, angHor, &lookX, &lookZ);
+	polar2Cartesian(1, angHor, angVert, &lookX, &lookY, &lookZ);
+	//cout << "LOOK VECTOR: " << lookX << '|' << lookY << '|' << lookZ << '\n';
 	gluLookAt(camX, camY, camZ,
-		camX+lookX, lookHeight + camY , camZ+lookZ,
+		camX + lookX, camY + lookY, camZ + lookZ,
 		0.0f, 1.0f, 0.0f);
 
 	setupLights(lights);
@@ -329,20 +329,27 @@ void setupCam() {
 	camX = fullScene ->getCamX();
 	camY = fullScene->getCamY();
 	camZ = fullScene->getCamZ();
-	vcamX = fullScene->getCamDirX();
+	vcamX = -fullScene->getCamDirX();
 	vcamY = fullScene->getCamDirY(),
-	vcamZ = fullScene->getCamDirZ();
+	vcamZ = -fullScene->getCamDirZ();
+
+
+	angHor = -3.14+atan2(vcamZ,vcamX);
+	angVert = atan2(sqrt(vcamX*vcamX+vcamZ*vcamZ),vcamY);
+	cout << "ANGHOR :" << angHor << '\n';
+	cout << "ANGVER :" << angVert << '\n';
 }
 
 void keyUp(int keyCode, int x, int y){
 
 	switch (keyCode)    {
 	case GLUT_KEY_UP:
-		lookHeight += 0.05f;
-		cout << "CURRENT lookHeight " << lookHeight;
+		angVert -= 0.01f;
+		cout << angVert;
 		break;
 	case GLUT_KEY_DOWN:
-		lookHeight -= 0.05f;
+		angVert += 0.01f;
+		cout << angVert;
 		break;
 	case GLUT_KEY_RIGHT:
 		angHor += 0.01f;
@@ -358,22 +365,22 @@ void keyUp(int keyCode, int x, int y){
 
 
 void processKeys(unsigned char key, int xx, int yy) {
-	float newX, newZ;
+	float newX, newZ, newY;
 	switch (key) {
 
 	case 'w':
-		polar2Cartesian(0.5, angHor, &newX, &newZ);
+		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
 		camX += newX;
 		camZ += newZ;
-		cout << "CURRENT CAM POS " << camX << "|" << camY << "|" << camZ;
+		camY += newY;
 		break;
 
 	case 's':
-		polar2Cartesian(0.5, angHor, &newX, &newZ);
+		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
 		camX -= newX;
 		camZ -= newZ;
+		camY -= newY;
 		break;
-	default:
 		break;
 	}
 }

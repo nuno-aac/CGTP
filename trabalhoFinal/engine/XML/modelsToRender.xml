@@ -1,10 +1,10 @@
 <?xml version="2.0" ?>
 <scene>
-  <camera dirX='-1' dirY='-1' dirZ='-1' posX='20' posY='20' posZ='20'>
+  <camera dirX='1' dirY='-1' dirZ='1' posX='-20' posY='20' posZ='-20'>
     <group>
-      <translate X='0' Y='-2' Z='-15'/>
+      <translate X='0' Y='-0.5' Z='-4'/>
       <models>
-        <model file='boxi.3d' material="material1.mat"/>
+        <model file='nave.3d' material="material1.mat"/>
       </models>
     </group>
   </camera>
