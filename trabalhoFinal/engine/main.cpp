@@ -354,16 +354,16 @@ void keyUp(int keyCode, int x, int y) {
 	if (fullScene->getCamType() == 1) {
 		switch (keyCode) {
 		case GLUT_KEY_UP:
-			angVert -= 0.01f;
+			angVert -= 0.03f;
 			break;
 		case GLUT_KEY_DOWN:
-			angVert += 0.01f;
+			angVert += 0.03f;
 			break;
 		case GLUT_KEY_RIGHT:
-			angHor += 0.01f;
+			angHor += 0.03f;
 			break;
 		case GLUT_KEY_LEFT:
-			angHor -= 0.01f;
+			angHor -= 0.03f;
 			break;
 		default:
 			break;

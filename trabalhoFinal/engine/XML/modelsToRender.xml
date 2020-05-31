@@ -19,7 +19,7 @@
     <group>
       <translate X='0' Y='0' Z='0'/>
       <models>
-        <model file='bola.3d' texture='earth.jpg' material="sun.mat"/>
+        <model file='coni.3d' texture='oildrum.jpg'/>
       </models>
     </group>
   </group>

@@ -1,6 +1,14 @@
 <?xml version="2.0" ?>
 <scene>
   <camera dirX='-1' dirY='-1' dirZ='-1' posX='200' posY='200' posZ='200' type='1'>
+    <light type='SPOTLIGHT' posX='0' posY='-0.5' posZ='-4' dirX='0' dirY='0' dirZ='-1' ang='10' att='0.005' exponent='60'/>
+    <group>
+      <translate X='0' Y='-1' Z='-4'/>
+      <rotate angle='-60' X='1' Y='0' Z='0'/>
+      <models>
+        <model file='nave.3d' material="material1.mat"/>
+      </models>
+    </group>
   </camera>
   <lights>
     <light type='POINT' posX='0' posY='0' posZ='0' att='0.0000001'/>
