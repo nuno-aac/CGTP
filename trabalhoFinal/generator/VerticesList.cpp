@@ -39,9 +39,11 @@ void VerticesList::addPoint(float x, float y, float z){
 }
 
 void VerticesList::addNormal(float x, float y, float z){
-  normals.push_back(x);
-  normals.push_back(y);
-  normals.push_back(z);
+    float n[3] = { x,y,z };
+    normalize(n);
+    normals.push_back(n[0]);
+    normals.push_back(n[1]);
+    normals.push_back(n[2]);
 }
 
 void VerticesList::addTextures(float x, float y){
