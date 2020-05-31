@@ -36,7 +36,10 @@ float ang = 0.0f;
 float zoom = 0.0f;
 
 float camX, camY, camZ;
-float lcamX, lcamY, lcamZ;
+float vcamX, vcamY, vcamZ;
+float angHor = 0, lookHeight = 0;
+
+
 
 bool showOrbit;
 
@@ -182,6 +185,15 @@ void applyTransformations(Group* g) {
 		glScalef(t->getX(), t->getY(), t->getZ());
 }
 
+void defaultMaterials() {
+	float amb[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float diff[4] = { 0.8, 0.8, 0.8, 1.0 };
+	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0);
+}
 
 void drawModel(Model* model) {
 	Material * material = model->getMaterial();
@@ -190,12 +202,9 @@ void drawModel(Model* model) {
 	vector<float> textures = model->getTextures();
 	glColor3f(model -> getR(), model -> getG(), model -> getB());
 	if (material) {
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material->getDiff());
-
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material->getAmb());
-
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material->getAmb());
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material->getDiff());
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material->getSpec());
-
 		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material->getShininess());
 	}
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -217,6 +226,7 @@ void drawModel(Model* model) {
 
 	glDrawArrays(GL_TRIANGLES, 0, model->getVertices().size()/3);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	defaultMaterials();
 }
 
 void drawModels(vector<Model*> models){
@@ -254,7 +264,7 @@ void setupLights(vector<Light*> l) {
 			pos[0] = l[i]->getDirX(); pos[1] = l[i]->getDirY(); pos[2] = l[i]->getDirZ(); pos[3] = 0; 
 		}
 		float quad_att = 0.001f;
-		GLfloat qaAmbientLight[] = { 0.9, 0.9, 0.9, 1.0 };
+		GLfloat qaAmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
 		GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
 		GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
 		glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
@@ -265,24 +275,27 @@ void setupLights(vector<Light*> l) {
 	}
 }
 
+void polar2Cartesian(float r, float angH, float* x, float* z) {
+	*x = r * cos(angH);
+	*z = r * sin(angH);
+}
+
 void renderScene(void) {
 	int size, numFigura;
+	float lookX, lookY, lookZ;
 	// clear buffers
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
 	drawGroup(fullScene->getCamGroup());
 	// set the camera
-	glLoadIdentity();
+	polar2Cartesian(0.5, angHor, &lookX, &lookZ);
 	gluLookAt(camX, camY, camZ,
-		lcamX, lcamY, lcamZ,
+		camX+lookX, lookHeight + camY , camZ+lookZ,
 		0.0f, 1.0f, 0.0f);
 
 	setupLights(lights);
-
-	// put the geometric transformations here
-
-
-	//glTranslatef(-5.0f, 0.0f, 0.0f);
 
 
 	// put drawing instructions here
@@ -301,8 +314,7 @@ void renderScene(void) {
 	glVertex3f(0.0f, 0.0f, -100.0f);
 	glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
-	//glTranslatef(vert, 0.0f, hor);
-	glRotatef(ang, 0.0f, 1.0f, 0.0f);
+
 	for (int i = 0; i < scene.size(); i++) {
 		drawGroup(scene[i]);
 	}
@@ -317,25 +329,26 @@ void setupCam() {
 	camX = fullScene ->getCamX();
 	camY = fullScene->getCamY();
 	camZ = fullScene->getCamZ();
-	lcamX = fullScene->getCamDirX() + fullScene->getCamX();
-	lcamY = fullScene->getCamDirY() + fullScene->getCamY();
-	lcamZ = fullScene->getCamDirZ() + fullScene->getCamZ();
+	vcamX = fullScene->getCamDirX();
+	vcamY = fullScene->getCamDirY(),
+	vcamZ = fullScene->getCamDirZ();
 }
 
 void keyUp(int keyCode, int x, int y){
 
 	switch (keyCode)    {
 	case GLUT_KEY_UP:
-		camZ -= 1.0f;
+		lookHeight += 0.05f;
+		cout << "CURRENT lookHeight " << lookHeight;
 		break;
 	case GLUT_KEY_DOWN:
-		vert += 1.0f;
+		lookHeight -= 0.05f;
 		break;
 	case GLUT_KEY_RIGHT:
-		hor += 1.0f;
+		angHor += 0.01f;
 		break;
 	case GLUT_KEY_LEFT:
-		hor -= 1.0f;
+		angHor -= 0.01f;
 		break;
 	default:
 		break;
@@ -343,28 +356,26 @@ void keyUp(int keyCode, int x, int y){
 	glutPostRedisplay();
 }
 
-void keyRotate(unsigned char keyCode, int x, int y) {
 
-	switch (keyCode) {
-	case '-':
-		zoom += 2;
+void processKeys(unsigned char key, int xx, int yy) {
+	float newX, newZ;
+	switch (key) {
+
+	case 'w':
+		polar2Cartesian(0.5, angHor, &newX, &newZ);
+		camX += newX;
+		camZ += newZ;
+		cout << "CURRENT CAM POS " << camX << "|" << camY << "|" << camZ;
 		break;
-	case '+':
-		zoom -= 2;
-		break;
-	case 'z':
-		ang += 5;
-		break;
-	case 'x':
-		ang -= 5;
-		break;
+
 	case 's':
-		showOrbit = !showOrbit;
+		polar2Cartesian(0.5, angHor, &newX, &newZ);
+		camX -= newX;
+		camZ -= newZ;
 		break;
 	default:
 		break;
 	}
-	glutPostRedisplay();
 }
 
 using namespace std;
@@ -388,7 +399,7 @@ int main(int argc, char** argv) {
 
 	//key handling
 	glutSpecialFunc(keyUp);
-	glutKeyboardFunc(keyRotate);
+	glutKeyboardFunc(processKeys);
 
 	// OpenGL settings
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //WIRES
@@ -396,7 +407,6 @@ int main(int argc, char** argv) {
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
 	//Get models
 	fullScene = parseXML("modelsToRender.xml");
 	scene = fullScene->getScene();
