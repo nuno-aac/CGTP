@@ -342,9 +342,9 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
 
       //GET NORM
       vX = cos(a * sliceStep) * vR;
-      vNextX = cos((a + 1) * sliceStep * vR);
+      vNextX = cos((a + 1) * sliceStep) * vR;
       vZ = sin(a * sliceStep) * vR;
-      vNextZ = sin((a + 1) * sliceStep * vR);
+      vNextZ = sin((a + 1) * sliceStep) * vR;
 
       if(b == 0){
         addPoint(0, 0, 0);
@@ -364,14 +364,14 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
       addNormal(vX, vY, vZ);
       addTextures(a*sliceText,0.375 + stackText*(b+1));
       addPoint(nextX, height, nextZ);
-      addNormal(vX, vY, vZ);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * b);
 
       addPoint(nextXHigher, nextHeight, nextZHigher);
-      addNormal(vX, vY, vZ);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * (b+1));
       addPoint(nextX, height, nextZ);
-      addNormal(vX, vY, vZ);
+      addNormal(vNextX, vY, vNextZ);
       addTextures((a + 1) * sliceText, 0.375 + stackText * b);
       addPoint(xHigher, nextHeight, zHigher);
       addNormal(vX, vY, vZ);
