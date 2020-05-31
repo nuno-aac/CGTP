@@ -2,7 +2,7 @@
 <scene>
   <group>
     <models>
-      <model file='sun.3d'/>
+      <model file='sun.3d' texture='sun.jpg'/>
     </models>
     <group>
       <translate time='5'>
@@ -25,7 +25,7 @@
           <point X='00' Y='00' Z='40'/>
         </translate>
       <models>
-        <model file='mercury.3d'/>
+        <model file='mercury.3d' texture='mercury.jpg'/>
       </models>
     </group>
     <group>
@@ -36,7 +36,7 @@
           <point X='00' Y='00' Z='80'/>
         </translate>
       <models>
-        <model file='venus.3d'/>
+        <model file='venus.3d' texture='venus.jpg'/>
       </models>
     </group>
     <group>
@@ -47,7 +47,7 @@
           <point X='00' Y='00' Z='120'/>
         </translate>
       <models>
-        <model file='earth.3d'/>
+        <model file='earth.3d' texture='earth.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -57,7 +57,7 @@
             <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
@@ -69,7 +69,7 @@
           <point X='00' Y='00' Z='160'/>
         </translate>
       <models>
-        <model file='mars.3d'/>
+        <model file='mars.3d' texture='mars.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -79,7 +79,7 @@
             <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -90,7 +90,7 @@
             <point X='-10' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
@@ -102,7 +102,7 @@
           <point X='00' Y='00' Z='210'/>
         </translate>
       <models>
-        <model file='jupiter.3d'/>
+        <model file='jupiter.3d' texture='jupiter.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -112,7 +112,7 @@
             <point X='17' Y='-14' Z='00'/>
           </translate>
         <models>
-          <model file='io.3d'/>
+          <model file='io.3d' material="material3.mat"/>
         </models>
       </group>
       <group>
@@ -123,7 +123,7 @@
             <point X='12' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='io.3d'/>
+          <model file='io.3d' material="material3.mat"/>
         </models>
       </group>
       <group>
@@ -134,7 +134,7 @@
             <point X='15' Y='17' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -145,7 +145,7 @@
             <point X='10' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -156,7 +156,7 @@
             <point X='-12' Y='-11' Z='00'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -167,7 +167,7 @@
             <point X='11' Y='00' Z='5'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -178,7 +178,7 @@
             <point X='14' Y='-14' Z='-15'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -189,7 +189,7 @@
             <point X='-15' Y='-14' Z='-14'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
@@ -201,7 +201,7 @@
           <point X='00' Y='00' Z='270'/>
         </translate>
       <models>
-        <model file='saturn.3d'/>
+        <model file='saturn.3d' texture='saturn.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -211,7 +211,7 @@
             <point X='-12' Y='-8' Z='-12'/>
           </translate>
         <models>
-          <model file='titan.3d'/>
+          <model file='titan.3d' material="material4.mat"/>
         </models>
       </group>
       <group>
@@ -222,7 +222,7 @@
             <point X='9' Y='10' Z='11'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -233,7 +233,7 @@
             <point X='-12' Y='10' Z='13'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -244,7 +244,7 @@
             <point X='-11' Y='11' Z='-11'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -255,7 +255,7 @@
             <point X='-14' Y='00' Z='14'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -266,7 +266,7 @@
             <point X='-11' Y='-2' Z='-11'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
@@ -278,7 +278,7 @@
           <point X='00' Y='00' Z='330'/>
         </translate>
       <models>
-        <model file='uranus.3d'/>
+        <model file='uranus.3d' texture='uranus.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -288,7 +288,7 @@
             <point X='-7' Y='-2' Z='6'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -299,7 +299,7 @@
             <point X='6' Y='1' Z='-6'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -310,7 +310,7 @@
             <point X='-8' Y='00' Z='00'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -321,7 +321,7 @@
             <point X='9' Y='3' Z='-6'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -332,7 +332,7 @@
             <point X='7' Y='00' Z='6'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -343,7 +343,7 @@
             <point X='4' Y='-7' Z='-6'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -354,7 +354,7 @@
             <point X='-7' Y='7' Z='6'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -365,7 +365,7 @@
             <point X='7' Y='-6' Z='-1'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
@@ -377,7 +377,7 @@
           <point X='00' Y='00' Z='370'/>
         </translate>
       <models>
-        <model file='neptune.3d'/>
+        <model file='neptune.3d' texture='neptune.jpg'/>
       </models>
       <group>
         <translate time='5'>
@@ -387,7 +387,7 @@
             <point X='7' Y='00' Z='6'/>
           </translate>
         <models>
-          <model file='moon.3d'/>
+          <model file='moon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -398,7 +398,7 @@
             <point X='4' Y='-7' Z='-6'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
       <group>
@@ -409,7 +409,7 @@
             <point X='-7' Y='7' Z='6'/>
           </translate>
         <models>
-          <model file='fakemoon.3d'/>
+          <model file='fakemoon.3d' material="material2.mat"/>
         </models>
       </group>
     </group>
