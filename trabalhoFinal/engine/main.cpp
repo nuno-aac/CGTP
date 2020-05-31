@@ -128,13 +128,31 @@ void getGlobalCatmullRomPoint(float gt, Catmull* catmull, float* pos, float* der
 	getCatmullRomPoint(t, &(points[indices[0]])[0], &(points[indices[1]])[0], &(points[indices[2]])[0], &(points[indices[3]])[0], pos, deriv);
 }
 
+void defaultMaterials() {
+	float amb[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float diff[4] = { 0.8, 0.8, 0.8, 1.0 };
+	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, spec);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0);
+}
+
 void drawCurve(Catmull* c) {
+	float amb[4] = { 0.4, 0.4, 0.4, 1.0 };
+	float diff[4] = { 0, 0, 0, 1.0 };
+	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0);
+	
 	float pos[3];
 	float deriv[3];
 	vector<float> curveVertex;
 	for (float tcurve = 0; tcurve < c->getTime(); tcurve += 0.01) {
 		getGlobalCatmullRomPoint(tcurve, c, pos, deriv);
-		//cout << pos[0] << pos[1] << pos[2] << '\n';
 		curveVertex.push_back(pos[0]);
 		curveVertex.push_back(pos[1]);
 		curveVertex.push_back(pos[2]);
@@ -145,6 +163,7 @@ void drawCurve(Catmull* c) {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * curveVertex.size(), &curveVertex[0], GL_STATIC_DRAW);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	glDrawArrays(GL_LINE_LOOP, 0, curveVertex.size() / 3);
+	defaultMaterials();
 }
 
 void applyTransformations(Group* g) {
@@ -183,16 +202,6 @@ void applyTransformations(Group* g) {
 		glScalef(t->getX(), t->getY(), t->getZ());
 }
 
-void defaultMaterials() {
-	float amb[4] = { 0.2, 0.2, 0.2, 1.0 };
-	float diff[4] = { 0.8, 0.8, 0.8, 1.0 };
-	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0);
-}
-
 void drawModel(Model* model) {
 	Material * material = model->getMaterial();
 	vector<float> modelVertex = model->getVertices();
@@ -203,6 +212,7 @@ void drawModel(Model* model) {
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material->getAmb());
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material->getDiff());
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material->getSpec());
+		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material->getEmissive());
 		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material->getShininess());
 	}
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -257,9 +267,11 @@ void setupLight(Light* l, int i) {
 	if (l->getType() == L_POINT) {
 		pos[0] = l->getPosX(); pos[1] = l->getPosY(); pos[2] = l->getPosZ(); pos[3] = 1;
 		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->getAtt());
+		glLightfv(GL_LIGHT0 + i, GL_POSITION, pos);
 	}
 	if (l->getType() == L_DIRECTIONAL) {
-		pos[0] = l->getDirX(); pos[1] = l->getDirY(); pos[2] = l->getDirZ(); pos[3] = 0;
+		dir[0] = l->getDirX(); dir[1] = l->getDirY(); dir[2] = l->getDirZ(); dir[3] = 0;
+		glLightfv(GL_LIGHT0 + i, GL_POSITION, dir);
 	}
 	if (l->getType() == L_SPOTLIGHT) {
 		pos[0] = l->getPosX(); pos[1] = l->getPosY(); pos[2] = l->getPosZ(); pos[3] = 1;
@@ -270,18 +282,16 @@ void setupLight(Light* l, int i) {
 		glLightf(GL_LIGHT0 + i, GL_SPOT_EXPONENT, l->getExponent());
 		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->getAtt());
 	}
-	float quad_att = 0.001f;
-	GLfloat qaAmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
+	GLfloat qaAmbientLight[] = { 0.6, 0.6, 0.6, 1.0 };
 	GLfloat qaDiffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
 	GLfloat qaSpecularLight[] = { 1.0, 1.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0 + i, GL_AMBIENT, qaAmbientLight);
 	glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, qaDiffuseLight);
 	glLightfv(GL_LIGHT0 + i, GL_SPECULAR, qaSpecularLight);
-	glLightfv(GL_LIGHT0 + i, GL_POSITION, pos);
 }
 
 void setupLights(vector<Light*> l, int isCamLight) {
-	for (int i = isCamLight; i <= l.size(); i++) {
+	for (int i = isCamLight; i < l.size() + isCamLight; i++) {
 		setupLight(l[i-isCamLight], i);
 	}
 }
@@ -300,15 +310,15 @@ void renderScene(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
-	drawGroup(fullScene->getCamGroup());
+	if (fullScene->getCamGroup() != nullptr) {
+		drawGroup(fullScene->getCamGroup());
+	}
 	if (fullScene->getCamLight() != nullptr) {
-		setupLight(fullScene->getCamLight(),0);
+		setupLight(fullScene->getCamLight(), 0);
 		isCamLight = 1;
 	}
 	// set the camera
 	polar2Cartesian(1, angHor, angVert, &lookX, &lookY, &lookZ);
-	//cout << "LOOK VECTOR: " << lookX << '|' << lookY << '|' << lookZ << '\n';
 	gluLookAt(camX, camY, camZ,
 		camX + lookX, camY + lookY, camZ + lookZ,
 		0.0f, 1.0f, 0.0f);
@@ -321,15 +331,15 @@ void renderScene(void) {
 	glBegin(GL_LINES);
 	// X axis in red
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(-100.0f, 0.0f, 0.0f);
+	glVertex3f(0, 0.0f, 0.0f);
 	glVertex3f(100.0f, 0.0f, 0.0f);
 	// Y Axis in Green
 	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, -100.0f, 0.0f);
+	glVertex3f(0.0f, 0, 0.0f);
 	glVertex3f(0.0f, 100.0f, 0.0f);
 	// Z Axis in Blue
 	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, -100.0f);
+	glVertex3f(0.0f, 0.0f, 0);
 	glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
 
@@ -339,8 +349,10 @@ void renderScene(void) {
 	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
-	time = glutGet(GLUT_ELAPSED_TIME);
-	time /= 1000;
+	if (!showOrbit) {
+		time = glutGet(GLUT_ELAPSED_TIME);
+		time /= 1000;
+	}
 }
 
 void setupCam() {
@@ -354,29 +366,26 @@ void setupCam() {
 
 	angHor = -3.14+atan2(vcamZ,vcamX);
 	angVert = atan2(sqrt(vcamX*vcamX+vcamZ*vcamZ),vcamY);
-	cout << "ANGHOR :" << angHor << '\n';
-	cout << "ANGVER :" << angVert << '\n';
 }
 
-void keyUp(int keyCode, int x, int y){
-
-	switch (keyCode)    {
-	case GLUT_KEY_UP:
-		angVert -= 0.01f;
-		cout << angVert;
-		break;
-	case GLUT_KEY_DOWN:
-		angVert += 0.01f;
-		cout << angVert;
-		break;
-	case GLUT_KEY_RIGHT:
-		angHor += 0.01f;
-		break;
-	case GLUT_KEY_LEFT:
-		angHor -= 0.01f;
-		break;
-	default:
-		break;
+void keyUp(int keyCode, int x, int y) {
+	if (fullScene->getCamType() == 1) {
+		switch (keyCode) {
+		case GLUT_KEY_UP:
+			angVert -= 0.01f;
+			break;
+		case GLUT_KEY_DOWN:
+			angVert += 0.01f;
+			break;
+		case GLUT_KEY_RIGHT:
+			angHor += 0.01f;
+			break;
+		case GLUT_KEY_LEFT:
+			angHor -= 0.01f;
+			break;
+		default:
+			break;
+		}
 	}
 	glutPostRedisplay();
 }
@@ -387,29 +396,20 @@ void processKeys(unsigned char key, int xx, int yy) {
 	switch (key) {
 
 	case 'w':
-		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
+		polar2Cartesian(5, angHor, angVert, &newX, &newY, &newZ);
 		camX += newX;
 		camZ += newZ;
 		camY += newY;
 		break;
 
 	case 's':
-		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
+		polar2Cartesian(5, angHor, angVert, &newX, &newY, &newZ);
 		camX -= newX;
 		camZ -= newZ;
 		camY -= newY;
-
-	case '+':
-		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
-		camX -= newX;
-		camZ -= newZ;
-		camY -= newY;
-
-	case '-':
-		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
-		camX -= newX;
-		camZ -= newZ;
-		camY -= newY;
+		break;
+	case 'q':
+		showOrbit = !showOrbit;
 		break;
 	default:
 		break;
@@ -446,7 +446,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Get models
-	fullScene = parseXML("modelsToRender.xml");
+	fullScene = parseXML("SolarSystem.xml");
 	scene = fullScene->getScene();
 	lights = fullScene->getLights();
 	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";

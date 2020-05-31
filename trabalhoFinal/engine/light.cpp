@@ -41,7 +41,7 @@ float Light::getDirY() {
 }
 
 float Light::getDirZ() {
-	return posZ;
+	return dirZ;
 }
 
 float Light::getAngCuttof() {

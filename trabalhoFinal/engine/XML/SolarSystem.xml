@@ -1,8 +1,13 @@
 <?xml version="2.0" ?>
 <scene>
+  <camera dirX='-1' dirY='-1' dirZ='-1' posX='200' posY='200' posZ='200' type='1'>
+  </camera>
+  <lights>
+    <light type='POINT' posX='0' posY='0' posZ='0' att='0.0000001'/>
+  </lights>
   <group>
     <models>
-      <model file='sun.3d' texture='sun.jpg'/>
+      <model file='sun.3d' material='sun.mat' texture='sun.jpg'/>
     </models>
     <group>
       <translate time='5'>

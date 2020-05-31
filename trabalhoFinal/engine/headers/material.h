@@ -9,6 +9,7 @@ class Material {
 	float diff[4];
 	float amb[4];
 	float spec[4];
+	float emmissive[4];
 	int shininess;
 
 public:
@@ -26,6 +27,10 @@ public:
 	float getSpecR();
 	float getSpecG();
 	float getSpecB();
+	float* getEmissive();
+	float getEmissiveR();
+	float getEmissiveG();
+	float getEmissiveB();
 	int getShininess();
 
 	void setDiffR(float dr);
@@ -37,6 +42,9 @@ public:
 	void setSpecR(float sr);
 	void setSpecG(float sg);
 	void setSpecB(float sb);
+	void setEmissiveR(float er);
+	void setEmissiveG(float eg);
+	void setEmissiveB(float eb);
 	void setShininess(int s);
 
 

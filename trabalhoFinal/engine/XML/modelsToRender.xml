@@ -1,7 +1,7 @@
 <?xml version="2.0" ?>
 <scene>
-  <camera dirX='1' dirY='-1' dirZ='1' posX='-20' posY='20' posZ='-20'>
-    <light type='SPOTLIGHT' posX='0' posY='-0.5' posZ='-4' dirX='0' dirY='0' dirZ='1' ang='10' att='0.05' exponent='20'/>
+  <camera dirX='1' dirY='-1' dirZ='1' posX='-20' posY='20' posZ='-20' type='1'>
+    <light type='SPOTLIGHT' posX='0' posY='-0.5' posZ='-4' dirX='0' dirY='0' dirZ='-1' ang='10' att='0.05' exponent='2'/>
     <group>
       <translate X='0' Y='-0.5' Z='-4'/>
       <models>
@@ -19,7 +19,7 @@
     <group>
       <translate X='0' Y='0' Z='0'/>
       <models>
-        <model file='bola.3d' texture='earth.jpg'/>
+        <model file='bola.3d' texture='earth.jpg' material="sun.mat"/>
       </models>
     </group>
   </group>

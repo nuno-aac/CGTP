@@ -14,7 +14,6 @@ void loadTexture(std::string s, Model * model) {
 	unsigned int t, tw, th;
 	unsigned char* texData;
 	unsigned int texID;
-	cout << s << '\n';
 	ilInit();
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
@@ -23,7 +22,6 @@ void loadTexture(std::string s, Model * model) {
 	ilLoadImage((ILstring)s.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
-	cout << tw << "/" << th << '\n';
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 
@@ -41,8 +39,6 @@ void loadTexture(std::string s, Model * model) {
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	cout << "TEXID LOAD" << texID << '\n';
-
 	model -> setTextureID(texID);
 
 }
@@ -57,7 +53,7 @@ void parseMaterialFile(string file, Model* m) {
 	ifstream infile(file);
 
 	if (infile.is_open() != 1) {
-		cout << "Invalida Materials file" << file;
+		cout << "Invalid Materials file" << file;
 		return;
 	}
 
@@ -79,6 +75,12 @@ void parseMaterialFile(string file, Model* m) {
 			mat->setSpecR(val1);
 			mat->setSpecG(val2);
 			mat->setSpecB(val3);
+		}
+		if (strcmp(title.c_str(), "Emission") == 0) {
+			infile >> val1 >> val2 >> val3;
+			mat->setEmissiveR(val1);
+			mat->setEmissiveG(val2);
+			mat->setEmissiveB(val3);
 		}
 		if (strcmp(title.c_str(), "Shininess") == 0) {
 			infile >> valInt;
@@ -204,7 +206,7 @@ RotationAnimation* parseRotation(XMLElement* t) {
 Group* parseGroup(XMLElement* g) {
 	Group* group = new Group();
 	Model* currentModel;
-	string fileName, texName;
+	string fileName, texName, materialFileName;
 
 	if (g == nullptr) {
 		return nullptr;
@@ -231,8 +233,8 @@ Group* parseGroup(XMLElement* g) {
 		fileName = model->Attribute("file");
 		currentModel = parseFiles("..\\..\\generator\\3dfiles\\" + fileName);
 		if (model->Attribute("material")){
-			fileName = model->Attribute("material");
-			parseMaterialFile("..\\materials\\" + fileName, currentModel);
+			materialFileName = model->Attribute("material");
+			parseMaterialFile("..\\materials\\" + materialFileName, currentModel);
 		}
 		if (model->Attribute("texture")) {
 			texName = model->Attribute("texture");
@@ -273,9 +275,9 @@ Light* parseLight(XMLElement* l) {
 	}
 	if (typeS.compare("DIRECTIONAL") == 0) {
 		light->setType(L_DIRECTIONAL);
-		if (l->Attribute("dirX")) light->setDirX(atof(l->Attribute("dirX")));
-		if (l->Attribute("dirY")) light->setDirY(atof(l->Attribute("dirY")));
-		if (l->Attribute("dirZ")) light->setDirZ(atof(l->Attribute("dirZ")));
+		if (l->Attribute("dirX")) light->setDirX(-atof(l->Attribute("dirX")));
+		if (l->Attribute("dirY")) light->setDirY(-atof(l->Attribute("dirY")));
+		if (l->Attribute("dirZ")) light->setDirZ(-atof(l->Attribute("dirZ")));
 	}
 	if (typeS.compare("SPOTLIGHT") == 0) {
 		light->setType(L_SPOTLIGHT);
