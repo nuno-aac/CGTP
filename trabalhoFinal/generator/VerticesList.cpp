@@ -342,9 +342,9 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
 
       //GET NORM
       vX = cos(a * sliceStep) * vR;
-      vNextX = cos((a + 1) * sliceStep * vR);
+      vNextX = cos((a - 1) * sliceStep * vR);
       vZ = sin(a * sliceStep) * vR;
-      vNextZ = sin((a + 1) * sliceStep * vR);
+      vNextZ = sin((a - 1) * sliceStep * vR);
 
       if(b == 0){
         addPoint(0, 0, 0);
