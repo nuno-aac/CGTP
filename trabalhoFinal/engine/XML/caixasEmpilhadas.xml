@@ -2,7 +2,7 @@
 <scene>
 	<camera dirX='1' dirY='-1' dirZ='1' posX='-20' posY='20' posZ='-20' type='0'/>
 	<lights>
-			<light type='DIRECTIONAL' dirX='1' dirY='-1' dirZ='1'/>
+			<light type='DIRECTIONAL' dirX='1' dirY='-1' dirZ='-1'/>
 	</lights>
 	<group>
 		<translate X='0' Y='0' Z='0'/>

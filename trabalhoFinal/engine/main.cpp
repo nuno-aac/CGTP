@@ -30,10 +30,6 @@ GLuint texturesBuf[300];
 int currentModel = 0;
 
 float time = 0.0f;
-float vert = 0.0f;
-float hor = 0.0f;
-float ang = 0.0f;
-float zoom = 0.0f;
 
 float camX, camY, camZ;
 float vcamX, vcamY, vcamZ;
@@ -354,16 +350,16 @@ void keyUp(int keyCode, int x, int y) {
 	if (fullScene->getCamType() == 1) {
 		switch (keyCode) {
 		case GLUT_KEY_UP:
-			angVert -= 0.03f;
+			angVert -= 0.02f;
 			break;
 		case GLUT_KEY_DOWN:
-			angVert += 0.03f;
+			angVert += 0.02f;
 			break;
 		case GLUT_KEY_RIGHT:
-			angHor += 0.03f;
+			angHor += 0.02f;
 			break;
 		case GLUT_KEY_LEFT:
-			angHor -= 0.03f;
+			angHor -= 0.02f;
 			break;
 		default:
 			break;
@@ -434,10 +430,7 @@ int main(int argc, char** argv) {
 	fullScene = parseXML("SolarSystem.xml");
 	scene = fullScene->getScene();
 	lights = fullScene->getLights();
-	cout << "|w/s = move/zoom \n|arrow keys = look-around\n|q = toogle orbitas\n|p = pause \n";
-	zoom = 7;
-	vert = 0;
-	hor = 0;
+	cout << "|GUIDE|\n|w/s = move/zoom \n|arrow keys = look-around\n|q = toogle orbitas\n|p = pause \n";
 	showOrbit = false;
 	isPause = false;
 
