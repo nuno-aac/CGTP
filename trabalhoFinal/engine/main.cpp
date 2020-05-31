@@ -39,7 +39,7 @@ float camX, camY, camZ;
 float vcamX, vcamY, vcamZ;
 float angHor, angVert;
 
-bool showOrbit;
+bool showOrbit, isPause;
 
 void changeSize(int w, int h) {
 
@@ -325,31 +325,13 @@ void renderScene(void) {
 
 	setupLights(lights, isCamLight);
 
-
-	// put drawing instructions here
-			//AXIS
-	glBegin(GL_LINES);
-	// X axis in red
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0, 0.0f, 0.0f);
-	glVertex3f(100.0f, 0.0f, 0.0f);
-	// Y Axis in Green
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 0, 0.0f);
-	glVertex3f(0.0f, 100.0f, 0.0f);
-	// Z Axis in Blue
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0);
-	glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
-
 	for (int i = 0; i < scene.size(); i++) {
 		drawGroup(scene[i]);
 	}
 	currentModel = 0;
 	// End of frame
 	glutSwapBuffers();
-	if (!showOrbit) {
+	if (!isPause) {
 		time = glutGet(GLUT_ELAPSED_TIME);
 		time /= 1000;
 	}
@@ -411,6 +393,9 @@ void processKeys(unsigned char key, int xx, int yy) {
 	case 'q':
 		showOrbit = !showOrbit;
 		break;
+	case 'p':
+		isPause = !isPause;
+		break;
 	default:
 		break;
 	}
@@ -454,6 +439,7 @@ int main(int argc, char** argv) {
 	vert = 0;
 	hor = 0;
 	showOrbit = false;
+	isPause = false;
 
 	setupCam();
 	// enter GLUT's main loop
