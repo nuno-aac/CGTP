@@ -251,14 +251,24 @@ void drawGroup(Group* g){
 }
 
 void setupLight(Light* l, int i) {
-	float pos[4];
+	float pos[4], dir[4];
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0 + i);
 	if (l->getType() == L_POINT) {
 		pos[0] = l->getPosX(); pos[1] = l->getPosY(); pos[2] = l->getPosZ(); pos[3] = 1;
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->getAtt());
 	}
 	if (l->getType() == L_DIRECTIONAL) {
 		pos[0] = l->getDirX(); pos[1] = l->getDirY(); pos[2] = l->getDirZ(); pos[3] = 0;
+	}
+	if (l->getType() == L_SPOTLIGHT) {
+		pos[0] = l->getPosX(); pos[1] = l->getPosY(); pos[2] = l->getPosZ(); pos[3] = 1;
+		dir[0] = l->getDirX(); dir[1] = l->getDirY(); dir[2] = l->getDirZ(); dir[3] = 1;
+		glLightfv(GL_LIGHT0 + i, GL_POSITION, pos);
+		glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION, dir);
+		glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, l->getAngCuttof());
+		glLightf(GL_LIGHT0 + i, GL_SPOT_EXPONENT, l->getExponent());
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->getAtt());
 	}
 	float quad_att = 0.001f;
 	GLfloat qaAmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
@@ -268,7 +278,6 @@ void setupLight(Light* l, int i) {
 	glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, qaDiffuseLight);
 	glLightfv(GL_LIGHT0 + i, GL_SPECULAR, qaSpecularLight);
 	glLightfv(GL_LIGHT0 + i, GL_POSITION, pos);
-	glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, quad_att);
 }
 
 void setupLights(vector<Light*> l, int isCamLight) {
@@ -389,7 +398,20 @@ void processKeys(unsigned char key, int xx, int yy) {
 		camX -= newX;
 		camZ -= newZ;
 		camY -= newY;
+
+	case '+':
+		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
+		camX -= newX;
+		camZ -= newZ;
+		camY -= newY;
+
+	case '-':
+		polar2Cartesian(0.5, angHor, angVert, &newX, &newY, &newZ);
+		camX -= newX;
+		camZ -= newZ;
+		camY -= newY;
 		break;
+	default:
 		break;
 	}
 }
