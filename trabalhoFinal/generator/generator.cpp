@@ -82,45 +82,19 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 	}
 	float r[4] = { 0 };
 	float ret = 0;
-	/*if (print) {
-		for (int i = 0; i < 4; i++) {
-			cout << "u " << u[i] << " ";
-		}
-		cout << '\n';
-	}
-	if (print) {
-		for (int i = 0; i < 4; i++) {
-			cout << "v " << v[i] << " ";
-		}
-		cout << '\n';
-	}*/
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			r[i] += u[j] * m[j][i];
 		}
 	}
-	/*if (print) {
-		for (int i = 0; i < 4; i++) {
-			cout << "r1 " << r[i] << " ";
-		}
-		cout << '\n';
-	}*/
 	for (int i = 0; i < 4; i++) {
 		u[i] = 0;
 	}
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			u[i] += r[j] * vet.at(4*j + i + (16 * patch));
-			//if(print) cout << "vet " << vet.at(4 * i + j + (16 * patch)) << ' ';
 		}
-		//if(print) cout << '\n';
 	}
-	/*if (print) {
-		for (int i = 0; i < 4; i++) {
-			cout << "u1 " << u[i] << " ";
-		}
-		cout << '\n';
-	}*/
 	for (int i = 0; i < 4; i++) {
 		r[i] = 0;
 	}
@@ -129,18 +103,9 @@ float calculatePoints(float ti, float tj, vector<float> vet, int patch, int flag
 			r[i] += u[j] * m[j][i];
 		}
 	}
-	/*if (print) {
-		for (int i = 0; i < 4; i++) {
-			cout << "r2 " << r[i] << " ";
-		}
-		cout << '\n';
-	}*/
 	for (int j = 0; j < 4; j++) {
 		ret += r[j] * v[j];
 	}
-	/*if (print) {
-		cout << "ret " << ret << '\n';
-	}*/
 	return ret;
 }
 
@@ -408,7 +373,6 @@ int main(int argc, char* argv[]) {
 		figura = argv[8];
 		vL->sphere(raio, slices, stacks);
 		geraPontosFich(vL, figura,r,g,b);
-		//geraPontosNormal(vN, figura);
 		return 0;
 	}
 
