@@ -23,10 +23,6 @@ void geraPontosFich(VerticesList * vL, string figura, float r, float g, float b)
 
   vector <float> vector = vL->getPoints();
 
-  cout << "size " << vector.size() << '\n';
-  cout << "sizeN " << vectorN.size() << '\n';
-  cout << "sizeT " << vectorT.size() << '\n';
-
   fs << to_string(vector.size()/3) << endl;
   fs << r << " ";
   fs << g << " ";
