@@ -361,7 +361,7 @@ void VerticesList::cone(float r, float maxHeight, int slices, int stacks){
         addTextures(0.8125, 0.1875);
         addPoint(x, 0 ,z);
         addNormal(0, -1, 0);
-        addTextures(0.1875 * cos(sliceStep*a), 0.1875 * sin(sliceStep * a));
+        addTextures(0.8125 + 0.1875 * cos(sliceStep*a), 0.1875 + 0.1875 * sin(sliceStep * a));
         addPoint(nextX, 0, nextZ);
         addNormal(0, -1, 0);
         addTextures(r * cos(sliceStep * (a + 1)), r * sin(sliceStep * (a + 1)));
