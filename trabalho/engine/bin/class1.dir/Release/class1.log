@@ -1,3 +1,2 @@
-﻿D:\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  main.cpp
-  class1.vcxproj -> C:\Users\GL502V\Documents\Univ\Ano3\CG\trabalho\engine\bin\engine.exe
+﻿  main.cpp
+  class1.vcxproj -> C:\Users\Nodelio\Desktop\University\CGTP\trabalho\engine\bin\Release\class1.exe

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine
+# Install script for directory: C:/Users/Nodelio/Desktop/University/CGTP/trabalho/engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/GL502V/Documents/Univ/Ano3/CG/trabalho/engine/bin/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Nodelio/Desktop/University/CGTP/trabalho/engine/bin/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

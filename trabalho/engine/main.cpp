@@ -176,7 +176,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	vector<string> models = readXML(argv[1]);
+	vector<string> models = readXML("modelSphere.xml");
 	for (int i = models.size() - 1; i >= 0; i--)
 		parseFile("..\\..\\generator\\3dfiles\\" + models.at(i));
 
