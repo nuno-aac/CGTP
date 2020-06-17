@@ -176,7 +176,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	vector<string> models = readXML("modelSphere.xml");
+	vector<string> models = readXML("modelBox.xml");
 	for (int i = models.size() - 1; i >= 0; i--)
 		parseFile("..\\..\\generator\\3dfiles\\" + models.at(i));
 
@@ -186,6 +186,8 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Trabalho fase 1");
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// put callback registration here
 	glutDisplayFunc(renderScene);

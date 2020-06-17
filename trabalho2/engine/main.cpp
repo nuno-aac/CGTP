@@ -189,7 +189,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	scene = parseXML("SolarSystem.xml");
+	scene = parseXML("modelsToRender.xml");
 	cout << "+/- = zoom | z/x = rotacao | arrow keys = mover o modelo";
 	zoom = 23;
 	vert = 25;

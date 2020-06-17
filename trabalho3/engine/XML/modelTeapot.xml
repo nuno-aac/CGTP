@@ -1,0 +1,8 @@
+<?xml version="2.0" ?>
+<scene>
+  <group>
+    <models>
+      <model file='bez.3d'/>
+    </models>
+  </group>
+</scene>

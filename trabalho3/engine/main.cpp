@@ -158,14 +158,14 @@ void applyTransformations(Group* g) {
 		currentModel++;
 	}
 
-	t = g -> getTranslation();
-	if (t != NULL) {
-		glTranslatef(t->getX(), t -> getY(), t -> getZ());
-	}
-
 	rotA = g->getRotationAnimation();
 	if (rotA != NULL) {
 		glRotatef(getRotationAngle(rotA), rotA->getX(), rotA->getY(), rotA->getZ());
+	}
+
+	t = g -> getTranslation();
+	if (t != NULL) {
+		glTranslatef(t->getX(), t -> getY(), t -> getZ());
 	}
 
 	t = g -> getStaticRotation();
@@ -306,7 +306,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	//Get models
-	scene = parseXML("modelsToRender.xml");
+	scene = parseXML("modelTeapot.xml");
 	cout << "|+/- = zoom \n|z/x = rotacao \n|arrow keys = mover o modelo\n|s = toogle orbitas";
 	zoom = 300;
 	vert = 0;
@@ -319,6 +319,8 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Trabalho fase 1");
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glewInit();
 	glGenBuffers(300, modelsBuf);

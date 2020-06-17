@@ -116,7 +116,6 @@ Group* parseGroup(XMLElement* g) {
 
 vector<Group*> parseXML(string nome) {
 	vector<Group*> scene;
-	vector<Light*> lights;
 	XMLDocument d;
 	string str;
 
@@ -128,9 +127,8 @@ vector<Group*> parseXML(string nome) {
 		if (root == nullptr) 
 			return scene;
 
-		XMLElement* elemento = root->FirstChildElement("light");
-
 		XMLElement* elemento = root->FirstChildElement("group");
+
 		while (elemento != nullptr) {
 
 			scene.push_back(parseGroup(elemento));

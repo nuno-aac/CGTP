@@ -1,5 +1,23 @@
 <?xml version="2.0" ?>
 <scene>
-	<model file='sphere0.3d'/>
-  <model file='cone1.3d'/>
+	<group>
+		<translate X = '1'/>
+		<models>
+			<model file = 'cone1.3d'/>
+		</models>
+		<group>
+			<translate X = '10'/>
+			<rotate Angle='90' X = '0' Y = '0' Z = '1' />
+			<models>
+				<model file = 'cone1.3d'/>
+			</models>
+			<group>
+				<translate X = '5'/>
+				<rotate Angle='90' X = '1' Y = '0' Z = '0' />
+				<models>
+					<model file = 'cone1.3d'/>
+				</models>
+			</group>
+		</group>
+	</group>
 </scene>
